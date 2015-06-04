@@ -8,6 +8,7 @@ class IconoController {
     def dlgIconos_ajax() {
         def flaticons = [], fontawesome = [], mfizz = []
 
+
         def path = servletContext.getRealPath("/") + "fonts/"    //web-app/fonts
 
         def flaticonsPath = path + "flaticons-construction/flaticon.css"
