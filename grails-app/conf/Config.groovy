@@ -115,3 +115,11 @@ log4j.main = {
            'org.hibernate',
            'net.sf.ehcache.hibernate'
 }
+
+chat {
+    serviceName = "svt-pc"
+    host = "localhost"
+    port = 5222
+    username = "test"
+    password = "123"
+}

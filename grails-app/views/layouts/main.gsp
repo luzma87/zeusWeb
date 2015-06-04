@@ -1,4 +1,4 @@
-<%@ page import="arazu.alertas.Alerta" %>
+
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -211,41 +211,12 @@
     <!-- http://wrapbootstrap.com/preview/WB0P8S4X3 -->
 
     %{--<mn:bannerTop/>--}%
-        <g:set var="alertas" value="${Alerta.cantAlertasPersonaPorTipo(session.usuario)}"/>
-        <g:set var="clase" value="success"/>
 
-        <g:if test="${alertas.total > 0}">
-            <g:if test="${alertas.d2 > 0}">
-                <g:set var="clase" value="warning"/>
-            </g:if>
-            <g:if test="${alertas.dmas > 0}">
-                <g:set var="clase" value="danger"/>
-            </g:if>
-            <div class="handle svt-border-${clase}" style="background: #ffe7b5">
-                <div class="circle-container">
-                    <div class="circle-base circle-icon svt-bg-info svt-border-info">
-                        <i class="fa fa-arrow-left"></i>
-                    </div>
-                </div>
-
-                <div class="content-alertas"></div>
-            </div>
-
-            <div class="circle showing">
-                <div class="circle-base circle-bg svt-bg-default svt-border-${clase}"></div>
-
-                <div class="circle-base circle-fg svt-bg-${clase} svt-border-${clase}" id="divTotalAlertas">
-                    ${alertas.total}
-                </div>
-            </div>
-        </g:if>
-
-        <mn:menu title="${g.layoutTitle(default: 'Arazu')}"/>
 
         <div class="container" id="mass-container" style="position: relative">
             <g:layoutBody/>
         </div>
 
-        <mn:stickyFooter/>
+
     </body>
 </html>
