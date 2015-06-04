@@ -1,0 +1,69 @@
+.pdf-viewer{
+    height: 535px;
+    width: 50%;
+    background-color: #006699;
+    position: fixed;
+    top: 75px;
+    right: 0px;
+    z-index: 500;
+    padding: 0px;
+    border-left: 2px solid #006699;
+    border-bottom: 2px solid #006699;
+    display: none;
+
+}
+.pdf-content{
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    position: relative;
+}
+.pdf-container{
+    width: 100%;
+    height: 95%;
+    margin: 0px;
+    position: absolute;
+    top: 5%;
+    left: 0px;
+    z-index: 502;
+}
+.pdf-handler{
+    position: absolute;
+    top: 49%;
+    left: -20px;
+    padding: 5px;
+    height: 40px;
+    line-height: 30px;
+    background-color: #006699;
+    color: #eee;
+    cursor: pointer;
+    z-index: 9999;
+}
+.pdf-header{
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 100%;
+    background:transparent;
+    height: 5%;
+    line-height: 20px;
+    padding-left: 10px;
+    color: white;
+    font-weight: bold;
+    display: none;
+}
+.data{
+    font-weight: normal;
+    margin-right: 10px;
+}
+#msgNoPDF{
+    margin: 10px;
+    height: 40px;
+    color: #eee;
+    font-weight: bold;
+    width: 100%;
+    position: absolute;
+    top: 60px;
+    left: 10px;
+    z-index: 501;
+}

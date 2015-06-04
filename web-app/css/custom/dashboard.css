@@ -1,0 +1,82 @@
+.card {
+    border-radius : 5px;
+    padding       : 8px;
+    display       : inline-table;
+    background    : #2d99e0;
+    min-width     : 250px;
+    min-height    : 180px;
+    margin        : 10px;
+}
+
+.titulo-card {
+    width       : 100%;
+    font-weight : bold;
+    font-size   : 14px;
+    line-height : 1;
+    color       : #000000 !important;
+}
+
+.cardContent {
+    border-radius : 5px;
+    padding       : 8px;
+    width         : 100%;
+    border        : 1px solid #eee;
+    margin-top    : 5px;
+    line-height   : 1;
+    background    : white;
+}
+
+.circle-card {
+    border-radius : 50%;
+    width         : 50px;
+    height        : 50px;
+
+    text-align    : center;
+    line-height   : 50px;
+    display       : inline-block;
+    margin-right  : 5px;
+    font-weight   : bold;
+}
+
+.circle-card-icon {
+    padding-left : 10px;
+    padding-top  : 5px;
+}
+
+.card-bg-green {
+    background : #5cb85c;
+}
+
+.table-report {
+    border-radius : 5px;
+    padding       : 0px;
+    display       : inline-table;
+    min-width     : 525px;
+    min-height    : 200px;
+    margin        : 10px;
+}
+
+.titulo-report {
+    width                   : 100%;
+    font-weight             : bold;
+    font-size               : 14px;
+    line-height             : 1;
+    background              : #2d99e0;
+    padding                 : 5px;
+    border-top-left-radius  : 5px;
+    border-top-right-radius : 5px;
+    color                   : #000000 !important;
+}
+
+.report-content {
+    width      : 100%;
+    font-size  : 11px;
+    margin     : 0px;
+    margin-top : -1px;
+}
+
+.header-table-report {
+    background   : #2d99e0 !important;
+    border-color : #2d99e0 !important;
+    color        : #000000 !important;
+}
