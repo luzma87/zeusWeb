@@ -1,4 +1,4 @@
-package arazu
+package chat
 
 class PdfViewerTagLib {
     static defaultEncodeAs = [taglib: 'none']

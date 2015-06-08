@@ -1,4 +1,4 @@
-package arazu
+package chat
 
 import org.codehaus.groovy.grails.commons.DomainClassArtefactHandler
 import org.springframework.beans.SimpleTypeConverter

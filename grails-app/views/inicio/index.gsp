@@ -5,7 +5,7 @@
   Time: 11:59 AM
 --%>
 
-<%@ page import="arazu.solicitudes.NotaPedido" contentType="text/html;charset=UTF-8" %>
+<%@ page import="chat.solicitudes.NotaPedido" contentType="text/html;charset=UTF-8" %>
 <html>
     <head>
         <meta name="layout" content="main"/>
@@ -78,8 +78,8 @@
                     <g:each in="${proyectos}" var="p">
                         <tr>
                             <td>${p.nombre}</td>
-                            <td style="text-align: center">${arazu.proyectos.Funcion.findAllByProyecto(p).size()}</td>
-                            <td style="text-align: center">${arazu.solicitudes.NotaPedido.findAllByProyecto(p).size()}</td>
+                            <td style="text-align: center">${chat.proyectos.Funcion.findAllByProyecto(p).size()}</td>
+                            <td style="text-align: center">${chat.solicitudes.NotaPedido.findAllByProyecto(p).size()}</td>
                         </tr>
                     </g:each>
 

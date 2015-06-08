@@ -1,4 +1,4 @@
-<%@ page import="arazu.proyectos.Proyecto" %>
+<%@ page import="chat.proyectos.Proyecto" %>
 
 <script type="text/javascript" src="${resource(dir: 'js', file: 'ui.js')}"></script>
 <g:if test="${!proyectoInstance}">

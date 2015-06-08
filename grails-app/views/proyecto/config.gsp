@@ -5,7 +5,7 @@
   Time: 22:01
 --%>
 
-<%@ page import="arazu.parametros.TipoUsuario; arazu.parametros.Cargo; arazu.seguridad.Persona; arazu.proyectos.Proyecto" contentType="text/html;charset=UTF-8" %>
+<%@ page import="chat.parametros.TipoUsuario; chat.parametros.Cargo; chat.seguridad.Persona; chat.proyectos.Proyecto" contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html>
     <head>

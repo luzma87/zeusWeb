@@ -5,7 +5,7 @@
   Time: 04:55 PM
 --%>
 
-<%@ page import="arazu.seguridad.Perfil" contentType="text/html;charset=UTF-8" %>
+<%@ page import="chat.seguridad.Perfil" contentType="text/html;charset=UTF-8" %>
 <html>
     <head>
         <meta name="layout" content="main"/>

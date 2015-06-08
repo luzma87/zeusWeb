@@ -13,6 +13,7 @@ import org.jivesoftware.smack.chat.ChatMessageListener
 import org.jivesoftware.smack.packet.Message
 import org.jivesoftware.smack.tcp.XMPPTCPConnection
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration
+import seguridad.Persona
 
 
 class PruebasController {
@@ -20,6 +21,7 @@ class PruebasController {
     def messageHandlerService
     static scope="session"
     def index() {
+
         XMPPTCPConnectionConfiguration config = XMPPTCPConnectionConfiguration.builder()
                 .setUsernameAndPassword("test", "123")
                 .setServiceName("svt-pc")
@@ -31,6 +33,7 @@ class PruebasController {
         AbstractXMPPConnection conn2 = new XMPPTCPConnection(config);
         conn2.connect();
         conn2.login();
+        System.out.println("name = " + conn2.getUser())
         messageHandlerService.inicio(conn2)
         [user:"test"]
     }
@@ -57,6 +60,13 @@ class PruebasController {
     def enviarMensaje(){
         messageHandlerService.sendMensaje(params.mensaje)
         render "ok"
+    }
+
+
+    def getInfoMensaje(){
+        println "params "+params
+        def p = Persona.findByLogin(params.user)
+        [personaInstance:p]
     }
 
     def prueba(){

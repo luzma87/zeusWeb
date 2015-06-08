@@ -1,4 +1,4 @@
-package arazu
+package chat
 
 class BuscadorTagLib {
 

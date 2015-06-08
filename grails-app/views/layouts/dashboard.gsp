@@ -1,4 +1,4 @@
-<%@ page import="arazu.alertas.Alerta" %>
+<%@ page import="chat.alertas.Alerta" %>
 <!DOCTYPE html>
 <html lang="es">
     <head>

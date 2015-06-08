@@ -40,7 +40,7 @@
         margin-bottom: 5px;
         color: #d2d2d2;
         text-align: left;
-
+        cursor: pointer;
     }
     .fila{
         width: 100%;
@@ -52,7 +52,7 @@
         background: #ffd781;
         margin-bottom: 5px;
         color: #000000;
-
+        cursor: pointer;
     }
     .usuario{
         font-weight: bold;
@@ -76,13 +76,13 @@
         margin-left: -12px;
 
     }
-      .btn-barra{
-          margin: 2px;
-          width: 40px;
-          height: 40px;
-          line-height: 30px;
+    .btn-barra{
+        margin: 2px;
+        width: 40px;
+        height: 40px;
+        line-height: 30px;
 
-      }
+    }
     </style>
 </head>
 <body>
@@ -100,16 +100,16 @@
         <a href="#" class="btn btn-success btn-barra" title="" id="broadcast">
             <i class="fa fa-rss"></i>
         </a>
-        <a href="#" class="btn btn-warning btn-barra" title="Avanzan unidades" id="unidades">
+        <a href="#" class="btn btn-warning btn-barra btn-utils" title="Avanzan unidades" id="unidades">
             <i class="fa fa-motorcycle"></i>
         </a>
-        <a href="#" class="btn btn-primary btn-barra" title="911 en camino" id="911">
+        <a href="#" class="btn btn-primary btn-barra btn-utils" title="911 en camino" id="911">
             <i class="fa fa-cab"></i>
         </a>
-        <a href="#" class="btn btn-danger btn-barra" title="Ambulancia en camino" id="ambulancia">
+        <a href="#" class="btn btn-danger btn-barra btn-utils" title="Ambulancia en camino" id="ambulancia">
             <i class="fa fa-ambulance"></i>
         </a>
-        <a href="#" class="btn btn-info btn-barra" title="Sospechoso detenido" id="sospechoso">
+        <a href="#" class="btn btn-info btn-barra btn-utils" title="Sospechoso detenido" id="sospechoso">
             <i class="fa fa-child"></i>
         </a>
         <a href="#" class="btn btn-default btn-barra" title="Enviar foto" id="foto">
@@ -122,11 +122,45 @@
 <script type="text/javascript">
     var actual =0
     var user ="${user}"
+    function infoMensaje(){
+        openLoader()
+        $.ajax({
+            type:"POST",
+            url: "${g.createLink(controller: 'pruebas',action: 'getInfoMensaje')}",
+            data:"user="+$(this).attr("user")+"&mensaje="+$(this).attr("mensaje"),
+            success : function(msg){
+                closeLoader()
+                var b = bootbox.dialog({
+                    id      : "dlgCreateEditPersona",
+                    title   : "Detalles",
+                    message : msg,
+                    buttons : {
+                        cancelar : {
+                            label     : "Cerrar",
+                            className : "btn-primary",
+                            callback  : function () {
+                            }
+                        }
+                    } //buttons
+                }); //dialog
+            }
+        });
+    }
     function appendMensaje(val){
-        if(val.de==user)
-            $("#mensajes").append("<div class='fila txt-der'><div class='mio'><span class='usuario'>"+val.de+" ("+val.hora+"): </span>"+val.mensaje+"</div></div>");
-        else
-            $("#mensajes").append("<div class='fila'><div class='mensaje'><span class='usuario'>"+val.de+" ("+val.hora+"): </span>"+val.mensaje+"</div></div>");
+        var div
+        var container
+        if(val.de==user) {
+            div = $("<div class='mio' user='"+val.de+"'  mensaje='"+val.mensaje+"'><span class='usuario'>" + val.de + " (" + val.hora + "): </span>" + val.mensaje + "</div>")
+            container=$("<div class='fila txt-der'></div>")
+            container.append(div)
+            $("#mensajes").append(container);
+        } else {
+            div = $("<div class='mensaje' user='"+val.de+"'  mensaje='"+val.mensaje+"'><span class='usuario'>" + val.de + " (" + val.hora + "): </span>" + val.mensaje + "</div>")
+            container=$("<div class='fila'></div>")
+            container.append(div)
+            $("#mensajes").append(container);
+        }
+        div.click(infoMensaje)
     }
     setInterval(function(){
         $.ajax({
@@ -147,10 +181,44 @@
     }, 3000);
 
     $("#enviar").click(function(){
+        var texto = $("#mensaje-txt").val()
+        if($.trim(texto)!=""){
+            $.ajax({
+                type:"POST",
+                url: "${g.createLink(controller: 'pruebas',action: 'enviarMensaje')}",
+                data:"mensaje="+$("#mensaje-txt").val(),
+                success : function(msg){
+                    $("#mensaje-txt").val("")
+                    $("#mensaje-txt").html("")
+                }
+            });
+            return false
+        }
+
+    })
+    $("#mensaje-txt").keydown(function (ev) {
+        if (ev.keyCode == 13) {
+            var texto = $("#mensaje-txt").val()
+            if($.trim(texto)!=""){
+                $.ajax({
+                    type:"POST",
+                    url: "${g.createLink(controller: 'pruebas',action: 'enviarMensaje')}",
+                    data:"mensaje="+$("#mensaje-txt").val(),
+                    success : function(msg){
+                        $("#mensaje-txt").val("")
+                        $("#mensaje-txt").html("")
+                    }
+                });
+                return false
+            }
+        }
+        return true;
+    });
+    $(".btn-utils").click(function(){
         $.ajax({
             type:"POST",
             url: "${g.createLink(controller: 'pruebas',action: 'enviarMensaje')}",
-            data:"mensaje="+$("#mensaje-txt").val(),
+            data:"mensaje="+$(this).attr("title"),
             success : function(msg){
                 $("#mensaje-txt").val("")
                 $("#mensaje-txt").html("")
@@ -158,7 +226,6 @@
         });
         return false
     })
-
 </script>
 </body>
 </html>

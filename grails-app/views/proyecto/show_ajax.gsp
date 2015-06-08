@@ -1,5 +1,5 @@
 
-<%@ page import="arazu.proyectos.Proyecto" %>
+<%@ page import="chat.proyectos.Proyecto" %>
 
 <g:if test="${!proyectoInstance}">
     <elm:notFound elem="Proyecto" genero="o" />

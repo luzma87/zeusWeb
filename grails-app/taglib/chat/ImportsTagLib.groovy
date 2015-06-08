@@ -1,4 +1,4 @@
-package arazu
+package chat
 
 class ImportsTagLib {
 //    static defaultEncodeAs = 'html'

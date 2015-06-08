@@ -5,7 +5,7 @@
   Time: 12:20 AM
 --%>
 
-<%@ page import="arazu.proyectos.Funcion; arazu.inventario.Bodega; arazu.proyectos.Proyecto" %>
+<%@ page import="chat.proyectos.Funcion; chat.inventario.Bodega; chat.proyectos.Proyecto" %>
 <!DOCTYPE html>
 <html>
     <head>

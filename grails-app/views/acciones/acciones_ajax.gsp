@@ -1,4 +1,4 @@
-<%@ page import="arazu.seguridad.Sistema; arazu.seguridad.Permiso; arazu.seguridad.Modulo; arazu.seguridad.TipoAccion" %>
+<%@ page import="chat.seguridad.Sistema; chat.seguridad.Permiso; chat.seguridad.Modulo; chat.seguridad.TipoAccion" %>
 
 <script src="${resource(dir: 'js/plugins/fixed-header-table-1.3', file: 'jquery.fixedheadertable.js')}"></script>
 <link rel="stylesheet" type="text/css" href="${resource(dir: 'js/plugins/fixed-header-table-1.3/css', file: 'defaultTheme.css')}"/>
