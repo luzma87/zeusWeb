@@ -23,9 +23,9 @@ class PruebasController {
     def index() {
 
         XMPPTCPConnectionConfiguration config = XMPPTCPConnectionConfiguration.builder()
-                .setUsernameAndPassword("test", "123")
-                .setServiceName("svt-pc")
-                .setHost("192.168.1.132")
+                .setUsernameAndPassword("valentinsvt", "123456")
+                .setServiceName("vps44751.vps.ovh.ca")
+                .setHost("167.114.144.175")
                 .setPort(5222)
                 .setSecurityMode(ConnectionConfiguration.SecurityMode.disabled)
                 .build();
@@ -35,7 +35,7 @@ class PruebasController {
         conn2.login();
         System.out.println("name = " + conn2.getUser())
         messageHandlerService.inicio(conn2)
-        [user:"test"]
+        [user:"valentinsvt"]
     }
 
     def getMessages(){

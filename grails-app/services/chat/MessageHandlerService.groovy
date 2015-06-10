@@ -26,10 +26,10 @@ class MessageHandlerService {
         def mucm = MultiUserChatManager.getInstanceFor(conn2)
         indice=0
         mensajes=[]
-        muc = mucm.getMultiUserChat("Jipijapa@conference.svt-pc")
+        muc = mucm.getMultiUserChat("Jipijapa@conference.vps44751.vps.ovh.ca")
         try{
             if(!muc.isJoined()){
-                muc.join("test")
+                muc.join("valentinsvt")
                 muc.addMessageListener(new MessageListener() {
                     @Override
                     void processMessage(Message message) {

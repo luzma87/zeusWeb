@@ -2,6 +2,18 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
+    <script src="http://maps.googleapis.com/maps/api/js"></script>
+    <script>
+        function initialize() {
+            var mapProp = {
+                center:new google.maps.LatLng(-0.16481615,-78.47895741),
+                zoom:15,
+                mapTypeId:google.maps.MapTypeId.ROADMAP
+            };
+            var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+        }
+        google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
     <title>Demo</title>
     <style type="text/css">
     .divIzq{
@@ -14,7 +26,7 @@
         overflow: auto;
         padding: 10px;
         width: 100%;
-        background: #ddd;
+
         margin-top: 0px;
         border-radius: 5px;
         border: 1px solid #36579F;
@@ -30,6 +42,7 @@
         border-bottom-right-radius: 5px;
         border-top-right-radius: 5px;
         padding: 10px;
+        border: 1px solid #36579F;
 
     }
     .mio{
@@ -53,6 +66,7 @@
         margin-bottom: 5px;
         color: #000000;
         cursor: pointer;
+        position: relative;
     }
     .usuario{
         font-weight: bold;
@@ -83,19 +97,23 @@
         line-height: 30px;
 
     }
+    .ventana{
+        width: 150px;
+        height: 210px;
+    }
+    .fila-ventana{
+        width: 100%;
+        height: 25px;
+        padding: 3px;
+    }
+    body{
+        margin-bottom: 0px !important;
+        overflow: hidden;
+    }
     </style>
 </head>
 <body>
 <div class="row">
-    <div class="col-md-6 divIzq" style="position:relative;">
-        <div class=" " id="mensajes" ></div>
-        <div class="ingreso">
-            <textarea class="txt-ingreso" id="mensaje-txt"></textarea>
-            <a href="#" class="btn btn-info" id="enviar" style="width: 19%;height: 100%;line-height: 90px;display: inline-block;margin-top: -93px">
-                <i class="fa fa-share-square-o" style="margin-right: 6px"></i> Enviar
-            </a>
-        </div>
-    </div>
     <div class="col-botones">
         <a href="#" class="btn btn-success btn-barra" title="" id="broadcast">
             <i class="fa fa-rss"></i>
@@ -117,32 +135,49 @@
         </a>
 
     </div>
-    <div class="col-md-5 divDer"></div>
+    <div class="col-md-6 divIzq" style="position:relative;">
+        <div class=" " id="mensajes" ></div>
+        <div class="ingreso">
+            <textarea class="txt-ingreso" id="mensaje-txt"></textarea>
+            <a href="#" class="btn btn-info" id="enviar" style="width: 19%;height: 100%;line-height: 90px;display: inline-block;margin-top: -93px">
+                <i class="fa fa-share-square-o" style="margin-right: 6px"></i> Enviar
+            </a>
+        </div>
+    </div>
+
+    <div class="col-md-5 divDer" id="googleMap">
+
+    </div>
 </div>
+<div class="ventana" style="display: none"></div>
 <script type="text/javascript">
     var actual =0
     var user ="${user}"
     function infoMensaje(){
         openLoader()
+
         $.ajax({
             type:"POST",
             url: "${g.createLink(controller: 'pruebas',action: 'getInfoMensaje')}",
             data:"user="+$(this).attr("user")+"&mensaje="+$(this).attr("mensaje"),
             success : function(msg){
                 closeLoader()
-                var b = bootbox.dialog({
-                    id      : "dlgCreateEditPersona",
-                    title   : "Detalles",
-                    message : msg,
-                    buttons : {
-                        cancelar : {
-                            label     : "Cerrar",
-                            className : "btn-primary",
-                            callback  : function () {
-                            }
-                        }
-                    } //buttons
-                }); //dialog
+
+                /*var b = bootbox.dialog({
+                 id      : "dlgCreateEditPersona",
+                 title   : "Detalles",
+                 message : msg,
+                 buttons : {
+                 cancelar : {
+                 label     : "Cerrar",
+                 className : "btn-primary",
+                 callback  : function () {
+                 }
+                 }
+                 } //buttons
+                 }); //dialog*/
+
+
             }
         });
     }
@@ -160,9 +195,41 @@
             container.append(div)
             $("#mensajes").append(container);
         }
-        div.click(infoMensaje)
+        //div.click(infoMensaje)
+        div.qtip({
+            content: {
+                title:"Información del usuario",
+                text: function(event, api) {
+                    $.ajax({
+                        url: "${g.createLink(controller: 'pruebas',action: 'getInfoMensaje')}",
+                        data:"user="+$(this).attr("user")+"&mensaje="+$(this).attr("mensaje")
+                    })
+                            .then(function(content) {
+                                // Set the tooltip content upon successful retrieval
+                                api.set('content.text', content);
+                            }, function(xhr, status, error) {
+                                // Upon failure... set the tooltip content to error
+                                api.set('content.text', status + ': ' + error);
+                            });
+
+                    return 'Loading...'; // Set some initial text
+                }
+            },
+            position: {
+                viewport: $(window)
+            },
+            style: 'qtip-dark',
+            show: {
+                event: 'click'
+            },
+            hide: 'unfocus'
+        });
     }
     setInterval(function(){
+        var scroll = false
+        if($("#mensajes").scrollTop()==$("#mensajes")[0].scrollHeight){
+            scroll=true
+        }
         $.ajax({
             type:"POST",
             url: "${g.createLink(controller: 'pruebas',action: 'getMessages')}",
@@ -175,7 +242,8 @@
                     appendMensaje(val)
 
                 });
-                $("#mensajes").scrollTop($("#mensajes")[0].scrollHeight);
+                if(scroll)
+                    $("#mensajes").scrollTop($("#mensajes")[0].scrollHeight);
             }
         });
     }, 3000);
