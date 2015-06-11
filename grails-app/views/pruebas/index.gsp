@@ -3,14 +3,16 @@
 <head>
     <meta name="layout" content="main"/>
     <script src="http://maps.googleapis.com/maps/api/js"></script>
+    <script src="${g.resource(dir: 'js',file: 'markerwithlabel.js')}"></script>
     <script>
+        var map
         function initialize() {
             var mapProp = {
                 center:new google.maps.LatLng(-0.16481615,-78.47895741),
                 zoom:15,
                 mapTypeId:google.maps.MapTypeId.ROADMAP
             };
-            var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+             map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
         }
         google.maps.event.addDomListener(window, 'load', initialize);
     </script>
@@ -110,6 +112,18 @@
         margin-bottom: 0px !important;
         overflow: hidden;
     }
+    .labels {
+        color: #000000;
+        background-color: white;
+        font-family: "Lucida Grande", "Arial", sans-serif;
+        font-size: 11px;
+        font-weight: bold;
+        text-align: center;
+        width: 60px;
+        border: 1px solid #36579F;
+        border-radius: 3px;
+        white-space: nowrap;
+    }
     </style>
 </head>
 <body>
@@ -180,6 +194,21 @@
 
             }
         });
+    }
+    function showPin(latitud,longitud,nombre){
+        var image = '${g.resource(dir: "images",file: "ping1.png")}';
+        var myLatlng = new google.maps.LatLng(latitud,longitud);
+        var marker = new new MarkerWithLabel({
+            position: myLatlng,
+            map: map,
+            title: nombre,
+            icon: image,
+            labelContent: nombre,
+            labelAnchor: new google.maps.Point(30, 55),
+            labelClass: "labels", // the CSS class for the label
+            labelStyle: {opacity: 0.90}
+        });
+
     }
     function appendMensaje(val){
         var div

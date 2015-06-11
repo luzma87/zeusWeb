@@ -29,9 +29,13 @@
         ${personaInstance?.celular}
     </div>
     <div class="fila-ventana">
-       <a href="#" class="btn btn-info btn-sm">
+       <a href="#" class="btn btn-info btn-sm ver-mapa " longitud="${personaInstance.longitud}" latitud="${personaInstance.latitud}" nombre="${personaInstance.nombre}">
            <i class="fa fa-map"></i> Ver en el mapa
        </a>
     </div>
 </div>
-
+<script type="text/javascript">
+    $(".ver-mapa").click(function(){
+        showPin($(this).attr("latitud"),$(this).attr("longitud"),$(this).attr("nombre"))
+    })
+</script>
