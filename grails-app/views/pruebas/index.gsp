@@ -12,11 +12,11 @@
                 zoom:15,
                 mapTypeId:google.maps.MapTypeId.ROADMAP
             };
-             map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+            map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
         }
         google.maps.event.addDomListener(window, 'load', initialize);
     </script>
-    <title>Demo</title>
+    <title>Zeus - chat</title>
     <style type="text/css">
     .divIzq{
         height: 520px;
@@ -110,7 +110,7 @@
     }
     body{
         margin-bottom: 0px !important;
-        overflow: hidden;
+
     }
     .labels {
         color: #000000;
@@ -254,11 +254,21 @@
             hide: 'unfocus'
         });
     }
+    var first = true
     setInterval(function(){
         var scroll = false
-        if($("#mensajes").scrollTop()==$("#mensajes")[0].scrollHeight){
+        var s = $("#mensajes").scrollTop()
+        $("#mensajes").scrollTop(s+1)
+        var s2 = $("#mensajes").scrollTop()
+        if(s==s2){
             scroll=true
+        }else{
+            $("#mensajes").scrollTop(s)
         }
+        if(first)
+            scroll=true
+        first=false
+       // console.log($("#mensajes").scrollTop(),$("#mensajes")[0].scrollHeight,scroll)
         $.ajax({
             type:"POST",
             url: "${g.createLink(controller: 'pruebas',action: 'getMessages')}",
@@ -267,12 +277,17 @@
             success : function(msg){
                 var data =msg
                 actual=actual+data.length
+                if(data.length>0){
+                    document.title=""+data.length+" mensajes nuevos"
+                }
                 $.each(data, function(i, val) {
                     appendMensaje(val)
 
                 });
-                if(scroll)
+                if(scroll) {
                     $("#mensajes").scrollTop($("#mensajes")[0].scrollHeight);
+                    document.title="Zeus - chat"
+                }
             }
         });
     }, 3000);
