@@ -34,27 +34,32 @@ class MenuTagLib {
 
     def menu = { attrs ->
         def items = [:]
-        println "menu "+attrs
+        println "menu " + attrs
         def strItems = ""
         if (!attrs.title) {
             attrs.title = "Zeus"
         }
         items = [
-                "Chat": [
+                chat    : [
                         controller: "pruebas",
                         action    : "index",
                         label     : "Chat",
                         icon      : "fa-whatsapp"
+                ],
+                personas: [
+                        controller: "persona",
+                        action    : "list",
+                        label     : "Personas",
+                        icon      : "fa-users"
                 ]
         ]
-
 
         items.each { k, item ->
             strItems += renderItem(item)
         }
 
         def alertas = "("
-        def count=0
+        def count = 0
 
         alertas += count
         alertas += ")"
@@ -103,6 +108,7 @@ class MenuTagLib {
 
         out << html
     }
+
     def renderItem(item) {
         def str = "", clase = ""
         if (session.cn == item.controller && session.an == item.action) {

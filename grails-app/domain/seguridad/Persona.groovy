@@ -13,8 +13,8 @@ class Persona {
     String telefono
     String celular
     String creacion = new Date().getTime().toString()
-    String modificacion= new Date().getTime().toString()
-    String tipo
+    String modificacion = new Date().getTime().toString()
+    String tipo //policia | ciudadano
 
     static mapping = {
         table 'ofuser'
@@ -36,18 +36,18 @@ class Persona {
     }
 
     static constraints = {
-        nombre(size: 1..100,nullable: true,blank: true)
-        login(size: 1..100,nullable: false,blank: false,unique: true)
-        cedula(size: 10..13,nullable: true,blank: true)
-        email(size: 10..13,nullable: true,blank: true)
-        password(size: 1..255,nullable: true,blank: true)
-        direccion(size: 1..500,nullable: true,blank: true)
+        nombre(size: 1..100, nullable: true, blank: true)
+        login(size: 1..100, nullable: false, blank: false, unique: true)
+        cedula(size: 10..13, nullable: true, blank: true)
+        email(size: 10..13, nullable: true, blank: true)
+        password(size: 1..255, nullable: true, blank: true)
+        direccion(size: 1..500, nullable: true, blank: true)
         longitud(nullable: true)
         latitud(nullable: true)
-        telefono(size: 1..13,nullable: true,blank: true)
-        celular(size: 1..13,nullable: true,blank: true)
-        creacion(size: 1..15,nullable: false,blank: false)
-        modificacion(size: 1..15,nullable: false,blank: false)
-        tipo(size: 1..1,nullable: true,blank: true)
+        telefono(size: 1..13, nullable: true, blank: true)
+        celular(size: 1..13, nullable: true, blank: true)
+        creacion(size: 1..15, nullable: false, blank: false)
+        modificacion(size: 1..15, nullable: false, blank: false)
+        tipo(size: 1..1, nullable: true, blank: true, inList: ['P', 'C'])
     }
 }
