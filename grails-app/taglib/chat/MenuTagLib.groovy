@@ -34,7 +34,7 @@ class MenuTagLib {
 
     def menu = { attrs ->
         def items = [:]
-        println "menu " + attrs
+//        println "menu " + attrs
         def strItems = ""
         if (!attrs.title) {
             attrs.title = "Zeus"

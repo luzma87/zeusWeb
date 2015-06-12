@@ -53,7 +53,7 @@
                 var lat = -0.16481615;
                 var lng = -78.47895741;
                 var zoom = 15;
-                <g:if test="${personaInstance.id}">
+                <g:if test="${personaInstance.id && personaInstance.latitud && personaInstance.longitud}">
                 lat = ${personaInstance.latitud};
                 lng = ${personaInstance.longitud};
                 </g:if>
@@ -82,7 +82,7 @@
             }
             google.maps.event.addDomListener(window, 'load', initialize);
         </script>
-        <title>Zeus - chat</title>
+        <title>Zeus - personas</title>
         <style type="text/css">
         .divIzq {
             height                    : 520px;
@@ -123,11 +123,14 @@
     </head>
 
     <body>
+
+        <elm:message tipo="${flash.tipo}" clase="${flash.clase}">${flash.message}</elm:message>
+
         <div class="row">
             <div class="col-md-6 divIzq" style="position:relative;">
 
                 <g:form class="form-horizontal" name="frmPersona" id="${personaInstance?.id}"
-                        role="form" action="save_ajax" method="POST">
+                        role="form" action="save" method="POST">
                     <g:hiddenField name="longitud" value="${fieldValue(bean: personaInstance, field: 'longitud')}" class="number form-control  "/>
                     <g:hiddenField name="latitud" value="${fieldValue(bean: personaInstance, field: 'latitud')}" class="number form-control  "/>
 

@@ -196,4 +196,30 @@ class PersonaController {
         personaInstance.properties = params
         return [personaInstance: personaInstance]
     } //form standalone
+
+    /**
+     * Acción que guarda la información de un elemento
+     */
+    def save() {
+        def personaInstance = new Persona()
+        if (params.id) {
+            personaInstance = Persona.get(params.id)
+            if (!personaInstance) {
+                flash.message = "No se encontró Persona."
+                flash.tipo = "notfound"
+                redirect(action: "form")
+                return
+            }
+        }
+        personaInstance.properties = params
+        if (!personaInstance.save(flush: true)) {
+            flash.message = "Ha ocurrido un error al guardar Persona: " + renderErrors(bean: personaInstance)
+            flash.tipo = "error"
+            redirect(action: "form")
+            return
+        }
+        flash.message = "${params.id ? 'Actualización' : 'Creación'} de Persona exitosa."
+        flash.tipo = "success"
+        redirect(action: "list")
+    } //save standalone
 }
