@@ -6,6 +6,22 @@
     <script src="${g.resource(dir: 'js',file: 'markerwithlabel.js')}"></script>
     <script>
         var map
+        function toggleBounce(marker) {
+
+            if (marker.getAnimation() != null) {
+                marker.setAnimation(null);
+            } else {
+                marker.setAnimation(google.maps.Animation.BOUNCE);
+            }
+        }
+        function stopBounce(pos) {
+
+            if (marker.getAnimation() != null) {
+                marker.setAnimation(null);
+            } else {
+                marker.setAnimation(google.maps.Animation.BOUNCE);
+            }
+        }
         function initialize() {
             var mapProp = {
                 center:new google.maps.LatLng(-0.16481615,-78.47895741),
@@ -13,6 +29,7 @@
                 mapTypeId:google.maps.MapTypeId.ROADMAP
             };
             map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
         }
         google.maps.event.addDomListener(window, 'load', initialize);
     </script>
@@ -116,11 +133,23 @@
         color: #000000;
         background-color: white;
         font-family: "Lucida Grande", "Arial", sans-serif;
-        font-size: 11px;
+        font-size: 10px;
         font-weight: bold;
         text-align: center;
         width: 60px;
         border: 1px solid #36579F;
+        border-radius: 3px;
+        white-space: nowrap;
+    }
+    .label-emergencia {
+        color: #ffffff;
+        background-color: #ff374d;
+        font-family: "Lucida Grande", "Arial", sans-serif;
+        font-size: 10px;
+        font-weight: bolder;
+        text-align: center;
+        padding: 5px;
+        border: 1px solid #fcf2ff;
         border-radius: 3px;
         white-space: nowrap;
     }
@@ -167,6 +196,7 @@
 <script type="text/javascript">
     var actual =0
     var user ="${user}"
+    var markers = []
     function infoMensaje(){
         openLoader()
 
@@ -177,28 +207,14 @@
             success : function(msg){
                 closeLoader()
 
-                /*var b = bootbox.dialog({
-                 id      : "dlgCreateEditPersona",
-                 title   : "Detalles",
-                 message : msg,
-                 buttons : {
-                 cancelar : {
-                 label     : "Cerrar",
-                 className : "btn-primary",
-                 callback  : function () {
-                 }
-                 }
-                 } //buttons
-                 }); //dialog*/
-
-
             }
         });
     }
+
     function showPin(latitud,longitud,nombre){
         var image = '${g.resource(dir: "images",file: "ping1.png")}';
         var myLatlng = new google.maps.LatLng(latitud,longitud);
-        var marker = new new MarkerWithLabel({
+        var marker =  new MarkerWithLabel({
             position: myLatlng,
             map: map,
             title: nombre,
@@ -208,11 +224,46 @@
             labelClass: "labels", // the CSS class for the label
             labelStyle: {opacity: 0.90}
         });
+        markers.push(marker)
+    }
+    function showPinUbicacion(latitud,longitud,nombre,hora){
 
+        var image = '${g.resource(dir: "images",file: "ping2.png")}';
+        var myLatlng = new google.maps.LatLng(latitud,longitud);
+        var marker = new  MarkerWithLabel({
+            position: myLatlng,
+            map: map,
+            title: "Asalto reportado: "+hora,
+            icon: image,
+            labelContent: nombre,
+            labelAnchor: new google.maps.Point(30, 55),
+            labelClass: "label-emergencia", // the CSS class for the label
+            labelStyle: {opacity: 0.90}
+        });
+        map.setCenter(marker.getPosition());
+        map.setZoom(17);
+        google.maps.event.addListener(marker, 'idle', toggleBounce(marker));
+        google.maps.event.addListener(marker, 'click',function(){
+            if (marker.getAnimation() != null) {
+                marker.setAnimation(null);
+            } else {
+                marker.setAnimation(google.maps.Animation.BOUNCE);
+            }
+        });
+        markers.push(marker)
     }
     function appendMensaje(val){
         var div
         var container
+        if(val.mensaje.length>0){
+
+            if(val.mensaje.substring(0,3)=="loc"){
+                var loc =val.mensaje.substring(4,val.mensaje.length)
+                loc=loc.split(",")
+                showPinUbicacion(loc[0]*1,loc[1]*1,val.de,val.hora)
+
+            }
+        }
         if(val.de==user) {
             div = $("<div class='mio' user='"+val.de+"'  mensaje='"+val.mensaje+"'><span class='usuario'>" + val.de + " (" + val.hora + "): </span>" + val.mensaje + "</div>")
             container=$("<div class='fila txt-der'></div>")

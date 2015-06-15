@@ -12,6 +12,7 @@ import org.jivesoftware.smack.chat.ChatMessageListener
 import org.jivesoftware.smack.packet.Message
 import org.jivesoftware.smack.tcp.XMPPTCPConnection
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration
+import org.jivesoftware.smackx.delay.packet.DelayInformation
 import org.jivesoftware.smackx.muc.MultiUserChatManager
 
 class MessageHandlerService {
@@ -33,12 +34,28 @@ class MessageHandlerService {
                 muc.addMessageListener(new MessageListener() {
                     @Override
                     void processMessage(Message message) {
+                        DelayInformation inf = null;
+                        def date
+                       // println "xml "+message.toXML()
+                        //println "xml2 "+message.getExtensionsXML()
+                        //println "xml3 "+message.getExtension("urn:xmpp:delay").toXML()
+                        try {
+                            inf = (DelayInformation)message.getExtension("urn:xmpp:delay");
+                        } catch (Exception e) {
+                            log.error(e);
+                        }
+// get offline message timestamp
+                        if(inf!=null) {
+                            date = inf.getStamp().format("dd-MM-yy HH:mm:ss");
+                            //println "stored "+date
+                        }else
+                            date = new Date().format("dd-MM-yy HH:mm:ss")
                         def tmp = [:]
                         tmp.put("mensaje",message.getBody())
                         tmp.put("tipo",1)
                         tmp.put("de",message.getFrom().split("/")[1])
                         tmp.put("type",message.getType())
-                        tmp.put("hora",new Date().format("hh:mm:ss"))
+                        tmp.put("hora",date)
 
                         addMensaje(tmp)
                         indice++
