@@ -233,6 +233,7 @@ class PersonaController {
             }
         }
         personaInstance.properties = params
+        personaInstance.modificacion
         if (!personaInstance.save(flush: true)) {
             flash.message = "Ha ocurrido un error al guardar Persona: " + renderErrors(bean: personaInstance)
             flash.tipo = "error"
