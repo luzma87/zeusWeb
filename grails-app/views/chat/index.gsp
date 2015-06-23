@@ -296,14 +296,16 @@
                 var div;
                 var container;
                 if (val.mensaje.length > 0) {
-                    if (val.mensaje.substring(0, 3) == "loc") {
+                    var tipo = val.mensaje.substring(0, 3);
+                    var mns = val.mensaje.substring(4);
+                    if (tipo == "loc") {
                         var loc = val.mensaje.substring(4, val.mensaje.length);
                         loc = loc.split(",");
                         showPinUbicacion(loc[0] * 1, loc[1] * 1, val.de, val.hora);
                     }
                 }
                 if (val.de == user) {
-                    div = $("<div class='mio' user='" + val.de + "'  mensaje='" + val.mensaje + "'><span class='usuario'>" + val.de + " (" + val.hora + "): </span>" + val.mensaje + "</div>");
+                    div = $("<div class='mio' user='" + val.de + "'  mensaje='" + val.mensaje + "'><span class='usuario'>" + val.de + " (" + val.hora + "): </span>" + mns + "</div>");
                     container = $("<div class='fila txt-der'></div>");
                     container.append(div);
                     $mensajes.append(container);
@@ -317,7 +319,7 @@
                         };
                     }
 
-                    div = $("<div class='mensaje' user='" + val.de + "'  mensaje='" + val.mensaje + "'><span class='usuario'>" + val.de + " (" + val.hora + "): </span>" + val.mensaje + "</div>");
+                    div = $("<div class='mensaje' user='" + val.de + "'  mensaje='" + val.mensaje + "'><span class='usuario'>" + val.de + " (" + val.hora + "): </span>" + mns + "</div>");
                     div.css({
                         background : colores[val.de].bg,
                         color      : colores[val.de].text
@@ -406,7 +408,7 @@
             startInterval();
 
             $("#enviar").click(function () {
-                var texto = $mensajeTxt.val();
+                var texto = "mns:" + $mensajeTxt.val();
                 if ($.trim(texto) != "") {
                     $.ajax({
                         type    : "POST",

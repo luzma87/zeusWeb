@@ -36,11 +36,12 @@ class ChatController {
 //            }
 //        }
 //        System.out.println("name = " + conn2.getUser())
-        def user = "luzma87"
-        def pass = "123456"
+        def user = "test3"
+        def pass = "123"
         def ip = "167.114.144.175"
         def serverName = "vps44751.vps.ovh.ca"
         def roomName = "Jipijapa"
+
         messageHandlerService.inicio(user, pass, ip, serverName, roomName)
 
         def botones = [
