@@ -176,7 +176,7 @@
                         <div class="col-sm-4">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                <g:field type="email" name="email" maxlength="13" class="form-control  unique noEspacios" value="${personaInstance?.email}"/>
+                                <g:field type="email" name="email" maxlength="50" class="form-control  unique noEspacios" value="${personaInstance?.email}"/>
                             </div>
                         </div>
 
@@ -211,6 +211,50 @@
         </div>
 
         <script type="text/javascript">
+
+            var validator = $("#frmPersona").validate({
+                errorClass     : "help-block",
+                errorPlacement : function (error, element) {
+                    if (element.parent().hasClass("input-group")) {
+                        error.insertAfter(element.parent());
+                    } else {
+                        error.insertAfter(element);
+                    }
+                    element.parents(".grupo").addClass('has-error');
+                },
+                success        : function (label) {
+                    label.parents(".grupo").removeClass('has-error');
+                    label.remove();
+                },
+                rules       : {
+                    login : {
+                        remote : {
+                            url  : "${createLink(controller:'persona', action: 'validar_unique_login_ajax')}",
+                            type : "post",
+                            data : {
+                                id : "${personaInstance?.id}"
+                            }
+                        }
+                    },
+                    email : {
+                        remote : {
+                            url  : "${createLink(controller:'persona', action: 'validar_unique_email_ajax')}",
+                            type : "post",
+                            data : {
+                                id : "${personaInstance?.id}"
+                            }
+                        }
+                    }
+                },
+                messages       : {
+                    login : {
+                        remote : "Ya existe Login"
+                    },
+                    email : {
+                        remote : "Ya existe Email"
+                    }
+                }
+            });
 
         </script>
     </body>

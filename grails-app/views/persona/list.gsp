@@ -37,9 +37,9 @@
             <thead>
                 <tr>
 
-                    <g:sortableColumn property="nombre" title="Nombre"/>
-
                     <g:sortableColumn property="login" title="Login"/>
+
+                    <g:sortableColumn property="nombre" title="Nombre"/>
 
                     <g:sortableColumn property="cedula" title="Cedula"/>
 
@@ -47,7 +47,9 @@
 
                     <g:sortableColumn property="direccion" title="Direccion"/>
 
-                    <g:sortableColumn property="longitud" title="Longitud"/>
+                    <g:sortableColumn property="telefono" title="Telefono"/>
+
+                    <g:sortableColumn property="celular" title="Celular"/>
 
                 </tr>
             </thead>
@@ -56,9 +58,9 @@
                     <g:each in="${personaInstanceList}" status="i" var="personaInstance">
                         <tr data-id="${personaInstance.id}">
 
-                            <td>${personaInstance.nombre}</td>
-
                             <td><elm:textoBusqueda busca="${params.search}"><g:fieldValue bean="${personaInstance}" field="login"/></elm:textoBusqueda></td>
+
+                            <td><elm:textoBusqueda busca="${params.search}">${personaInstance.nombre}</elm:textoBusqueda></td>
 
                             <td><elm:textoBusqueda busca="${params.search}"><g:fieldValue bean="${personaInstance}" field="cedula"/></elm:textoBusqueda></td>
 
@@ -66,7 +68,9 @@
 
                             <td><elm:textoBusqueda busca="${params.search}"><g:fieldValue bean="${personaInstance}" field="direccion"/></elm:textoBusqueda></td>
 
-                            <td><g:fieldValue bean="${personaInstance}" field="longitud"/></td>
+                            <td><elm:textoBusqueda busca="${params.search}"><g:fieldValue bean="${personaInstance}" field="telefono"/></elm:textoBusqueda></td>
+
+                            <td><elm:textoBusqueda busca="${params.search}"><g:fieldValue bean="${personaInstance}" field="celular"/></elm:textoBusqueda></td>
 
                         </tr>
                     </g:each>

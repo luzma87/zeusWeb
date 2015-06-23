@@ -14,12 +14,14 @@ import org.jivesoftware.smack.packet.Message
 import org.jivesoftware.smack.tcp.XMPPTCPConnection
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration
 import seguridad.Persona
+import seguridad.Shield
 
 
-class PruebasController {
+class PruebasController extends Shield {
 
     def messageHandlerService
-    static scope="session"
+    static scope = "session"
+
     def index() {
 
         XMPPTCPConnectionConfiguration config = XMPPTCPConnectionConfiguration.builder()
@@ -35,19 +37,20 @@ class PruebasController {
         conn2.login();
         System.out.println("name = " + conn2.getUser())
         messageHandlerService.inicio(conn2)
-        [user:"valentinsvt"]
+        [user: "valentinsvt"]
     }
 
-    def getMessages(){
+    def getMessages() {
         def actual
-        if(params.actual)
+        if (params.actual) {
             actual = params.actual.toInteger()
-        else
-            actual=0
+        } else {
+            actual = 0
+        }
         def mensajes = messageHandlerService.getMensajes(actual)
-        if(mensajes.size()>0){
+        if (mensajes.size() > 0) {
             def json = new JsonBuilder(mensajes.reverse())
-           // println json.toPrettyString()
+            // println json.toPrettyString()
             render json
             return
         }
@@ -57,21 +60,19 @@ class PruebasController {
 
     }
 
-    def enviarMensaje(){
+    def enviarMensaje() {
         messageHandlerService.sendMensaje(params.mensaje)
         render "ok"
     }
 
 
-    def getInfoMensaje(){
-        println "params "+params
+    def getInfoMensaje() {
+        println "params " + params
         def p = Persona.findByLogin(params.user)
-        [personaInstance:p]
+        [personaInstance: p]
     }
 
-    def prueba(){
-
-
+    def prueba() {
 
         /*Chat chat2 = chatManager.createChat("test2" + "@" + "svt-pc");
         try {

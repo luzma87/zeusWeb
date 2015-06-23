@@ -17,7 +17,7 @@ class Persona {
     String tipo //policia | ciudadano
 
     static mapping = {
-        table 'ofuser'
+        table 'ofUser'
         cache usage: 'read-write', include: 'non-lazy'
         version false
         id generator: 'identity'
@@ -30,7 +30,7 @@ class Persona {
             password column: 'encryptedPassword'
             direccion column: 'direccion'
             creacion column: 'creationDate'
-            modificacion column: 'modificacionDate'
+            modificacion column: 'modificationDate'
 
         }
     }
@@ -39,7 +39,7 @@ class Persona {
         nombre(size: 1..100, nullable: true, blank: true)
         login(size: 1..100, nullable: false, blank: false, unique: true)
         cedula(size: 10..13, nullable: true, blank: true)
-        email(size: 10..13, nullable: true, blank: true)
+        email(size: 10..50, nullable: true, blank: true)
         password(size: 1..255, nullable: true, blank: true)
         direccion(size: 1..500, nullable: true, blank: true)
         longitud(nullable: true)

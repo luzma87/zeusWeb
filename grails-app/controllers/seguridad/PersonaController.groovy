@@ -182,6 +182,27 @@ class PersonaController {
     }
 
     /**
+     * Acción llamada con ajax que valida que no se duplique la propiedad cedula
+     * @render boolean que indica si se puede o no utilizar el valor recibido
+     */
+    def validar_unique_cedula_ajax() {
+        params.cedula = params.cedula.toString().trim()
+        if (params.id) {
+            def obj = Persona.get(params.id)
+            if (obj.cedula.toLowerCase() == params.cedula.toLowerCase()) {
+                render true
+                return
+            } else {
+                render Persona.countByCedulaIlike(params.login) == 0
+                return
+            }
+        } else {
+            render Persona.countByCedulaIlike(params.login) == 0
+            return
+        }
+    }
+
+    /**
      * Acción que muestra un formaulario para crear o modificar un elemento
      */
     def form() {

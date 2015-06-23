@@ -17,9 +17,9 @@ environments {
     development {
         dataSource {
             dbCreate = "update" // one of 'create', 'create-drop','update'
-            url = "jdbc:mysql://localhost/zeus?useUnicode=yes&characterEncoding=UTF-8"
+            url = "jdbc:mysql://167.114.144.175/zeus?useUnicode=yes&characterEncoding=UTF-8"
             username = "root"
-            password = "mysql"
+            password = "eldia2k"
         }
 
     }
@@ -32,7 +32,7 @@ environments {
     production {
         dataSource {
             dbCreate = "update" // one of 'create', 'create-drop','update'
-            url = "jdbc:mysql://localhost/zeus?useUnicode=yes&characterEncoding=UTF-8"
+            url = "jdbc:mysql://167.114.144.175/zeus?useUnicode=yes&characterEncoding=UTF-8"
             username = "root"
             password = "eldia2k"
         }

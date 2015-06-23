@@ -25,7 +25,7 @@
                     </div>
 
                     <div class="lzm-tab-body" style="background: white">
-                        <img class="img-login" src="${resource(dir: 'images', file: 'logo-login.png')}"/>
+                        <img class="img-login" src="${resource(dir: 'images', file: 'banner3.png')}"/>
 
                         <g:form name="frmLogin" action="validar">
                             <div class="input-group input-login">

@@ -3,6 +3,7 @@ package chat
 class Mensaje {
 
     PersonaGrupo personaGrupo
+    String tipo
     String mensaje
     Date fechaCreacion
     Date fechaEnvio
@@ -17,6 +18,7 @@ class Mensaje {
         sort fechaEnvio: "desc"
         columns {
             id column: "mnsj__id"
+            tipo column: 'mnsjtipo'
             personaGrupo column: "prgr__id"
             mensaje column: "mnsjmnsj"
             fechaCreacion column: "mnsjfccr"
