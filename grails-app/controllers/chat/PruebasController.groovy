@@ -25,7 +25,7 @@ class PruebasController extends Shield {
     def index() {
 
         XMPPTCPConnectionConfiguration config = XMPPTCPConnectionConfiguration.builder()
-                .setUsernameAndPassword("valentinsvt", "123456")
+                .setUsernameAndPassword("test4", "123456")
                 .setServiceName("vps44751.vps.ovh.ca")
                 .setHost("167.114.144.175")
                 .setPort(5222)
