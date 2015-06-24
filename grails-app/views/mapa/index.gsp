@@ -18,6 +18,35 @@
             var map, oms;
             var colores = {};
 
+            var markers = [];
+
+            function showPin(latitud, longitud, from, hora, title, image, clase) {
+                if (!isNaN(latitud) && !isNaN(longitud)) {
+                    console.log("show pin", latitud, longitud, from, hora, title, image, clase);
+                    %{--image = '${g.resource(dir: "images", file: "ping2.png")}';--}%
+                    var myLatlng = new gm.LatLng(latitud, longitud);
+                    var marker = new MarkerWithLabel({
+                        position     : myLatlng,
+                        map          : map,
+                        title        : title + ": " + hora,
+                        icon         : image,
+                        labelContent : title + " - " + from + "<br/>" + hora,
+                        labelAnchor  : new gm.Point(30, 55),
+                        labelClass   : "label-" + clase, // the CSS class for the label
+                        labelStyle   : {opacity : 0.90}
+                    });
+                    if (map) {
+                        map.setCenter(marker.getPosition());
+                        map.setZoom(17);
+                    }
+//                    gm.event.addListener(marker, 'idle', toggleBounce(marker));
+                    if (oms) {
+                        oms.addMarker(marker);
+                    }
+                    markers.push(marker)
+                }
+            }
+
             function toggleBounce(marker) {
                 if (marker.getAnimation() != null) {
                     marker.setAnimation(null);
@@ -41,11 +70,11 @@
                 };
                 map = new gm.Map(document.getElementById("googleMap"), mapProp);
 
-                oms = new OverlappingMarkerSpiderfier(map, {
-                    markersWontMove : true,
-                    markersWontHide : true,
-                    keepSpiderfied  : true
-                });
+//                oms = new OverlappingMarkerSpiderfier(map, {
+//                    markersWontMove : true,
+//                    markersWontHide : true,
+//                    keepSpiderfied  : true
+//                });
 
 //                oms.addListener('click', function (marker, event) {
 //                    if (marker.getAnimation() != null) {
@@ -54,6 +83,21 @@
 //                        marker.setAnimation(gm.Animation.BOUNCE);
 //                    }
 //                });
+
+                <g:each in="${tiposIncidencia}" var="d">
+                <g:set var="key" value="${d.key}"/>
+                <g:set var="icono" value="${d.value.icono}"/>
+                <g:set var="title" value="${d.value.title}"/>
+                <g:each in="${d.value.mensajes}" var="m">
+                var parts = "${m.body}".split(":");
+                var loc = parts[parts.length - 1];
+                loc = loc.split(",");
+                //            setTimeout(function () {
+                showPin(loc[0] * 1, loc[1] * 1, "${m.fromJID.split('@')[0]}", "${new Date(m.id).format('dd-MM-yyyy HH:mm')}", "${title}", "${icono}", "${key}");
+                //            }, 500);
+                </g:each>
+                </g:each>
+
             }
             gm.event.addDomListener(window, 'load', initialize);
         </script>
@@ -182,16 +226,42 @@
         }
 
         .label-emergencia, .label-loc, .label-asL, .label-acL, .label-ssL, .label-inL, .label-lbL {
-            color            : #ffffff;
-            background-color : #ff374d;
-            font-family      : "Lucida Grande", "Arial", sans-serif;
-            font-size        : 10px;
-            font-weight      : bolder;
-            text-align       : center;
-            padding          : 5px;
-            border           : 1px solid #fcf2ff;
-            border-radius    : 3px;
-            white-space      : nowrap;
+            color         : #000;
+            background    : #ff374d;
+            font-family   : "Lucida Grande", "Arial", sans-serif;
+            font-size     : 10px;
+            font-weight   : bolder;
+            text-align    : center;
+            padding       : 5px;
+            border        : 1px solid #fcf2ff;
+            border-radius : 3px;
+            white-space   : nowrap;
+        }
+
+        .label-asL {
+            background : #009688;
+            color      : #fff;
+        }
+
+        .label-acL {
+            background : #C2185B;
+        }
+
+        .label-ssL {
+            background : #FF5722;
+        }
+
+        .label-inL {
+            background : #D32F2F;
+        }
+
+        .label-lbL {
+            background : #FFC107;
+        }
+
+        .label-loc {
+            background : #4CAF50;
+            color      : #fff;
         }
         </style>
     </head>
@@ -205,48 +275,6 @@
         </div>
 
         <script type="text/javascript">
-            var markers = [];
-
-            function showPin(latitud, longitud, from, hora, title, image, clase) {
-                if (!isNaN(latitud) && !isNaN(longitud)) {
-                    console.log("show pin ubicacion: ", latitud, longitud, from, hora, title, image, clase);
-                    %{--image = '${g.resource(dir: "images", file: "ping2.png")}';--}%
-                    var myLatlng = new gm.LatLng(latitud, longitud);
-                    var marker = new MarkerWithLabel({
-                        position     : myLatlng,
-                        map          : map,
-                        title        : title + ": " + hora,
-                        icon         : image,
-                        labelContent : "Notificado por " + from,
-                        labelAnchor  : new gm.Point(30, 55),
-                        labelClass   : "label-" + clase, // the CSS class for the label
-                        labelStyle   : {opacity : 0.90}
-                    });
-                    if (map) {
-                        map.setCenter(marker.getPosition());
-                        map.setZoom(17);
-                    }
-//                    gm.event.addListener(marker, 'idle', toggleBounce(marker));
-                    if (oms) {
-                        oms.addMarker(marker);
-                    }
-                    markers.push(marker)
-                }
-            }
-
-            <g:each in="${tiposIncidencia}" var="d">
-            <g:set var="key" value="${d.key}"/>
-            <g:set var="icono" value="${d.value.icono}"/>
-            <g:set var="title" value="${d.value.title}"/>
-            <g:each in="${d.value.mensajes}" var="m">
-            var parts = "${m.body}".split(":");
-            var loc = parts[parts.length - 1];
-            loc = loc.split(",");
-            setTimeout(function () {
-                showPin(loc[0] * 1, loc[1] * 1, "${m.fromJID.split('@')[0]}", "${new Date(m.id).format('dd-MM-yyyy HH:mm')}", "${title}", "${icono}", "${key}");
-            }, 500);
-            </g:each>
-            </g:each>
 
         </script>
 

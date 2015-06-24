@@ -27,4 +27,8 @@ class Mensaje {
 
     static constraints = {
     }
+
+    String toString() {
+        return body
+    }
 }

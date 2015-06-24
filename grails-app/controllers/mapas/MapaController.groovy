@@ -20,7 +20,7 @@ class MapaController {
                 loc: [
                         mensajes: [],
                         icono   : resource(dir: 'images/pins', file: 'location32.png'),
-                        title   : "Ubicación"
+                        title   : "UbicaciÃ³n"
                 ],
                 asL: [
                         mensajes: [],
@@ -50,7 +50,7 @@ class MapaController {
                 loL: [
                         mensajes: [],
                         icono   : resource(dir: 'images/pins', file: 'location32.png'),
-                        title   : "Ubicación"
+                        title   : "Ubicaciï¿½n"
                 ]*/
         ]
 
@@ -64,7 +64,7 @@ class MapaController {
 
 //        println "ROOMS: " + room
 //        println "CONVS: " + conversaciones
-//        println "MENJS: " + tiposIncidencia
+        println "MENJS: " + tiposIncidencia
 
         return [tiposIncidencia: tiposIncidencia]
     }

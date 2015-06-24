@@ -3,23 +3,23 @@ package seguridad
 class LoginController {
 
     /**
-     * Acción que valida que la sesión esté activa
+     * AcciÃ³n que valida que la sesiÃ³n estÃ© activa
      */
     def validarSesion() {
         println "sesion creada el:" + new Date(session.getCreationTime()) + " hora actual: " + new Date()
-        println "último acceso:" + new Date(session.getLastAccessedTime()) + " hora actual: " + new Date()
+        println "Ãºltimo acceso:" + new Date(session.getLastAccessedTime()) + " hora actual: " + new Date()
 
         println session.usuario
         if (session.usuario) {
             render "OK"
         } else {
-            flash.message = "Su sesión ha caducado, por favor ingrese nuevamente."
+            flash.message = "Su sesiÃ³n ha caducado, por favor ingrese nuevamente."
             render "NO"
         }
     }
 
     /**
-     * Acción que muestra la pantalla de login
+     * AcciÃ³n que muestra la pantalla de login
      */
     def login() {
         def usu = session.usuario
@@ -35,7 +35,7 @@ class LoginController {
     }
 
     /**
-     * Acción que valida las credenciales de login. Si el usuario tiene un solo perfil, inicia directamente la sesión, sino muestra la pantalla de selección de perfil
+     * AcciÃ³n que valida las credenciales de login. Si el usuario tiene un solo perfil, inicia directamente la sesiÃ³n, sino muestra la pantalla de selecciÃ³n de perfil
      */
     def validar() {
         if (!params.user || !params.pass) {
@@ -64,7 +64,7 @@ class LoginController {
             println "PARM: " + params.pass.encodeAsMD5()
 
             if (params.pass.encodeAsMD5() != user.password) {
-                flash.message = "Contraseña incorrecta"
+                flash.message = "ContraseÃ±a incorrecta"
                 flash.tipo = "error"
                 flash.icon = "icon-warning"
                 session.usuario = null
@@ -79,7 +79,7 @@ class LoginController {
     }
 
     /**
-     * Función que hace el login: asigna el perfil y los permisos a la sesión y redirecciona a la pantalla de inicio
+     * FunciÃ³n que hace el login: asigna el perfil y los permisos a la sesiÃ³n y redirecciona a la pantalla de inicio
      * @param perfil
      * @return
      */
@@ -88,7 +88,7 @@ class LoginController {
     }
 
     /**
-     * Acción que termina la sesión y redirecciona a la pantalla de login
+     * AcciÃ³n que termina la sesiÃ³n y redirecciona a la pantalla de login
      */
     def logout() {
         session.usuario = null

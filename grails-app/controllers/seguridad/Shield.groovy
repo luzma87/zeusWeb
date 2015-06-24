@@ -7,8 +7,8 @@ class Shield {
 
     def beforeInterceptor = [action: this.&auth, except: 'login']
     /**
-     * Verifica si se ha iniciado una sesión
-     * Verifica si el usuario actual tiene los permisos para ejecutar una acción
+     * Verifica si se ha iniciado una sesiÃ³n
+     * Verifica si el usuario actual tiene los permisos para ejecutar una acciÃ³n
      */
     def auth() {
         /** **************************************************************************/
