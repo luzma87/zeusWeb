@@ -289,7 +289,9 @@
                     map.setZoom(17);
                 }
                 gm.event.addListener(marker, 'idle', toggleBounce(marker));
-                oms.addMarker(marker);
+                if (oms) {
+                    oms.addMarker(marker);
+                }
                 markers.push(marker)
             }
             function appendMensaje(val) {

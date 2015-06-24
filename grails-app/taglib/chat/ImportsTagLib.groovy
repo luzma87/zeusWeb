@@ -106,8 +106,8 @@ class ImportsTagLib {
         text += imp.css(src: resource(dir: 'js/jquery-ui-1.11.2', file: 'jquery-ui.theme.min.css'))
         // MFizz
         text += imp.css(src: resource(dir: 'fonts/font-mfizz-1.2', file: 'font-mfizz.css'))
-        // Flaticons construction
-        text += imp.css(src: resource(dir: 'fonts/flaticons-construction', file: 'flaticon.css'))
+        // Flaticons pins
+        text += imp.css(src: resource(dir: 'fonts/flaticons-pins', file: 'flaticon.css'))
         // FontAwesome
         text += imp.css(src: resource(dir: 'fonts/font-awesome-4.3.0/css', file: 'font-awesome.min.css'))
 

@@ -17,7 +17,7 @@ import seguridad.Persona
 import seguridad.Shield
 
 
-class PruebasController extends Shield {
+class PruebasController {
 
     def messageHandlerService
     static scope = "session"

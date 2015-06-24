@@ -6,6 +6,7 @@ import org.jivesoftware.smack.ConnectionConfiguration
 import org.jivesoftware.smack.tcp.XMPPTCPConnection
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration
 import seguridad.Persona
+import seguridad.Shield
 
 class ChatController {
 
