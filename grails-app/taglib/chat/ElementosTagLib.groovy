@@ -323,7 +323,7 @@ class ElementosTagLib {
 
         def defaultFormat = "dd-MM-YYYY"
         if (showTime) {
-            defaultFormat += " hh:mm"
+            defaultFormat += " HH:mm"
         }
 
         def format = attrs.format ?: defaultFormat
