@@ -22,10 +22,10 @@
 
             function showPin(latitud, longitud, from, hora, title, image, clase) {
                 if (!isNaN(latitud) && !isNaN(longitud)) {
-                    console.log("show pin", latitud, longitud, from, hora, title, image, clase);
+//                    console.log("show pin", latitud, longitud, from, hora, title, image, clase);
                     %{--image = '${g.resource(dir: "images", file: "ping2.png")}';--}%
                     var myLatlng = new gm.LatLng(latitud, longitud);
-                    var marker = new MarkerWithLabel({
+                    var marker = new gm.Marker({
                         position     : myLatlng,
                         map          : map,
                         title        : title + ": " + hora,
@@ -70,11 +70,11 @@
                 };
                 map = new gm.Map(document.getElementById("googleMap"), mapProp);
 
-//                oms = new OverlappingMarkerSpiderfier(map, {
-//                    markersWontMove : true,
-//                    markersWontHide : true,
-//                    keepSpiderfied  : true
-//                });
+                oms = new OverlappingMarkerSpiderfier(map, {
+                    markersWontMove : true,
+                    markersWontHide : true,
+                    keepSpiderfied  : true
+                });
 
 //                oms.addListener('click', function (marker, event) {
 //                    if (marker.getAnimation() != null) {
