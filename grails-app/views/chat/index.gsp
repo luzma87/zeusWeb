@@ -5,6 +5,7 @@
         <script src="http://maps.googleapis.com/maps/api/js"></script>
         <imp:js src="${g.resource(dir: 'js', file: 'markerwithlabel.js')}"/>
         <imp:js src="${g.resource(dir: 'js/plugins/jquery.xcolor', file: 'jquery.xcolor.min.js')}"/>
+        <imp:js src="${g.resource(dir: 'js/plugins/ion.sound-3.0.4', file: 'ion.sound.min.js')}"/>
         <imp:js src="${g.resource(dir: 'js/plugins/OverlappingMarkerSpiderfier/js', file: 'oms.min.js')}"/>
         <script>
             var gm = google.maps;
@@ -195,7 +196,8 @@
                 <g:each in="${botones}" var="boton">
                     <g:set var="btn" value="${boton.value}"/>
                     <g:if test="${btn.title}">
-                        <a href="#" class="btn ${btn.clase} btn-utils" title="${btn.title}" id="${boton.key}">
+                        <a href="#" class="btn ${btn.clase} btn-utils" title="${btn.title}"
+                           id="${boton.key}" data-prefijo="${btn.prefijo}">
                             <i class="fa ${btn.icon} fa-2x"></i>
                         </a>
                     </g:if>
@@ -312,7 +314,6 @@
                     container.append(div);
                     $mensajes.append(container);
                 } else {
-
                     if (!colores[val.de]) {
                         var cl = $.xcolor.random();
                         colores[val.de] = {
@@ -331,6 +332,7 @@
                     $mensajes.append(container);
                 }
                 //div.click(infoMensaje)
+
                 div.qtip({
                     content  : {
                         title : "Información del usuario",
@@ -359,6 +361,11 @@
                     },
                     hide     : 'unfocus'
                 });
+                if (val.de == user) {
+                    ion.sound.play("s1");
+                } else {
+                    ion.sound.play("s2");
+                }
             }
 
             function showMensajes() {
@@ -409,51 +416,97 @@
 
             startInterval();
 
-            $("#enviar").click(function () {
-                var texto = "mns:" + $mensajeTxt.val();
-                if ($.trim(texto) != "") {
-                    $.ajax({
-                        type    : "POST",
-                        url     : "${g.createLink(controller: 'chat',action: 'enviarMensaje')}",
-                        data    : "mensaje=" + $mensajeTxt.val(),
-                        success : function (msg) {
-                            $mensajeTxt.val("");
-                            $mensajeTxt.html("");
-                            startInterval();
+            $(function () {
+
+                // init bunch of sounds
+                ion.sound({
+                    sounds : [
+                        {
+                            alias : "s1",
+                            name  : "tap"
+                        },
+                        {
+                            alias : "s2",
+                            name  : "door_bell"
                         }
-                    });
-                    return false
-                }
-            });
-            $mensajeTxt.keydown(function (ev) {
-                if (ev.keyCode == 13) {
-                    var texto = $mensajeTxt.val();
+                    ],
+
+                    // main config
+                    path      : "${resource(dir:'js/plugins/ion.sound-3.0.4/sounds')}/",
+                    preload   : true,
+                    multiplay : true,
+                    volume    : 1,
+
+                    ready_callback : function (obj) {
+//                    obj.name;     // File name
+//                    obj.alias;    // Alias (if set)
+//                    obj.ext;      // File .ext
+//                    obj.duration; // Seconds
+
+                        console.log("READY");
+                    },
+                    ended_callback : function (obj) {
+//                    obj.name;     // File name
+//                    obj.alias;    // Alias (if set)
+//                    obj.part;     // Part (if sprite)
+//                    obj.start;    // Start time (sec)
+//                    obj.duration; // Seconds
+
+                        console.log("ENDED");
+                    }
+                });
+                $("#enviar").click(function () {
+                    var texto = "msg:" + $mensajeTxt.val();
                     if ($.trim(texto) != "") {
                         $.ajax({
                             type    : "POST",
                             url     : "${g.createLink(controller: 'chat',action: 'enviarMensaje')}",
-                            data    : "mensaje=" + $mensajeTxt.val(),
+                            data    : {
+                                mensaje : texto
+                            },
                             success : function (msg) {
                                 $mensajeTxt.val("");
                                 $mensajeTxt.html("");
+                                startInterval();
                             }
                         });
                         return false
                     }
-                }
-                return true;
-            });
-            $(".btn-utils").click(function () {
-                $.ajax({
-                    type    : "POST",
-                    url     : "${g.createLink(controller: 'chat',action: 'enviarMensaje')}",
-                    data    : "mensaje=" + $(this).attr("title"),
-                    success : function (msg) {
-                        $mensajeTxt.val("");
-                        $mensajeTxt.html("");
-                    }
                 });
-                return false
+                $mensajeTxt.keydown(function (ev) {
+                    if (ev.keyCode == 13) {
+                        var texto = "msg:" + $mensajeTxt.val();
+                        if ($.trim(texto) != "") {
+                            $.ajax({
+                                type    : "POST",
+                                url     : "${g.createLink(controller: 'chat',action: 'enviarMensaje')}",
+                                data    : {
+                                    mensaje : texto
+                                },
+                                success : function (msg) {
+                                    $mensajeTxt.val("");
+                                    $mensajeTxt.html("");
+                                }
+                            });
+                            return false
+                        }
+                    }
+                    return true;
+                });
+                $(".btn-utils").click(function () {
+                    $.ajax({
+                        type    : "POST",
+                        url     : "${g.createLink(controller: 'chat',action: 'enviarMensaje')}",
+                        data    : {
+                            mensaje : $(this).data("prefijo") + ":" + $(this).attr("title")
+                        },
+                        success : function (msg) {
+                            $mensajeTxt.val("");
+                            $mensajeTxt.html("");
+                        }
+                    });
+                    return false
+                });
             });
         </script>
     </body>

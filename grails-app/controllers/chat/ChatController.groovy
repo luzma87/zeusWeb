@@ -47,24 +47,28 @@ class ChatController {
 
         def botones = [
                 unidades  : [
-                        clase: "btn-warning",
-                        title: "Avanzan unidades",
-                        icon : "fa-motorcycle"
+                        clase  : "btn-warning",
+                        prefijo: "und",
+                        title  : "Avanzan unidades",
+                        icon   : "fa-motorcycle"
                 ],
                 sospechoso: [
-                        clase: "btn-danger",
-                        title: "Sospechoso detenido",
-                        icon : "fa-child"
+                        clase  : "btn-danger",
+                        prefijo: "ssd",
+                        title  : "Sospechoso detenido",
+                        icon   : "fa-child"
                 ],
                 falsa     : [
-                        clase: "btn-primary",
-                        title: "Falsa alarma",
-                        icon : "fa-times"
+                        clase  : "btn-primary",
+                        prefijo: "fls",
+                        title  : "Falsa alarma",
+                        icon   : "fa-times"
                 ],
                 novedad   : [
-                        clase: "btn-success",
-                        title: "Sin novedad",
-                        icon : "fa-check"
+                        clase  : "btn-success",
+                        prefijo: "snn",
+                        title  : "Sin novedad",
+                        icon   : "fa-check"
                 ],
                 comunidad : [:]
         ]
