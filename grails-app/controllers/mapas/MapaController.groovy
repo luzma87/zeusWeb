@@ -16,41 +16,43 @@ class MapaController {
         def conversaciones = Conversacion.findAllByRoomIlike("%" + room.name + "%")
 //        def mensajes = Mensaje.findAllByConversacionInList(conversacion
 
+        def folder = "32px_bubble"
+
         def tiposIncidencia = [
                 loc: [
                         mensajes: [],
-                        icono   : resource(dir: 'images/pins', file: 'location32.png'),
+                        icono   : resource(dir: 'images/pins/'+folder, file: 'location32.png'),
                         title   : "Ubicación"
                 ],
                 asL: [
                         mensajes: [],
-                        icono   : resource(dir: 'images/pins', file: 'thief1.png'),
+                        icono   : resource(dir: 'images/pins/'+folder, file: 'thief1.png'),
                         title   : "Asalto"
                 ],
                 acL: [
                         mensajes: [],
-                        icono   : resource(dir: 'images/pins', file: 'cars1.png'),
+                        icono   : resource(dir: 'images/pins/'+folder, file: 'cars1.png'),
                         title   : "Accidente"
                 ],
                 ssL: [
                         mensajes: [],
-                        icono   : resource(dir: 'images/pins', file: 'businessman205.png'),
+                        icono   : resource(dir: 'images/pins/'+folder, file: 'businessman205.png'),
                         title   : "Sospechoso"
                 ],
                 inL: [
                         mensajes: [],
-                        icono   : resource(dir: 'images/pins', file: 'bill7.png'),
+                        icono   : resource(dir: 'images/pins/'+folder, file: 'bill7.png'),
                         title   : "Intruso"
                 ],
                 lbL: [
                         mensajes: [],
-                        icono   : resource(dir: 'images/pins', file: 'healthyfood1.png'),
+                        icono   : resource(dir: 'images/pins/'+folder, file: 'healthyfood1.png'),
                         title   : "Libadores"
                 ]/*,
                 loL: [
                         mensajes: [],
-                        icono   : resource(dir: 'images/pins', file: 'location32.png'),
-                        title   : "Ubicaci�n"
+                        icono   : resource(dir: 'images/pins/'+folder, file: 'location32_color.png'),
+                        title   : "Ubicación"
                 ]*/
         ]
 
@@ -64,7 +66,7 @@ class MapaController {
 
 //        println "ROOMS: " + room
 //        println "CONVS: " + conversaciones
-        println "MENJS: " + tiposIncidencia
+//        println "MENJS: " + tiposIncidencia
 
         return [tiposIncidencia: tiposIncidencia]
     }

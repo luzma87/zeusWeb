@@ -17,7 +17,7 @@
             var gm = google.maps;
             var map, oms;
             var colores = {};
-
+            var infowindow;
             var markers = [];
 
             function showPin(latitud, longitud, from, hora, title, image, clase) {
@@ -25,11 +25,30 @@
 //                    console.log("show pin", latitud, longitud, from, hora, title, image, clase);
                     %{--image = '${g.resource(dir: "images", file: "ping2.png")}';--}%
                     var myLatlng = new gm.LatLng(latitud, longitud);
+
+                    // Marker sizes are expressed as a Size of X,Y
+                    // where the origin of the image (0,0) is located
+                    // in the top left of the image.
+
+                    // Origins, anchor positions and coordinates of the marker
+                    // increase in the X direction to the right and in
+                    // the Y direction down.
+                    var img = {
+                        url    : image,
+                        // This marker is 20 pixels wide by 32 pixels tall.
+                        size   : new google.maps.Size(32, 32),
+                        // The origin for this image is 0,0.
+                        origin : new google.maps.Point(0, 0),
+                        // The anchor for this image is the base of the flagpole at 0,32.
+                        anchor : new google.maps.Point(16, 32)
+                    };
+
                     var marker = new gm.Marker({
                         position     : myLatlng,
+//                        draggable    : true,
                         map          : map,
                         title        : title + ": " + hora,
-                        icon         : image,
+                        icon         : img,
                         labelContent : title + " - " + from + "<br/>" + hora,
                         labelAnchor  : new gm.Point(30, 55),
                         labelClass   : "label-" + clase, // the CSS class for the label
@@ -39,6 +58,12 @@
                         map.setCenter(marker.getPosition());
                         map.setZoom(17);
                     }
+
+                    oms.addListener('click', function (marker, event) {
+                        infowindow.setContent(marker.labelContent);
+                        infowindow.open(map, marker);
+                    });
+
 //                    gm.event.addListener(marker, 'idle', toggleBounce(marker));
                     if (oms) {
                         oms.addMarker(marker);
@@ -76,12 +101,17 @@
                     keepSpiderfied  : true
                 });
 
+                infowindow = new gm.InfoWindow({
+                    content : "DUMMY"
+                });
+
 //                oms.addListener('click', function (marker, event) {
-//                    if (marker.getAnimation() != null) {
-//                        marker.setAnimation(null);
-//                    } else {
-//                        marker.setAnimation(gm.Animation.BOUNCE);
-//                    }
+//                    infowindow.open(map, marker);
+////                    if (marker.getAnimation() != null) {
+////                        marker.setAnimation(null);
+////                    } else {
+////                        marker.setAnimation(gm.Animation.BOUNCE);
+////                    }
 //                });
 
                 <g:each in="${tiposIncidencia}" var="d">
