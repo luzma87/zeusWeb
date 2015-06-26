@@ -1,0 +1,59 @@
+@font-face {
+    font-family : "Flaticon";
+    src         : url("flaticon.eot");
+    src         : url("flaticon.eot#iefix") format("embedded-opentype"),
+    url("flaticon.woff") format("woff"),
+    url("flaticon.ttf") format("truetype"),
+    url("flaticon.svg") format("svg");
+    font-weight : normal;
+    font-style  : normal;
+}
+
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {
+    font-family            : Flaticon;
+    /*font-size   : 20px;*/
+    /*font-style  : normal;*/
+    /*margin-left : 20px;*/
+    font-style             : normal;
+    font-weight            : normal;
+    font-variant           : normal;
+    text-transform         : none;
+    line-height            : 1;
+    -webkit-font-smoothing : antialiased;
+    display                : inline-block;
+    text-decoration        : inherit;
+
+}
+
+.flaticon-car24:before {
+    content : "\e000";
+}
+
+.flaticon-extinguisher7:before {
+    content : "\e001";
+}
+
+.flaticon-fuel14:before {
+    content : "\e002";
+}
+
+.flaticon-fuel15:before {
+    content : "\e003";
+}
+
+.flaticon-fuel2:before {
+    content : "\e004";
+}
+
+.flaticon-gas11:before {
+    content : "\e005";
+}
+
+.flaticon-gps5:before {
+    content : "\e006";
+}
+
+.flaticon-leaves3:before {
+    content : "\e007";
+}

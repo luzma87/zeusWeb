@@ -1,95 +1,138 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: luz
-  Date: 12/12/14
-  Time: 12:15 PM
---%>
-
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
-    <head>
-        <meta name="layout" content="no-menu">
-        <title>Entrada</title>
-        <link href="${resource(dir: 'css', file: 'login.css')}" rel="stylesheet"/>
-    </head>
-
-    <body>
-
-        <elm:message tipo="error" contenido="${flash.message}"/>
-
-        <div class="row">
-            <div class="col-md-3 col-md-offset-9 col-sm-5 col-xs-5 col-xs-offset-7">
-                <div class="lzm-tab lzm-tab-left lzm-tab-primary " style="background: none">
-                    <div class="lzm-tab-heading" style="background: none">
-                        <a href="#" class="selected">Entrada</a>
+<head>
+    <title>Inicio</title>
+    <meta name="layout" content="login" />
+</head>
+<body>
+<div class="row" style="margin-top: 20px;">
+    <div class="col-md-12" >
+        <div class="panel-completo" style="height: auto;min-height: 10px">
+            <div class="row">
+                <div class="col-md-12" style="position: relative" >
+                    <img src="${resource(dir:'images/favicons',file: 'apple-touch-icon-60x60.png')}">
+                    <span style="color: #006EB7">Petroleos y Servicios</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" style="margin-top: 20px;padding: 20px">
+    <div class="col-md-4 col-md-offset-1">
+        <div class="panel-completo" style="height: 338px">
+            <div class="row">
+                <div class="col-md-12 titulo-panel" style="position: relative">
+                    Petroleos y Servicios - Sistema contable
+                </div>
+            </div>
+            <div class="row fila">
+                <div class="col-md-12">
+                    <h1 style="margin-top: 0px">Ingreso al sistema</h1>
+                </div>
+            </div>
+            <div class="row fila">
+                <div class="col-md-12">
+                    <label>Usuario:</label>
+                </div>
+            </div>
+            <div class="row fila">
+                <div class="col-md-12">
+                    <input type="text" class="form-control" placeholder="Ingrese su usuario">
+                </div>
+            </div>
+            <div class="row fila">
+                <div class="col-md-12">
+                    <label>Contraseña:</label>
+                </div>
+            </div>
+            <div class="row fila">
+                <div class="col-md-12">
+                    <input type="password" class="form-control" placeholder="Ingrese su contraseña">
+                </div>
+            </div>
+            <div class="row fila">
+                <div class="col-md-12 text-right">
+                    <a href="#" class="btn btn-verde">
+                        <i class="fa fa-sign-in"></i> Ingresar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 ">
+        <div class="panel-completo">
+            <div class="row">
+                <div class="col-md-12 titulo-panel">
+                    Otros sistemas PyS
+                </div>
+            </div>
+            <div class="row fila">
+                <div class="col-md-12">
+                    <div class="card-verde">
+                        <div class="row fila">
+                            <div class="col-xs-4">
+                                <i class="fa fa-cubes fa-3x"></i>
+                            </div>
+                            <div class="col-xs-8 text-right">
+                                <h1 style="margin-top: 0px">Esicc</h1>
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="lzm-tab-body" style="background: white">
-                        <img class="img-login" src="${resource(dir: 'images', file: 'banner3.png')}"/>
-
-                        <g:form name="frmLogin" action="validar">
-                            <div class="input-group input-login">
-                                <g:textField name="user" autocomplete="off" class="form-control required noEspacios" placeholder="Usuario"/>
-                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                </div>
+            </div>
+            <div class="row fila">
+                <div class="col-md-12">
+                    <div class="card-verde">
+                        <div class="row fila">
+                            <div class="col-xs-4">
+                                <i class="fa fa-dashboard fa-3x"></i>
                             </div>
-
-                            <div class="input-group input-login">
-                                <g:passwordField name="pass" class="form-control required" placeholder="Contraseña"/>
-                                <span class="input-group-addon"><i class="fa fa-unlock-alt"></i></span>
+                            <div class="col-xs-8 text-right">
+                                <h1 style="margin-top: 0px">Dashboard</h1>
                             </div>
-
-                            <div class="text-right">
-                                <a href="#" id="btn-login" class="btn btn-primary">
-                                    Validar <i class="fa fa-unlock"></i>
-                                </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row fila">
+                <div class="col-md-12">
+                    <div class="card-verde">
+                        <div class="row fila">
+                            <div class="col-xs-4">
+                                <i class="fa fa-file fa-3x"></i>
                             </div>
-                        </g:form>
+                            <div class="col-xs-8 text-right">
+                                <h1 style="margin-top: 0px">Facturación</h1>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="col-md-3 ">
+        <div class="panel-completo" style="height: 338px">
+            <div class="row">
+                <div class="col-md-12 titulo-panel">
+                    Otra iformación
+                </div>
+            </div>
+            <div class="row fila">
+                <div class="col-md-12">
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sollicitudin enim sapien,
+                        vel efficitur justo semper in. Nunc rhoncus leo non vestibulum eleifend. Duis faucibus,
+                        sem nec convallis efficitur, eros lectus efficitur ex, eget pharetra velit dolor eget ipsum.
+                        Vestibulum a placerat neque. Nullam sit amet nulla tempus, pulvinar dolor vitae, maximus augue.
+                        Sed purus mi, auctor et nisl ut, pharetra ornare metus. Phasellus commodo arcu sit amet enim eleifend
+                        rutrum. Aliquam ac efficitur tortor. Donec sit amet augue eu tellus vulputate condimentum id quis nunc.
+                    </p>
+                </div>
+            </div>
 
-        <script type="text/javascript">
-            var $frm = $("#frmLogin");
-            function doLogin() {
-                if ($frm.valid()) {
-                    $("#btn-login").replaceWith(spinner);
-                    $frm.submit();
-                }
-            }
+        </div>
+    </div>
+</div>
 
-            $(function () {
-                $("#user").focus();
-
-                $frm.validate({
-//                    validClass    : "text-success",
-                    errorClass     : "text-danger",
-                    errorPlacement : function (error, element) {
-                        if (element.parent().hasClass("input-group")) {
-                            error.insertAfter(element.parent());
-                        } else {
-                            error.insertAfter(element);
-                        }
-                        console.log("error ", error, element, element.parents(".input-group"));
-                        element.parents(".input-group").addClass('has-error');
-                    }/*,
-                     success       : function (label) {
-                     console.log("success ", label, label.parents(".input-group"));
-                     label.hide();
-                     label.prev().removeClass('has-error').addClass("has-success");
-                     }*/
-                });
-                $("#btn-login").click(function () {
-                    doLogin();
-                });
-                $frm.find("input").keyup(function (ev) {
-                    if (ev.keyCode == 13) {
-                        doLogin();
-                    }
-                })
-            });
-
-        </script>
-
-    </body>
+</body>
 </html>

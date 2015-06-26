@@ -3,6 +3,34 @@ package chat
 class MenuTagLib {
     static namespace = 'mn'
 
+
+    def barraTop = {attrs->
+        def titulo = attrs['titulo']
+        def html = '<nav class="default navbar">\n' +
+                '    <div class="row">\n' +
+                '        <div class="col-md-1 col-xs-2 col-sm-1" style="width: 50px">\n' +
+                '            <a href="#" class="btn btn-verde " id="control-menu">\n' +
+                '                <i class="fa fa-bars"></i>\n' +
+                '            </a>\n' +
+                '        </div>\n' +
+
+                '        <div class="col-md-9 titulo hidden-sm hidden-xs ">\n' +titulo+
+                '        </div>\n' +
+                '        <div class="col-md-1 hidden-xs" style="width: 50px;margin-top: 10px">\n' +
+                '            <a href="#" class="item" title="Alertas" >\n' +
+                '                <i class="fa fa-bell"></i>\n' +
+                '            </a>\n' +
+                '        </div>\n' +
+                '        <div class="col-md-1 col-xs-2 col-sm-2 " style="margin-top: 10px">\n' +
+                '            <a href="#" class="item" >\n' +
+                '                <i class="fa fa-sign-out"></i> Salir\n' +
+                '            </a>\n' +
+                '        </div>\n' +
+                '    </div>\n' +
+                '</nav>'
+        out<< html
+    }
+
     def stickyFooter = { attrs ->
         def html = ""
         html += "<footer class='footer ${attrs['class']}'>"

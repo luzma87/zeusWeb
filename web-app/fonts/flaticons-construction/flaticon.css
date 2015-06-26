@@ -1,0 +1,167 @@
+@font-face {
+    font-family : "Flaticon";
+    src         : url("flaticon.eot");
+    src         : url("flaticon.eot#iefix") format("embedded-opentype"),
+    url("flaticon.woff") format("woff"),
+    url("flaticon.ttf") format("truetype"),
+    url("flaticon.svg") format("svg");
+    font-weight : normal;
+    font-style  : normal;
+}
+
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {
+    font-family            : Flaticon;
+    /*font-size   : 20px;*/
+    /*font-style  : normal;*/
+    /*margin-left : 20px;*/
+    font-style             : normal;
+    font-weight            : normal;
+    font-variant           : normal;
+    text-transform         : none;
+    line-height            : 1;
+    -webkit-font-smoothing : antialiased;
+    display                : inline-block;
+    text-decoration        : inherit;
+
+}
+
+.flaticon-architecture1:before {
+    content : "\e000";
+}
+
+.flaticon-attention1:before {
+    content : "\e001";
+}
+
+.flaticon-barrow:before {
+    content : "\e002";
+}
+
+.flaticon-bricks3:before {
+    content : "\e003";
+}
+
+.flaticon-cement:before {
+    content : "\e004";
+}
+
+.flaticon-concrete:before {
+    content : "\e005";
+}
+
+.flaticon-construction10:before {
+    content : "\e006";
+}
+
+.flaticon-construction11:before {
+    content : "\e007";
+}
+
+.flaticon-construction12:before {
+    content : "\e008";
+}
+
+.flaticon-construction14:before {
+    content : "\e009";
+}
+
+.flaticon-construction15:before {
+    content : "\e00a";
+}
+
+.flaticon-construction16:before {
+    content : "\e00b";
+}
+
+.flaticon-construction17:before {
+    content : "\e00c";
+}
+
+.flaticon-construction3:before {
+    content : "\e00d";
+}
+
+.flaticon-construction4:before {
+    content : "\e00e";
+}
+
+.flaticon-constructor2:before {
+    content : "\e00f";
+}
+
+.flaticon-constructor4:before {
+    content : "\e010";
+}
+
+.flaticon-crane2:before {
+    content : "\e011";
+}
+
+.flaticon-crane8:before {
+    content : "\e012";
+}
+
+.flaticon-forklift3:before {
+    content : "\e013";
+}
+
+.flaticon-hammer42:before {
+    content : "\e014";
+}
+
+.flaticon-handy:before {
+    content : "\e015";
+}
+
+.flaticon-nail3:before {
+    content : "\e016";
+}
+
+.flaticon-power30:before {
+    content : "\e017";
+}
+
+.flaticon-rounded45:before {
+    content : "\e018";
+}
+
+.flaticon-screw4:before {
+    content : "\e019";
+}
+
+.flaticon-screw5:before {
+    content : "\e01a";
+}
+
+.flaticon-toolbox3:before {
+    content : "\e01b";
+}
+
+.flaticon-triangular45:before {
+    content : "\e01c";
+}
+
+.flaticon-triangular46:before {
+    content : "\e01d";
+}
+
+.flaticon-truck27:before {
+    content : "\e01e";
+}
+
+.flaticon-truck29:before {
+    content : "\e01f";
+}
+
+.flaticon-truck30:before {
+    content : "\e020";
+}
+
+.flaticon-two195:before {
+    content : "\e021";
+}
+
+.flaticon-worker5:before {
+    content : "\e022";
+}

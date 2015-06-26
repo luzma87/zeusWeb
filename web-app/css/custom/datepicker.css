@@ -1,7 +1,14 @@
-/*.datepicker th {*/
-/*background : inherit !important;*/
-/*color      : inherit !important;*/
-/*}*/
+.datepicker th {
+    background : #19AA8D !important;
+    color      : #ffffff !important;
+    border-radius: 0px;
+}
+.datepicker table {
+    margin-top: -5px;
+}
+.day{
+    color: #000000;
+}
 
 /*.datepicker-dropdown {*/
 /*background-color : #efefef !important;*/
@@ -11,30 +18,30 @@
 /*.datepicker {*/
 /*z-index : 9999;*/
 /*}*/
+/*
+.bootstrap-datetimepicker-widget {
+    font-size : 14px;
+}
 
-/*.bootstrap-datetimepicker-widget {*/
-    /*font-size : 14px;*/
-/*}*/
+.bootstrap-datetimepicker-widget td.day {
+    height      : 15px;
+    line-height : 15px;
+    width       : 15px;
+}
 
-/*.bootstrap-datetimepicker-widget td.day {*/
-    /*height      : 15px;*/
-    /*line-height : 15px;*/
-    /*width       : 15px;*/
-/*}*/
+.bootstrap-datetimepicker-widget .timepicker-hour,
+.bootstrap-datetimepicker-widget .timepicker-minute,
+.bootstrap-datetimepicker-widget .timepicker-second {
+    width     : 25px;
+    font-size : 15px;
+}
 
-/*.bootstrap-datetimepicker-widget .timepicker-hour,*/
-/*.bootstrap-datetimepicker-widget .timepicker-minute,*/
-/*.bootstrap-datetimepicker-widget .timepicker-second {*/
-    /*width     : 25px;*/
-    /*font-size : 15px;*/
-/*}*/
+.bootstrap-datetimepicker-widget td, .bootstrap-datetimepicker-widget td span {
+    height      : 25px;
+    line-height : 25px;
+    width       : 25px;
+}
 
-/*.bootstrap-datetimepicker-widget td, .bootstrap-datetimepicker-widget td span {*/
-    /*height      : 25px;*/
-    /*line-height : 25px;*/
-    /*width       : 25px;*/
-/*}*/
-
-/*.timepicker-picker table {*/
-    /*margin-top : 30px;*/
-/*}*/
+.timepicker-picker table {
+    margin-top : 30px;
+}*/

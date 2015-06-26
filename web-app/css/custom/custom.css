@@ -1,148 +1,219 @@
-body {
-    color          : #444;
-    padding-top    : 85px;
-    padding-bottom : 30px;
+body{
+
+    background-color:#2F4050;
+    color: #ffffff;
+    padding: 0px !important;
+    margin: 0px !important;
+    /*font-size: 11px !important;*/
+}
+.menu{
+    width: 190px;
+    color: #ffffff;
+    background-color: transparent;
+    position: absolute;
 }
 
-.container {
-    /*background : #ededed;*/
-    /*border-left  : solid 1px #555;*/
-    /*border-right : solid 1px #555;*/
+.contenido{
+    background: #F3F3F4;
+    min-height: 1200px;
+    margin: 0px;
+    margin-left: 190px;
+    padding-left: 15px;
+    padding-right: 15px;
+    color: #676A6C;
+    border-left: 3px solid #E7EAEC;
+}
+.default{
+    background: #EFEFF0;
+    margin-left: -3px;
+    padding-left: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    min-height: 30px;
+    margin-bottom: 15px;
+    color: #A1ACBE !important;
+    border-radius: 0px;
+    margin-left: -15px;
+}
+.buscar-header{
+    background: transparent;
+    border: none;
+    box-shadow: none;
 }
 
-.show-label {
-    font-weight : bold;
+.titulo{
+    text-align: center;
+    font-size: 18px;
+    color: #8B8888;
+    margin-top: 5px;
+}
+.default a.item{
+    color: #8c96a8 !important;
+}
+.submenu{
+    display: none;
+    list-style: none;
+}
+.submenu a{
+    width: 100%;
+}
+.menu-vertical ul{
+    padding: 0px;
+    padding-bottom: 5px;
+    padding-left: 20px;
+    /*padding: 20px;*/
+}
+.menu-vertical li{
+    padding: 15px;
+    padding-left: 0px;
+    color: #8095A8;
+    font-weight: normal;
+    cursor: pointer;
+}
+.menu-item.active{
+    color: #fff;
+    background: #293846;
+    border-left: 3px  solid #19AA8D;
+}
+.menu-item:hover{
+    color: #fff;
+    background: #293846;
+}
+.menu a{
+    text-decoration: none;
+    background: transparent;
+    color: #8095A8;
+    padding: 0px;
+    margin: 0px;
+}
+.menu a.active{
+    text-decoration: none;
+    background: transparent;
+    color: #fff;
+}
+.menu a:hover{
+    text-decoration: none;
+    background: #293846 !important;
+    color: #fff;
+}
+.menu a:focus{
+    text-decoration: none;
+    background: #293846 !important;
+    color: #fff;
+    border: none !important;
 }
 
-.toolbar {
-    margin-bottom : 10px;
+.info-user{
+    height: 170px;
+    position: relative;
+    cursor: default !important;
 }
-
-/* para los iconos grandotes */
-.fa-6x {
-    font-size : 6em;
-}
-
-.fa-1_5x {
-    font-size : 1.2em;
-}
-
-/* el mensaje de not found */
-.not-found {
-    height     : 110px;
-    margin-top : 25px;
-}
-
-.not-found > i {
-    margin-right : 10px;
-    margin-left  : 20px;
-}
-
-.not-found > p {
-    line-height : 75px;
-    font-size   : 20px;
-    font-weight : bold;
-}
-
-.hasCountdown {
-    border-color     : #1260B3 !important;
-    color            : #1260B3 !important;
-    background-color : #FFAB19;
-}
-
-.col2 {
-    -moz-column-count    : 2; /* Firefox */
-    -webkit-column-count : 2; /* Safari and Chrome */
-    column-count         : 2;
-}
-
-.col3 {
-    -moz-column-count    : 3; /* Firefox */
-    -webkit-column-count : 3; /* Safari and Chrome */
-    column-count         : 3;
-}
-
-.col4 {
-    -moz-column-count    : 4; /* Firefox */
-    -webkit-column-count : 4; /* Safari and Chrome */
-    column-count         : 4;
-}
-
-.form-group, .grupo {
-    -webkit-column-break-inside : avoid;
-    -moz-column-break-inside    : avoid;
-    -o-column-break-inside      : avoid;
-    -ms-column-break-inside     : avoid;
-    column-break-inside         : avoid;
-}
-
-.keeptogether {
-    display : inline-block;
-    width   : 100%;
-}
-
-.iconMargin {
-    margin-right : 10px;
-}
-
-.found, .highlight {
-    background-color : #157AB5;
-    color            : #F5F5F5;
-}
-
-.stacktrace {
-    /*width          : 860px;*/
-    /*background     : rgba(254, 0, 0, 0.2);*/
-    /*padding-left   : 15px;*/
-    /*padding-top    : 20px;*/
-    /*padding-bottom : 20px;*/
-    border : black dotted 1px
-}
-
-.row-low-margin-top {
-    margin-top : 0 !important;
-}
-
-.linea {
-    position    : absolute;
-    left        : 30px;
-    bottom      : 5px;
-    width       : 1px;
-    border-left : 1px solid #0088CC;
-    height      : 95%;
+.fa-menu{
+    font-size: 16px;
+    margin-right: 7px;
 
 }
-
-.label-azul {
-    color       : #0061CC;
-    /*font-family : 'open sans condensed';*/
-    font-weight : bold;
-    font-size   : 14px;
-    /*text-shadow : -2px 2px 1px rgba(0, 0, 0, 0.25);*/
-    line-height : 14px;
-
+.btn-verde{
+    background:  #19AA8D;
+    color: #ffffff !important;
+}
+.btn-verde:hover{
+    background:  #18A689;
+    color: #ffffff !important;
 }
 
-.label-shared {
-    width       : auto;
-    display     : inline;
-    font-weight : normal;
+.verde{
+    background:  #18A689;
+}
+.verde th{
+    background:  #18A689 !important;
+}
+.verde td{
+    background: #ffffff;
 }
 
-.row {
-    margin-top : 15px;
+
+
+.btn-darkblue{
+    background:  #2F4050;
+    color: #ffffff !important;
+    padding-left: 12px;
+    padding-right: 12px;
+    font-size: 16px;
+}
+.btn-darkblue:hover{
+    background:  #293846;
+    color: #ffffff !important;
 }
 
-.padding-sm {
-    padding-top    : 5px;
-    padding-bottom : 5px;
+.darkblue{
+    background:  #2F4050;
+}
+.darkblue th{
+    background:  #2F4050 !important;
+}
+.darkblue td{
+    background: #ffffff;
 }
 
-.margin-sm {
-    margin-top    : 5px;
-    margin-bottom : 5px;
+
+.panel-completo{
+    width: 100%;
+    display: block;
+    border-top: 3px solid #E7EAEC;
+    background: #fff;
+    padding: 20px;
+    min-height: 40px;
+}
+.titulo-panel{
+    border-bottom: 1px solid #E7EAEC;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    min-height: 35px;
+    font-weight: bold;
 }
 
-.noPadding {
-    padding : 0;
+.fila{
+    margin-top: 10px;
+}
+
+h1{
+    font-weight: normal;
+    font-size: 22px;
+    margin-top: 0px;
+}
+
+/*cards!!!!*/
+.card-verde{
+    border-radius: 5px;
+    width: 100%;
+    min-height: 80px;
+    background: #1AB394;
+    color: #ffffff;
+    padding: 15px;
+}
+.card-verde2{
+    border-radius: 5px;
+    width: 100%;
+    min-height: 100px;
+    background: #23C6C8;
+    color: #ffffff;
+    padding: 15px;
+}
+.card-naranja{
+    border-radius: 5px;
+    width: 100%;
+    min-height: 100px;
+    background: #F8AC59;
+    color: #ffffff;
+    padding: 15px;
+}
+.circulo-logo{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #fff;
+    text-align: center;
+    line-height: 60px;
 }

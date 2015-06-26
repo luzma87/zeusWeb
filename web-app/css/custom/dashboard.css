@@ -2,7 +2,7 @@
     border-radius : 5px;
     padding       : 8px;
     display       : inline-table;
-    background    : #2d99e0;
+    background    : #74C2E1;
     min-width     : 250px;
     min-height    : 180px;
     margin        : 10px;
@@ -24,6 +24,7 @@
     margin-top    : 5px;
     line-height   : 1;
     background    : white;
+    text-decoration: none;
 }
 
 .circle-card {
@@ -36,11 +37,6 @@
     display       : inline-block;
     margin-right  : 5px;
     font-weight   : bold;
-}
-
-.circle-card-icon {
-    padding-left : 10px;
-    padding-top  : 5px;
 }
 
 .card-bg-green {
@@ -61,7 +57,7 @@
     font-weight             : bold;
     font-size               : 14px;
     line-height             : 1;
-    background              : #2d99e0;
+    background              : #74C2E1;
     padding                 : 5px;
     border-top-left-radius  : 5px;
     border-top-right-radius : 5px;
@@ -76,7 +72,112 @@
 }
 
 .header-table-report {
-    background   : #2d99e0 !important;
-    border-color : #2d99e0 !important;
+    background   : #5fcbde !important;
+    border-color : #5fcbde !important;
     color        : #000000 !important;
+}
+
+.header-panel{
+    width: 95%;
+    background: #74C2E1;
+    height: 100px;
+    border-radius : 5px;
+    margin-top: 15px;
+    padding: 0px;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.header-item{
+    width: 19%;
+    height: 100%;
+    display: inline-block;
+    padding: 5px;
+}
+.header-content {
+    border-radius : 5px;
+    padding       : 8px;
+    width         : 100%;
+    /*border        : 1px solid #eee;*/
+    margin-top    : 5px;
+    background    : white;
+    text-decoration: none;
+    text-align: left;
+
+}
+
+.header-flow{
+    width: 100.2%;
+    height: 50px;
+    padding: 0px;
+    margin-left: -1px;
+    border: 1px solid #d4d4d4;
+}
+.header-flow-item{
+    width: 25%;
+    margin: 0px;
+    height: 100%;
+    text-align: center;
+    line-height: 45px;
+    float: left;
+    font-weight: bold;
+    margin: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    position: relative;
+    text-decoration: none;
+}
+.header-flow-item.disabled{
+
+   color: #777777;
+}
+.header-flow-item.active{
+    color: #3A87AD;
+    cursor: pointer;
+}
+.header-flow-item.before{
+    color: #468847;
+    cursor: pointer;
+}
+.badge.active{
+    background-color: #3A87AD;
+    padding-top: 3px;
+}
+.badge.disabled{
+    background-color: #777777;
+    padding-top: 3px;
+}
+.badge.before{
+    background-color: #468847;
+    padding-top: 3px;
+}
+.arrow{
+    border: 24px solid transparent;
+    border-left: 14px solid #b8b8b8;
+    border-right: 0;
+    display: block;
+    position: absolute;
+    right: 0px;
+    top: 0;
+    z-index: 1;
+    background: none;
+}
+.arrow:before {
+    border: 24px solid transparent;
+    border-left: 14px solid #fff;
+    border-right: 0;
+    content: "";
+    display: block;
+    position: absolute;
+    right: 1px;
+    top: -24px;
+}
+.flow-body{
+    width: 100%;
+    padding: 10px;
+    padding-left: 30px;
+}
+
+.celeste{
+    background    : #74C2E1;
 }
