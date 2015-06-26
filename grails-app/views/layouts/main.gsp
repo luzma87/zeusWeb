@@ -42,7 +42,7 @@
                 <span class="caret toggle-menu"></span></a>
             <ul class="submenu " style="margin-top: 0px">
                 <li><a href="${g.createLink(controller: 'chat',action: 'index')}" class="active">Público</a></li>
-                <li><a href="${g.createLink(controller: 'chatPolicia',action: 'index')}">Policias</a></li>
+                <li><a href="${g.createLink(controller: 'chatPolicia',action: 'index')}">Policías</a></li>
             </ul>
         </li>
         <li class="menu-item">

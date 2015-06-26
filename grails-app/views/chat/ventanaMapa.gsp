@@ -89,7 +89,7 @@
         border-radius : 5px;
         background    : #2196f3;
         margin-bottom : 5px;
-        color         : #f0f0f0;
+        color         : #d2d2d2;
         text-align    : left;
         cursor        : pointer;
     }
@@ -185,8 +185,8 @@
         white-space      : nowrap;
     }
     .btn-utils{
-        width: 40px;
-        font-size: 12px;
+        width: 120px;
+        font-size: 11px;
     }
     </style>
 </head>
@@ -195,45 +195,29 @@
 <mn:barraTop titulo="Chat policias"/>
 <div class="row">
 
-    <div class="col-md-6 divIzq " style="position:relative;">
+    <div class="col-md-6 divIzq " style="position:relative;display: none" >
         <div class="panel-completo" style="padding: 5px">
             <div class="row fila" style="margin-left: 0px">
                 <div class="col-md-12 titulo-panel" style="position: relative">
                     Chat
-                    <g:each in="${botones}" var="boton" status="i">
-                        <g:set var="btn" value="${boton.value}"/>
-                        <g:if test="${btn.title}">
-                            <a href="#" class="btn ${btn.clase} btn-utils"
-                               title="${btn.title}" id="${boton.key}" data-prefijo="${btn.prefijo}"
-                               style="position: absolute;right: ${i*50+5}px;top: -5px"
-                            >
-                                <i class="fa ${btn.icon}"></i>
-                            </a>
-                        </g:if>
-                    </g:each>
                 </div>
             </div>
             <div class="" id="mensajes"></div>
 
             <div class="ingreso">
                 <textarea class="txt-ingreso" id="mensaje-txt"></textarea>
-                <a href="#" class="btn btn-verde" id="enviar" style="width: 19%;height: 100%;line-height: 45px;display: inline-block;margin-top: -55px">
+                <a href="#" class="btn btn-info" id="enviar" style="width: 19%;height: 100%;line-height: 45px;display: inline-block;margin-top: -55px">
                     <i class="fa fa-share-square-o" style="margin-right: 6px"></i> Enviar
                 </a>
             </div>
         </div>
     </div>
-    <div class="col-md-6" id="map-container">
+    <div class="col-md-12" id="map-container">
         <div class="panel-completo" style="padding: 5px">
             <div class="row fila" style="margin-left: 0px">
                 <div class="col-md-12 titulo-panel" style="position: relative">
                     <span class="map-hide">Mapa</span>
-                    <a href="#" style="position: absolute;right: 5px" id="map-pop" title="Abrir en nueva ventana">
-                        <i class="fa fa-external-link" ></i>
-                    </a>
-                    <a href="#" style="position: absolute;right: 30px" id="map-hide" title="Ocultar/Mostrar">
-                        <i class="fa fa-level-down" ></i>
-                    </a>
+
                 </div>
             </div>
             <div class="divDer map-hide" id="googleMap" style="margin-top: 5px">
@@ -243,11 +227,7 @@
     </div>
 
 </div>
-<div class="row" style="margin-top: 10px">
-    <div class="col-md-12">
 
-    </div>
-</div>
 <div class="ventana" style="display: none"></div>
 <script type="text/javascript">
     var actual = 0;

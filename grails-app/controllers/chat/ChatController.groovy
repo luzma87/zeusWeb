@@ -75,6 +75,16 @@ class ChatController {
 
         return [user: user, botones: botones]
     }
+    def ventanaMapa(){
+        def user = "test4"
+        def pass = "123456"
+        def ip = "167.114.144.175"
+        def serverName = "vps44751.vps.ovh.ca"
+        def roomName = "Policia"
+        messageHandlerService.inicio(user, pass, ip, serverName, roomName)
+
+        return [user: user]
+    }
 
     def getMessages() {
         def actual
