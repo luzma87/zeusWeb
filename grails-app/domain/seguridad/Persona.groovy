@@ -48,6 +48,6 @@ class Persona {
         celular(size: 1..13, nullable: true, blank: true)
         creacion(size: 1..15, nullable: false, blank: false)
         modificacion(size: 1..15, nullable: false, blank: false)
-        tipo(size: 1..1, nullable: true, blank: true, inList: ['P', 'C'])
+        tipo(size: 1..1, nullable: true, blank: true, inList: ['C', 'P'])
     }
 }

@@ -334,8 +334,8 @@ class MenuTagLib {
         def html = ""
 
         def active = ""
-        println session.cn
-        println session.an
+//        println session.cn
+//        println session.an
         if (session.cn == item.controller && session.an == item.action) {
             active = "active"
         }

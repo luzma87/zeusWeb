@@ -16,7 +16,7 @@ class PersonaController extends Shield {
      * @param all boolean que indica si saca todos los resultados, ignorando el parámetro max (true) o no (false)
      * @return lista de los elementos encontrados
      */
-    def getList_funcion(params, all) {
+    List<Persona> getList_funcion(params, all) {
         params = params.clone()
         params.max = params.max ? Math.min(params.max.toInteger(), 100) : 10
         params.offset = params.offset ?: 0
@@ -140,6 +140,20 @@ class PersonaController extends Shield {
     } //delete para eliminar via ajax
 
     /**
+     * Acción llamada con ajax que permite modificar la contraseña de un usuario
+     */
+    def cambiarPass_ajax() {
+        def persona = Persona.get(params.id)
+        def pass = params.pass.toString().encodeAsMD5()
+        persona.password = pass
+        if (!persona.save(flush: true)) {
+            render "ERROR*" + renderErrors(bean: persona)
+        } else {
+            render "SUCCESS*Contraseña modificada exitosamente"
+        }
+    }
+
+    /**
      * Acción llamada con ajax que valida que no se duplique la propiedad email
      * @render boolean que indica si se puede o no utilizar el valor recibido
      */
@@ -233,6 +247,9 @@ class PersonaController extends Shield {
             }
         }
         personaInstance.properties = params
+        if (params.pass) {
+            personaInstance.password = params.pass.toString().encodeAsMD5()
+        }
         if (!personaInstance.save(flush: true)) {
             flash.message = "Ha ocurrido un error al guardar Persona: " + renderErrors(bean: personaInstance)
             flash.tipo = "error"

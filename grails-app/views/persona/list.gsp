@@ -3,7 +3,7 @@
 <html>
     <head>
         <meta name="layout" content="main">
-        <title>Lista de Persona</title>
+        <title>Lista de Personas</title>
     </head>
 
     <body>
@@ -13,13 +13,13 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel-completo" style="padding: 5px">
-                    <div class="row fila" style="margin-left: 0px">
+                    <div class="row fila" style="margin-left: 0">
                         <div class="col-md-11 titulo-panel">
                             Lista de usuarios
                         </div>
                     </div>
 
-                    <div class="row fila" style="margin-left: 0px">
+                    <div class="row fila" style="margin-left: 0">
                         <div class="btn-toolbar toolbar">
                             <div class="btn-group">
                                 <g:link action="form" class="btn btn-verde btnCrear">
@@ -45,42 +45,26 @@
                             <table class="table table-condensed table-bordered table-striped table-hover verde">
                                 <thead>
                                     <tr>
-
-                                        <g:sortableColumn property="login" title="Login"/>
-
+                                        <g:sortableColumn property="login" title="Usuario"/>
                                         <g:sortableColumn property="nombre" title="Nombre"/>
-
-                                        <g:sortableColumn property="cedula" title="Cedula"/>
-
-                                        <g:sortableColumn property="email" title="Email"/>
-
-                                        <g:sortableColumn property="direccion" title="Direccion"/>
-
-                                        <g:sortableColumn property="telefono" title="Telefono"/>
-
+                                        <g:sortableColumn property="cedula" title="Cédula"/>
+                                        <g:sortableColumn property="email" title="E-mail"/>
+                                        <g:sortableColumn property="direccion" title="Dirección"/>
+                                        <g:sortableColumn property="telefono" title="Teléfono"/>
                                         <g:sortableColumn property="celular" title="Celular"/>
-
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <g:if test="${personaInstanceCount > 0}">
                                         <g:each in="${personaInstanceList}" status="i" var="personaInstance">
-                                            <tr data-id="${personaInstance.id}">
-
+                                            <tr data-id="${personaInstance.id}" data-nombre="${personaInstance.nombre}">
                                                 <td><elm:textoBusqueda busca="${params.search}"><g:fieldValue bean="${personaInstance}" field="login"/></elm:textoBusqueda></td>
-
                                                 <td><elm:textoBusqueda busca="${params.search}">${personaInstance.nombre}</elm:textoBusqueda></td>
-
                                                 <td><elm:textoBusqueda busca="${params.search}"><g:fieldValue bean="${personaInstance}" field="cedula"/></elm:textoBusqueda></td>
-
                                                 <td><elm:textoBusqueda busca="${params.search}"><g:fieldValue bean="${personaInstance}" field="email"/></elm:textoBusqueda></td>
-
                                                 <td><elm:textoBusqueda busca="${params.search}"><g:fieldValue bean="${personaInstance}" field="direccion"/></elm:textoBusqueda></td>
-
                                                 <td><elm:textoBusqueda busca="${params.search}"><g:fieldValue bean="${personaInstance}" field="telefono"/></elm:textoBusqueda></td>
-
                                                 <td><elm:textoBusqueda busca="${params.search}"><g:fieldValue bean="${personaInstance}" field="celular"/></elm:textoBusqueda></td>
-
                                             </tr>
                                         </g:each>
                                     </g:if>
@@ -98,16 +82,12 @@
                                     </g:else>
                                 </tbody>
                             </table>
-
                             <elm:pagination total="${personaInstanceCount}" params="${params}"/>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
-
 
         <script type="text/javascript">
 
@@ -156,15 +136,30 @@
                 });
             }
 
+            function createPassInput(label, id) {
+                var $pass1Cont = $("<div class='form-group'>");
+                var $pass1Lbl = $('<label for="pass" class="col-sm-4 control-label text-default">' + label + '</label>');
+                var $pass1 = $("<input type='password' name='" + id + "' id='" + id + "' class='form-control'/>");
+                var $pass1Divs = $("<div class='col-sm-8 grupo'>");
+                var $pass1IG = $("<div class='input-group'>");
+                var $pass1Span = $("<span class='input-group-addon'><i class='fa fa-lock'></i>");
+
+                $pass1IG.append($pass1).append($pass1Span);
+                $pass1Divs.append($pass1IG);
+                $pass1Cont.append($pass1Lbl).append($pass1Divs);
+
+                return $pass1Cont;
+            }
+
             $(function () {
 
                 $("tbody>tr").contextMenu({
                     items  : {
-                        header   : {
+                        header      : {
                             label  : "Acciones",
                             header : true
                         },
-                        ver      : {
+                        ver         : {
                             label  : "Ver",
                             icon   : "fa fa-search",
                             action : function ($element) {
@@ -177,10 +172,8 @@
                                     },
                                     success : function (msg) {
                                         bootbox.dialog({
-                                            title : "Ver Persona",
-
-                                            class : "modal-lg",
-
+                                            title   : "Ver Persona",
+                                            "class" : "modal-lg",
                                             message : msg,
                                             buttons : {
                                                 ok : {
@@ -195,7 +188,7 @@
                                 });
                             }
                         },
-                        editar   : {
+                        editar      : {
                             label  : "Editar",
                             icon   : "fa fa-pencil",
                             action : function ($element) {
@@ -203,7 +196,107 @@
                                 location.href = "${createLink(action:'form')}/" + id
                             }
                         },
-                        eliminar : {
+                        cambiarPass : {
+                            label  : "Cambiar contraseña",
+                            icon   : "fa fa-lock",
+                            action : function ($element) {
+                                var id = $element.data("id");
+                                var nombre = $element.data("nombre");
+
+                                var $form = $("<form id='frmChPass' class='form-horizontal'>");
+                                var $pass1Cont = createPassInput("Contraseña", "pass");
+                                var $pass2Cont = createPassInput("Repita contraseña", "pass2");
+
+                                $form.append($pass1Cont).append($pass2Cont);
+
+                                $form.validate({
+                                    errorClass     : "help-block",
+                                    ignore         : [],
+                                    errorPlacement : function (error, element) {
+                                        if (element.attr("name") == "latitud" || element.attr("name") == "longitud") {
+                                            error.insertAfter("#latitud");
+                                        } else {
+                                            if (element.parent().hasClass("input-group")) {
+                                                error.insertAfter(element.parent());
+                                            } else {
+                                                error.insertAfter(element);
+                                            }
+                                        }
+                                        element.parents(".grupo").addClass('has-error');
+                                    },
+                                    success        : function (label) {
+                                        label.parents(".grupo").removeClass('has-error');
+                                        label.remove();
+                                    },
+                                    rules          : {
+                                        pass  : {
+                                            required : true
+                                        },
+                                        pass2 : {
+                                            required : true,
+                                            equalTo  : "#pass"
+                                        }
+                                    },
+                                    messages       : {
+                                        pass  : {
+                                            required : "Ingrese la contraseña"
+                                        },
+                                        pass2 : {
+                                            required : "Ingrese nuevamente la contraseña",
+                                            equalTo  : "Repita la contraseña"
+                                        }
+                                    }
+                                });
+
+                                bootbox.dialog({
+                                    "class" : "modal-sm",
+                                    title   : "<span class='text-verde'>Cambiar contraseña de <em>" + nombre + "</em></span>",
+                                    message : $form,
+                                    buttons : {
+                                        guardar  : {
+                                            label     : "<i class='fa fa-save'></i> Guardar",
+                                            className : "btn-verde",
+                                            callback  : function () {
+                                                if ($form.valid()) {
+                                                    openLoader();
+                                                    $.ajax({
+                                                        type    : "POST",
+                                                        url     : '${createLink(controller:'persona', action:'cambiarPass_ajax')}',
+                                                        data    : {
+                                                            id   : id,
+                                                            pass : $("#pass").val()
+                                                        },
+                                                        success : function (msg) {
+                                                            var parts = msg.split("*");
+                                                            log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
+                                                            if (parts[0] == "SUCCESS") {
+                                                                setTimeout(function () {
+                                                                    location.reload(true);
+                                                                }, 1000);
+                                                            } else {
+                                                                closeLoader();
+                                                            }
+                                                        },
+                                                        error   : function () {
+                                                            log("Ha ocurrido un error interno", "Error");
+                                                            closeLoader();
+                                                        }
+                                                    });
+                                                }
+                                                return false;
+                                            }
+                                        },
+                                        cancelar : {
+                                            label     : "Cancelear",
+                                            className : "btn-default",
+                                            callback  : function () {
+                                            }
+                                        }
+                                    }
+                                });
+                            }
+                        },
+                        eliminar    : {
                             label            : "Eliminar",
                             icon             : "fa fa-trash-o",
                             separator_before : true,
@@ -216,7 +309,7 @@
                     onShow : function ($element) {
                         $element.addClass("success");
                     },
-                    onHide : function ($element) {
+                    onHide : function () {
                         $(".success").removeClass("success");
                     }
                 });

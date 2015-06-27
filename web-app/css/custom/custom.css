@@ -1,5 +1,4 @@
 body {
-
     background-color : #2F4050;
     color            : #ffffff;
     padding          : 0 !important;
@@ -151,15 +150,27 @@ body {
 }
 
 .verde {
-    background : #18A689;
+    background-color : #18A689;
 }
 
 .verde th {
-    background : #18A689 !important;
+    background-color : #18A689 !important;
 }
 
-.verde td {
+.text-verde {
+    color : #18A689;
+}
+
+.text-default {
+    color : #555;
+}
+
+.table-striped.verde > tbody > tr:nth-of-type(even) {
     background : #ffffff;
+}
+
+.table-striped.verde > tbody > tr:nth-of-type(even):hover {
+    background : #BCC3E5;
 }
 
 .btn-darkblue {
@@ -176,15 +187,19 @@ body {
 }
 
 .darkblue {
-    background : #2F4050;
+    background-color : #2F4050;
 }
 
 .darkblue th {
-    background : #2F4050 !important;
+    background-color : #2F4050 !important;
 }
 
-.darkblue td {
+.table-striped.darkblue > tbody > tr:nth-of-type(even) {
     background : #ffffff;
+}
+
+.table-striped.darkblue > tbody > tr:nth-of-type(even):hover {
+    background : #BCC3E5;
 }
 
 .panel-completo {
@@ -228,6 +243,7 @@ h1 {
     color         : #ffffff;
     padding       : 15px;
 }
+
 .card-default {
     border-radius : 5px;
     width         : 100%;

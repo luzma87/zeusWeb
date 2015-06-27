@@ -8,10 +8,8 @@ table {
 /*}*/
 
 th.sortable {
-    background-position : right;
-    background-repeat   : no-repeat;
-    background-image    : url(../../images/skin/upDown.png);
-    padding-right       : 1.1em;
+    background    : url(../../images/skin/upDown.png) no-repeat right;
+    padding-right : 15px !important;
 }
 
 th.asc {

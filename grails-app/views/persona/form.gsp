@@ -75,7 +75,7 @@
             }
             google.maps.event.addDomListener(window, 'load', initialize);
         </script>
-        <title>Zeus - personas</title>
+        <title>Registro de usuario</title>
         <style type="text/css">
         .divIzq {
             height                    : 520px;
@@ -121,7 +121,7 @@
                 <div class="panel-completo" style="padding: 5px">
                     <div class="row fila" style="margin-left: 0">
                         <div class="col-md-11 titulo-panel" style="position: relative">
-                            Chat
+                            Datos personales
                         </div>
                     </div>
 
@@ -129,75 +129,108 @@
                         <div class="col-md-12">
                             <g:form class="form-horizontal" name="frmPersona" id="${personaInstance?.id}"
                                     role="form" action="save" method="POST">
-                                <g:hiddenField name="longitud" value="${fieldValue(bean: personaInstance, field: 'longitud')}" class="number form-control  "/>
-                                <g:hiddenField name="latitud" value="${fieldValue(bean: personaInstance, field: 'latitud')}" class="number form-control  "/>
+                                <div class="grupo">
+                                    <g:hiddenField name="longitud" value="${fieldValue(bean: personaInstance, field: 'longitud')}" class="number form-control required "/>
+                                    <g:hiddenField name="latitud" value="${fieldValue(bean: personaInstance, field: 'latitud')}" class="number form-control required "/>
+                                </div>
 
-                                <div class="form-group grupo">
+                                <div class="form-group">
                                     <label for="nombre" class="col-sm-2 control-label">Nombres</label>
 
-                                    <div class="col-sm-10">
-                                        <g:textField name="nombre" maxlength="100" class="form-control " value="${personaInstance?.nombre}"/>
+                                    <div class="col-sm-10 grupo">
+                                        <g:textField name="nombre" maxlength="100" class="form-control required" value="${personaInstance?.nombre}"/>
                                     </div>
                                 </div>
 
-                                <div class="form-group grupo">
+                                <div class="form-group">
                                     <label for="tipo" class="col-sm-2 control-label">Tipo</label>
 
-                                    <div class="col-sm-4">
-                                        %{--<g:textField name="tipo" maxlength="1" class="form-control " value="${personaInstance?.tipo}"/>--}%
-                                        <g:select name="tipo" from="${Persona.constraints.tipo.inList}" class="form-control " value="${personaInstance?.tipo}"
+                                    <div class="col-sm-4 grupo">
+                                        <g:select name="tipo" from="${Persona.constraints.tipo.inList}" class="form-control required" value="${personaInstance?.tipo}"
                                                   valueMessagePrefix="persona.tipo"/>
                                     </div>
                                     <label for="cedula" class="col-sm-2 control-label">Cédula</label>
 
-                                    <div class="col-sm-4">
-                                        <g:textField name="cedula" maxlength="13" class="form-control " value="${personaInstance?.cedula}"/>
+                                    <div class="col-sm-4 grupo">
+                                        <g:textField name="cedula" maxlength="13" class="form-control required" value="${personaInstance?.cedula}"/>
                                     </div>
                                 </div>
 
-                                <div class="form-group grupo">
+                                <div class="form-group">
                                     <label for="telefono" class="col-sm-2 control-label">Teléfono</label>
 
-                                    <div class="col-sm-4">
-                                        <g:textField name="telefono" maxlength="13" class="form-control " value="${personaInstance?.telefono}"/>
+                                    <div class="col-sm-4 grupo">
+                                        <g:textField name="telefono" maxlength="13" class="form-control required" value="${personaInstance?.telefono}"/>
                                     </div>
                                     <label for="celular" class="col-sm-2 control-label">Celular</label>
 
-                                    <div class="col-sm-4">
-                                        <g:textField name="celular" maxlength="13" class="form-control " value="${personaInstance?.celular}"/>
+                                    <div class="col-sm-4 grupo">
+                                        <g:textField name="celular" maxlength="13" class="form-control required" value="${personaInstance?.celular}"/>
                                     </div>
                                 </div>
 
-                                <div class="form-group grupo">
+                                <div class="form-group">
                                     <label for="email" class="col-sm-2 control-label">E-mail</label>
 
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-4 grupo">
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                            <g:field type="email" name="email" maxlength="50" class="form-control  unique noEspacios" value="${personaInstance?.email}"/>
+                                            <g:field type="email" name="email" maxlength="50" class="form-control required unique noEspacios" value="${personaInstance?.email}"/>
                                         </div>
                                     </div>
 
-                                    <label for="login" class="col-sm-2 control-label">Login</label>
+                                    <label for="login" class="col-sm-2 control-label">Usuario</label>
 
-                                    <div class="col-sm-4">
-                                        <g:textField name="login" maxlength="100" required="" class="form-control  required unique noEspacios" value="${personaInstance?.login}"/>
+                                    <div class="col-sm-4 grupo">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-user"></i>
+                                            </span>
+                                            <g:textField name="login" maxlength="100" required="" class="form-control required unique noEspacios" value="${personaInstance?.login}"/>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="form-group grupo">
+                                <g:if test="${!personaInstance.password}">
+                                    <div class="form-group">
+                                        <label for="pass" class="col-sm-2 control-label">Contraseña</label>
+
+                                        <div class="col-sm-4 grupo">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                                <g:passwordField name="pass" maxlength="50" class="form-control required unique noEspacios"/>
+                                            </div>
+                                        </div>
+
+                                        <label for="pass2" class="col-sm-2 control-label">Repita Contraseña</label>
+
+                                        <div class="col-sm-4 grupo">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                                <g:passwordField name="pass2" maxlength="50" equalTo="#pass"
+                                                                 class="form-control required unique noEspacios"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </g:if>
+
+                                <div class="form-group">
                                     <label for="direccion" class="col-sm-2 control-label">Dirección</label>
 
-                                    <div class="col-sm-10">
-                                        <g:textArea name="direccion" cols="40" rows="5" maxlength="500" class="form-control " value="${personaInstance?.direccion}"/>
+                                    <div class="col-sm-10 grupo">
+                                        <g:textArea name="direccion" cols="40" rows="5" maxlength="500" class="form-control required" value="${personaInstance?.direccion}"/>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <div class="col-sm-offset-2 col-sm-10">
-                                        <button type="submit" class="btn btn-verde">
-                                            <i class="fa fa-floppy-o"></i> Guardar
-                                        </button>
+                                        <div class="btn-group" role="group">
+                                            <g:link action="list" class="btn btn-default">Cancelar</g:link>
+                                            <button type="submit" class="btn btn-verde" id="btnSubmit"
+                                                    data-loading-text="<i class='fa fa-spinner fa-spin'></i> Espere...">
+                                                <i class="fa fa-floppy-o"></i> Guardar
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </g:form>
@@ -210,7 +243,7 @@
                 <div class="panel-completo" style="padding: 5px">
                     <div class="row fila" style="margin-left: 0">
                         <div class="col-md-11 titulo-panel" style="position: relative">
-                            <span class="map-hide">Mapa</span>
+                            <span class="map-hide">Ubicación</span>
 
                         </div>
                     </div>
@@ -224,50 +257,90 @@
 
         <script type="text/javascript">
 
-            var validator = $("#frmPersona").validate({
-                errorClass     : "help-block",
-                errorPlacement : function (error, element) {
-                    if (element.parent().hasClass("input-group")) {
-                        error.insertAfter(element.parent());
-                    } else {
-                        error.insertAfter(element);
-                    }
-                    element.parents(".grupo").addClass('has-error');
-                },
-                success        : function (label) {
-                    label.parents(".grupo").removeClass('has-error');
-                    label.remove();
-                },
-                rules          : {
-                    login : {
-                        remote : {
-                            url  : "${createLink(controller:'persona', action: 'validar_unique_login_ajax')}",
-                            type : "post",
-                            data : {
-                                id : "${personaInstance?.id}"
+            $(function () {
+                $("#frmPersona").validate({
+                    errorClass     : "help-block",
+                    ignore         : [],
+                    errorPlacement : function (error, element) {
+                        if (element.attr("name") == "latitud" || element.attr("name") == "longitud") {
+                            error.insertAfter("#latitud");
+                        } else {
+                            if (element.parent().hasClass("input-group")) {
+                                error.insertAfter(element.parent());
+                            } else {
+                                error.insertAfter(element);
+                            }
+                        }
+                        element.parents(".grupo").addClass('has-error');
+                    },
+                    submitHandler  : function (form) {
+                        $("#btnSubmit").button('loading');
+                        form.submit();
+                    },
+                    success        : function (label) {
+                        label.parents(".grupo").removeClass('has-error');
+                        label.remove();
+                    },
+                    groups         : {
+                        ubicacion : "latitud longitud"
+                    },
+                    rules          : {
+                        login : {
+                            remote : {
+                                url  : "${createLink(controller:'persona', action: 'validar_unique_login_ajax')}",
+                                type : "post",
+                                data : {
+                                    id : "${personaInstance?.id}"
+                                }
+                            }
+                        },
+                        email : {
+                            remote : {
+                                url  : "${createLink(controller:'persona', action: 'validar_unique_email_ajax')}",
+                                type : "post",
+                                data : {
+                                    id : "${personaInstance?.id}"
+                                }
                             }
                         }
                     },
-                    email : {
-                        remote : {
-                            url  : "${createLink(controller:'persona', action: 'validar_unique_email_ajax')}",
-                            type : "post",
-                            data : {
-                                id : "${personaInstance?.id}"
-                            }
+                    messages       : {
+                        latitud   : {
+                            required : "Ubique la persona en el mapa"
+                        },
+                        nombre    : {
+                            required : "Ingrese el nombre"
+                        },
+                        cedula    : {
+                            required : "Ingrese el número de cédula"
+                        },
+                        telefono  : {
+                            required : "Ingrese el número de teléfono"
+                        },
+                        celular   : {
+                            required : "Ingrese el número de celular"
+                        },
+                        login     : {
+                            required : "Ingrese el usuario",
+                            remote   : "Ya existe el usuario"
+                        },
+                        email     : {
+                            required : "Ingrese el e-mail",
+                            remote   : "Ya existe el email"
+                        },
+                        pass      : {
+                            required : "Ingrese la contraseña"
+                        },
+                        pass2     : {
+                            required : "Ingrese nuevamente la contraseña",
+                            equalTo  : "Ingrese nuevamente la contraseña"
+                        },
+                        direccion : {
+                            required : "Ingrese la dirección"
                         }
                     }
-                },
-                messages       : {
-                    login : {
-                        remote : "Ya existe Login"
-                    },
-                    email : {
-                        remote : "Ya existe Email"
-                    }
-                }
-            });
-
+                });
+            })
         </script>
     </body>
 </html>
