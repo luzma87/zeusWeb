@@ -282,7 +282,7 @@ class MenuTagLib {
                             icon      : "fa-users"
                     ],
                     mensajesCom: [
-                            controller: "mensajes",
+                            controller: "mensajeComunidad",
                             action    : "list",
                             label     : "Mens. a la comunidad",
                             icon      : "fa-rss"

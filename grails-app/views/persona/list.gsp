@@ -15,7 +15,7 @@
                 <div class="panel-completo" style="padding: 5px">
                     <div class="row fila" style="margin-left: 0">
                         <div class="col-md-11 titulo-panel">
-                            Lista de usuarios
+                            Usuarios
                         </div>
                     </div>
 
@@ -295,16 +295,16 @@
                                     }
                                 });
                             }
-                        },
-                        eliminar    : {
-                            label            : "Eliminar",
-                            icon             : "fa fa-trash-o",
-                            separator_before : true,
-                            action           : function ($element) {
-                                var id = $element.data("id");
-                                deletePersona(id);
-                            }
-                        }
+                        }/*,
+                         eliminar    : {
+                         label            : "Eliminar",
+                         icon             : "fa fa-trash-o",
+                         separator_before : true,
+                         action           : function ($element) {
+                         var id = $element.data("id");
+                         deletePersona(id);
+                         }
+                         }*/
                     },
                     onShow : function ($element) {
                         $element.addClass("success");
