@@ -69,10 +69,16 @@ class MenuTagLib {
         }
         items = [
                 chat    : [
-                        controller: "pruebas",
+                        controller: "chat",
                         action    : "index",
                         label     : "Chat",
                         icon      : "fa-whatsapp"
+                ],
+                mapa    : [
+                        controller: "mapa",
+                        action    : "index",
+                        label     : "Mapa de incidentes",
+                        icon      : "fa-street-view"
                 ],
                 personas: [
                         controller: "persona",

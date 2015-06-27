@@ -1,12 +1,7 @@
 package chat
 
 import groovy.json.JsonBuilder
-import org.jivesoftware.smack.AbstractXMPPConnection
-import org.jivesoftware.smack.ConnectionConfiguration
-import org.jivesoftware.smack.tcp.XMPPTCPConnection
-import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration
 import seguridad.Persona
-import seguridad.Shield
 
 class ChatController {
 
@@ -14,6 +9,39 @@ class ChatController {
     static scope = "session"
 
 //    AbstractXMPPConnection conn2 = null
+
+    def getInfoMensajeChat_ajax() {
+
+        def folder = "32px_bubble"
+        def tipos = [
+                loc: [
+                        icono: resource(dir: 'images/pins/' + folder, file: 'location32.png'),
+                        title: "Ubicación"
+                ],
+                asL: [
+                        icono: resource(dir: 'images/pins/' + folder, file: 'thief1.png'),
+                        title: "Asalto"
+                ],
+                acL: [
+                        icono: resource(dir: 'images/pins/' + folder, file: 'cars1.png'),
+                        title: "Accidente"
+                ],
+                ssL: [
+                        icono: resource(dir: 'images/pins/' + folder, file: 'businessman205.png'),
+                        title: "Sospechoso"
+                ],
+                inL: [
+                        icono: resource(dir: 'images/pins/' + folder, file: 'bill7.png'),
+                        title: "Intruso"
+                ],
+                lbL: [
+                        icono: resource(dir: 'images/pins/' + folder, file: 'healthyfood1.png'),
+                        title: "Libadores"
+                ]
+        ]
+
+        return [params: params, tipos: tipos]
+    }
 
     def index() {
 //        println "conn2.connected? " + conn2.connected
@@ -73,9 +101,12 @@ class ChatController {
                 comunidad : [:]
         ]
 
-        return [user: user, botones: botones]
+        def folder = "32px_bubble"
+
+        return [user: user, botones: botones, folder: folder]
     }
-    def ventanaMapa(){
+
+    def ventanaMapa() {
         def user = "test4"
         def pass = "123456"
         def ip = "167.114.144.175"
@@ -102,9 +133,25 @@ class ChatController {
             return
         }
         render "[]"
-        return
         // println "mensajes"
+    }
 
+    def getIncidentes () {
+        def actual
+        if (params.actual) {
+            actual = params.actual.toInteger()
+        } else {
+            actual = 0
+        }
+        def mensajes = messageHandlerService.getIncidentes(actual)
+
+        if (mensajes.size() > 0) {
+            def json = new JsonBuilder(mensajes.reverse())
+            // println json.toPrettyString()
+            render json
+            return
+        }
+        render "[]"
     }
 
     def enviarMensaje() {
