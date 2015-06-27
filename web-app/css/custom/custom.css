@@ -207,11 +207,15 @@ h1 {
     margin-top  : 0;
 }
 
+.card-inicio{
+    min-height    : 132px !important;
+}
+
 /*cards!!!!*/
 .card-verde {
     border-radius : 5px;
     width         : 100%;
-    min-height    : 80px;
+    min-height    : 100px;
     background    : #1AB394;
     color         : #ffffff;
     padding       : 15px;
