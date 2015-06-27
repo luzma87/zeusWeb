@@ -333,7 +333,7 @@ class MenuTagLib {
     def renderVerticalMenuItem(item) {
         def html = ""
 
-        def active = ""
+        def active = "non-active"
 //        println session.cn
 //        println session.an
         if (session.cn == item.controller && session.an == item.action) {
@@ -344,7 +344,7 @@ class MenuTagLib {
 
             def submenuStr = ""
             item.items.each { itm ->
-                def submenuActive = ""
+                def submenuActive = "non-active"
                 def it = itm.value
                 if (session.cn == it.controller && session.an == it.action) {
                     active = "active"

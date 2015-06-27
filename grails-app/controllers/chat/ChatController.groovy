@@ -90,8 +90,7 @@ class ChatController extends Shield {
                         prefijo: "snn",
                         title  : "Sin novedad",
                         icon   : "fa-check"
-                ],
-                comunidad : [:]
+                ]
         ]
 
         def folder = "32px_bubble"

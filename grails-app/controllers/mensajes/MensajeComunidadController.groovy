@@ -56,6 +56,14 @@ class MensajeComunidadController extends Shield {
     }
 
     /**
+     * Acción llamada con ajax que muestra la lista de mensajes a la comunidad para seleccionar el que se desea enviar por el chat
+     */
+    def listSelect_ajax() {
+        def mensajeComunidadInstanceList = getList_funcion(params, true)
+        return [mensajeComunidadInstanceList: mensajeComunidadInstanceList]
+    }
+
+    /**
      * Acción llamada con ajax que muestra la información de un elemento particular
      */
     def show_ajax() {

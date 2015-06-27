@@ -115,7 +115,7 @@
             gm.event.addDomListener(window, 'load', initialize);
 
         </script>
-        <title>Zeus - Chat</title>
+        <title>Chat comunitario</title>
         <style type="text/css">
         .divIzq {
             height        : 520px;
@@ -254,6 +254,10 @@
             width     : 40px;
             font-size : 12px;
         }
+
+        .fila {
+            margin-top : 0;
+        }
         </style>
     </head>
 
@@ -263,19 +267,25 @@
 
             <div class="col-md-6 divIzq " style="position:relative;">
                 <div class="panel-completo" style="padding: 5px">
-                    <div class="row fila" style="margin-left: 0">
+                    <div class="row fila" style="margin-left: 0; margin-top: 10px">
                         <div class="col-md-12 titulo-panel" style="position: relative">
                             Chat
-                            <g:each in="${botones}" var="boton" status="i">
+                            <g:set var="i" value="${0}"/>
+                            <g:each in="${botones}" var="boton">
                                 <g:set var="btn" value="${boton.value}"/>
                                 <g:if test="${btn.title}">
                                     <a href="#" class="btn ${btn.clase} btn-utils"
                                        title="${btn.title}" id="${boton.key}" data-prefijo="${btn.prefijo}"
-                                       style="position: absolute;right: ${i * 50 + 5}px;top: -5px">
+                                       style="position: absolute; right: ${i * 50 + 5}px;top: -5px">
                                         <i class="fa ${btn.icon}"></i>
                                     </a>
+                                    <g:set var="i" value="${i + 1}"/>
                                 </g:if>
                             </g:each>
+                            <a href="#" class="btn btn-verde" title="Mensaje a la comunidad" id="btnCom"
+                               style="position: absolute; right: ${i * 50 + 5}px;top: -5px">
+                                <i class="fa fa-rss"></i>
+                            </a>
                         </div>
                     </div>
 
@@ -330,25 +340,24 @@
             var $mensajeTxt = $("#mensaje-txt");
             var $mensajes = $("#mensajes");
 
-            function test(id,usuario,tipo) {
-
+            function test(id, usuario, tipo) {
                 $.ajax({
                     type    : "POST",
                     url     : "${g.createLink(controller: 'chat',action: 'cambiaEstado_ajax')}",
                     data    : "id=" + id,
                     success : function (msg) {
-                        infowindow.close()
+                        infowindow.close();
                         $.ajax({
                             type    : "POST",
                             url     : "${g.createLink(controller: 'chat',action: 'enviarMensaje_ajax')}",
                             data    : {
-                                mensaje : "und:"+tipo+" reportado por "+usuario+": Unidades en camino"
+                                mensaje : "und:" + tipo + " reportado por " + usuario + ": Unidades en camino"
                             },
                             success : function (msg) {
                                 startInterval();
-                                for(var i = 0;i<markers.length;i++){
-                                    var m = markers[i]
-                                    if(m.incId==id){
+                                for (var i = 0; i < markers.length; i++) {
+                                    var m = markers[i];
+                                    if (m.incId == id) {
                                         m.setMap(null)
                                     }
                                 }
@@ -405,8 +414,7 @@
                     url     : "${g.createLink(controller: 'chat',action: 'getInfoMensaje_ajax')}",
                     data    : "user=" + $(this).attr("user") + "&mensaje=" + $(this).attr("mensaje"),
                     success : function (msg) {
-                        closeLoader()
-
+                        closeLoader();
                     }
                 });
             }
@@ -498,7 +506,8 @@
                         var cl = $.xcolor.random();
                         colores[val.de] = {
                             bg   : cl,
-                            text : getContrast50(cl.getHex())
+                            text : $.xcolor.complementary(cl)
+//                            text : getContrast50(cl.getHex())
                         };
                     }
 
@@ -591,8 +600,22 @@
                 });
             }
 
-            $(function () {
+            function enviarMensaje(texto) {
+                $.ajax({
+                    type    : "POST",
+                    url     : "${g.createLink(controller: 'chat',action: 'enviarMensaje_ajax')}",
+                    data    : {
+                        mensaje : texto
+                    },
+                    success : function (msg) {
+                        $mensajeTxt.val("");
+                        $mensajeTxt.html("");
+                        startInterval();
+                    }
+                });
+            }
 
+            $(function () {
                 // init bunch of sounds
                 ion.sound({
                     sounds : [
@@ -636,18 +659,7 @@
                 $("#enviar").click(function () {
                     var texto = "msg:" + $mensajeTxt.val();
                     if ($.trim(texto) != "") {
-                        $.ajax({
-                            type    : "POST",
-                            url     : "${g.createLink(controller: 'chat',action: 'enviarMensaje_ajax')}",
-                            data    : {
-                                mensaje : texto
-                            },
-                            success : function (msg) {
-                                $mensajeTxt.val("");
-                                $mensajeTxt.html("");
-                                startInterval();
-                            }
-                        });
+                        enviarMensaje(texto);
                         return false
                     }
                 });
@@ -656,17 +668,7 @@
                     if (ev.keyCode == 13) {
                         var texto = "msg:" + $mensajeTxt.val();
                         if ($.trim(texto) != "") {
-                            $.ajax({
-                                type    : "POST",
-                                url     : "${g.createLink(controller: 'chat',action: 'enviarMensaje_ajax')}",
-                                data    : {
-                                    mensaje : texto
-                                },
-                                success : function (msg) {
-                                    $mensajeTxt.val("");
-                                    $mensajeTxt.html("");
-                                }
-                            });
+                            enviarMensaje(texto);
                             return false
                         }
                     }
@@ -674,17 +676,8 @@
                 });
 
                 $(".btn-utils").click(function () {
-                    $.ajax({
-                        type    : "POST",
-                        url     : "${g.createLink(controller: 'chat',action: 'enviarMensaje_ajax')}",
-                        data    : {
-                            mensaje : $(this).data("prefijo") + ":" + $(this).attr("title")
-                        },
-                        success : function (msg) {
-                            $mensajeTxt.val("");
-                            $mensajeTxt.html("");
-                        }
-                    });
+                    var texto = $(this).data("prefijo") + ":" + $(this).attr("title");
+                    enviarMensaje(texto);
                     return false
                 });
                 $("#map-hide").click(function () {
@@ -702,6 +695,29 @@
                     var ventana = window.open("${g.createLink(controller: 'chat',action: 'ventanaMapa')}");
                     $(".divIzq").removeClass("col-md-6").removeClass("col-md-11").addClass("col-md-12");
                     $("#map-container").remove()
+                });
+
+                $("#btnCom").click(function () {
+                    $.ajax({
+                        type    : "POST",
+                        url     : "${createLink(controller:'mensajeComunidad', action:'listSelect_ajax')}",
+                        success : function (msg) {
+                            var b = bootbox.dialog({
+                                id      : "dlgMensajesComunidad",
+                                title   : "<span class='text-verde'>Enviar Mensaje a la Comunidad</span>",
+                                message : msg,
+                                buttons : {
+                                    cancelar : {
+                                        label     : "Cancelar",
+                                        className : "btn-primary",
+                                        callback  : function () {
+                                        }
+                                    }
+                                } //buttons
+                            }); //dialog
+                        } //success
+                    }); //ajax
+                    return false;
                 });
             });
         </script>

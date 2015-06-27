@@ -201,16 +201,16 @@
                     <div class="row fila" style="margin-left: 0px">
                         <div class="col-md-12 titulo-panel" style="position: relative">
                             Chat
-                            <g:each in="${botones}" var="boton" status="i">
-                                <g:set var="btn" value="${boton.value}"/>
-                                <g:if test="${btn.title}">
-                                    <a href="#" class="btn ${btn.clase} btn-utils"
-                                       title="${btn.title}" id="${boton.key}" data-prefijo="${btn.prefijo}"
-                                       style="position: absolute;right: ${i * 50 + 5}px;top: -5px">
-                                        <i class="fa ${btn.icon}"></i>
-                                    </a>
-                                </g:if>
-                            </g:each>
+                            %{--<g:each in="${botones}" var="boton" status="i">--}%
+                            %{--<g:set var="btn" value="${boton.value}"/>--}%
+                            %{--<g:if test="${btn.title}">--}%
+                            %{--<a href="#" class="btn ${btn.clase} btn-utils"--}%
+                            %{--title="${btn.title}" id="${boton.key}" data-prefijo="${btn.prefijo}"--}%
+                            %{--style="position: absolute;right: ${i * 50 + 5}px;top: -5px">--}%
+                            %{--<i class="fa ${btn.icon}"></i>--}%
+                            %{--</a>--}%
+                            %{--</g:if>--}%
+                            %{--</g:each>--}%
                         </div>
                     </div>
 
@@ -227,7 +227,7 @@
 
             <div class="col-md-6" id="map-container">
                 <div class="panel-completo" style="padding: 5px">
-                    <div class="row fila" style="margin-left: 0px">
+                    <div class="row fila" style="margin-left: 0">
                         <div class="col-md-12 titulo-panel" style="position: relative">
                             <span class="map-hide">Mapa</span>
                             <a href="#" style="position: absolute;right: 5px" id="map-pop" title="Abrir en nueva ventana">
