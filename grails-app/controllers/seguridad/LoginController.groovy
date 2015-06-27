@@ -5,7 +5,7 @@ class LoginController {
     /**
      * Acción que valida que la sesión esté activa
      */
-    def validarSesion() {
+    def validarSesion_ajax() {
         println "sesion creada el:" + new Date(session.getCreationTime()) + " hora actual: " + new Date()
         println "último acceso:" + new Date(session.getLastAccessedTime()) + " hora actual: " + new Date()
 

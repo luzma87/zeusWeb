@@ -259,7 +259,7 @@
     </head>
 
     <body>
-        <mn:barraTop titulo="Chat público"/>
+        %{--<mn:barraTop titulo="Chat público"/>--}%
         <div class="row">
 
             <div class="col-md-6 divIzq " style="position:relative;">
@@ -335,13 +335,13 @@
 
                 $.ajax({
                     type    : "POST",
-                    url     : "${g.createLink(controller: 'chat',action: 'cambiaEstado')}",
+                    url     : "${g.createLink(controller: 'chat',action: 'cambiaEstado_ajax')}",
                     data    : "id=" + id,
                     success : function (msg) {
                         infowindow.close()
                         $.ajax({
                             type    : "POST",
-                            url     : "${g.createLink(controller: 'chat',action: 'enviarMensaje')}",
+                            url     : "${g.createLink(controller: 'chat',action: 'enviarMensaje_ajax')}",
                             data    : {
                                 mensaje : "und:"+tipo+" reportado por "+usuario+": Unidades en camino"
                             },
@@ -403,7 +403,7 @@
 
                 $.ajax({
                     type    : "POST",
-                    url     : "${g.createLink(controller: 'chat',action: 'getInfoMensaje')}",
+                    url     : "${g.createLink(controller: 'chat',action: 'getInfoMensaje_ajax')}",
                     data    : "user=" + $(this).attr("user") + "&mensaje=" + $(this).attr("mensaje"),
                     success : function (msg) {
                         closeLoader()
@@ -519,7 +519,7 @@
                         title : "Información del usuario",
                         text  : function (event, api) {
                             $.ajax({
-                                url  : "${g.createLink(controller: 'chat',action: 'getInfoMensaje')}",
+                                url  : "${g.createLink(controller: 'chat',action: 'getInfoMensaje_ajax')}",
                                 data : {
                                     user    : $(this).attr("user"),
                                     mensaje : $(this).attr("mensaje")
@@ -572,7 +572,7 @@
 //                console.log($mensajes.scrollTop(), $mensajes[0].scrollHeight, scroll)
                 $.ajax({
                     type     : "POST",
-                    url      : "${g.createLink(controller: 'chat',action: 'getMessages')}",
+                    url      : "${g.createLink(controller: 'chat',action: 'getMessages_ajax')}",
                     data     : "actual=" + actual,
                     dataType : "json",
                     success  : function (msg) {
@@ -639,7 +639,7 @@
                     if ($.trim(texto) != "") {
                         $.ajax({
                             type    : "POST",
-                            url     : "${g.createLink(controller: 'chat',action: 'enviarMensaje')}",
+                            url     : "${g.createLink(controller: 'chat',action: 'enviarMensaje_ajax')}",
                             data    : {
                                 mensaje : texto
                             },
@@ -659,7 +659,7 @@
                         if ($.trim(texto) != "") {
                             $.ajax({
                                 type    : "POST",
-                                url     : "${g.createLink(controller: 'chat',action: 'enviarMensaje')}",
+                                url     : "${g.createLink(controller: 'chat',action: 'enviarMensaje_ajax')}",
                                 data    : {
                                     mensaje : texto
                                 },
@@ -677,7 +677,7 @@
                 $(".btn-utils").click(function () {
                     $.ajax({
                         type    : "POST",
-                        url     : "${g.createLink(controller: 'chat',action: 'enviarMensaje')}",
+                        url     : "${g.createLink(controller: 'chat',action: 'enviarMensaje_ajax')}",
                         data    : {
                             mensaje : $(this).data("prefijo") + ":" + $(this).attr("title")
                         },

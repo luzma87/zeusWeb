@@ -12,7 +12,7 @@ class ChatController extends Shield {
 //    AbstractXMPPConnection conn2 = null
 
     def getInfoMensajeChat_ajax() {
-        println "params info "+params
+        println "params info " + params
         def inc = Incidente.get(params.id)
         def folder = "32px_bubble"
         def tipos = [
@@ -42,15 +42,16 @@ class ChatController extends Shield {
                 ]
         ]
 
-        return [params: params, tipos: tipos,inc:inc]
+        return [params: params, tipos: tipos, inc: inc]
     }
 
-    def cambiaEstado(){
-        println "params cambia estado "+params
+    def cambiaEstado_ajax() {
+        println "params cambia estado " + params
         def inc = Incidente.get(params.id)
-        inc.estado="R"
-        if(!inc.save(flush: true))
-            println "error "+inc.save()
+        inc.estado = "R"
+        if (!inc.save(flush: true)) {
+            println "error " + inc.save()
+        }
         render "ok"
     }
 
@@ -94,13 +95,14 @@ class ChatController extends Shield {
         ]
 
         def folder = "32px_bubble"
-        messageHandlerService.sendMensaje("La Policía Nacional ha ingresado al chat")
+        messageHandlerService.sendMensaje("lgn:La Policía Nacional ha ingresado al chat")
         return [user: user, botones: botones, folder: folder]
     }
 
     def ventanaMapa() {
-        def user = "test4"
-        def pass = "123".encodeAsMD5()
+        def pers = Persona.get(session.usuario.id)
+        def user = pers.login
+        def pass = pers.password
         def ip = "167.114.144.175"
         def serverName = "vps44751.vps.ovh.ca"
         def roomName = "Policia"
@@ -109,7 +111,7 @@ class ChatController extends Shield {
         return [user: user]
     }
 
-    def getMessages() {
+    def getMessages_ajax() {
         def actual
         if (params.actual) {
             actual = params.actual.toInteger()
@@ -128,7 +130,7 @@ class ChatController extends Shield {
         // println "mensajes"
     }
 
-    def getIncidentes () {
+    def getIncidentes_ajax() {
         def actual
         if (params.actual) {
             actual = params.actual.toInteger()
@@ -146,27 +148,14 @@ class ChatController extends Shield {
         render "[]"
     }
 
-    def enviarMensaje() {
+    def enviarMensaje_ajax() {
         messageHandlerService.sendMensaje(params.mensaje)
         render "ok"
     }
 
-
-    def getInfoMensaje() {
+    def getInfoMensaje_ajax() {
         println "params " + params
         def p = Persona.findByLogin(params.user)
         [personaInstance: p]
-    }
-
-    def prueba() {
-
-        /*Chat chat2 = chatManager.createChat("test2" + "@" + "svt-pc");
-        try {
-            chat2.sendMessage("prueba");
-        } catch (SmackException.NotConnectedException e) {
-            e.printStackTrace();
-        }
-        */
-        render "ok"
     }
 }

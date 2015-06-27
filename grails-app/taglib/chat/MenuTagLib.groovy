@@ -183,14 +183,9 @@ class MenuTagLib {
 
     def verticalMenu = { attrs ->
 
-        println ">>>>>>>>>>>>>>>>>>>>>>>>>>"
-        println session.cn
-        println session.an
-        println ">>>>>>>>>>>>>>>>>>>>>>>>>>"
-
         def usu = Persona.get(session.usuario.id)
         def tipo = usu.tipo
-        def perfil
+        def perfil = ""
 
         if (!tipo) {
             tipo = "C"
@@ -244,20 +239,20 @@ class MenuTagLib {
         } else if (tipo == "P") {
             perfil = "Policía"
             items = [
-                    inicio    : [
+                    inicio     : [
                             controller: "inicio",
                             action    : "index",
                             label     : "Inicio",
                             icon      : "fa-home"
                     ],
-                    chat      : [
+                    chat       : [
                             label: "Chat",
                             icon : "fa-wechat",
                             items: [
                                     publico: [
                                             controller: "chat",
                                             action    : "index",
-                                            label     : "Público",
+                                            label     : "Comunitario",
                                             icon      : "fa-comments"
                                     ],
                                     policia: [
@@ -268,25 +263,31 @@ class MenuTagLib {
                                     ]
                             ]
                     ],
-                    busquedas : [
+                    busquedas  : [
                             controller: "busquedas",
                             action    : "index",
                             label     : "Búsquedas",
                             icon      : "fa-search"
                     ],
-                    incidentes: [
+                    incidentes : [
                             controller: "mapa",
                             action    : "index",
                             label     : "Incidentes",
                             icon      : "fa-map-marker"
                     ],
-                    personas  : [
+                    personas   : [
                             controller: "persona",
                             action    : "list",
                             label     : "Usuarios",
                             icon      : "fa-users"
                     ],
-                    logout    : [
+                    mensajesCom: [
+                            controller: "mensajes",
+                            action    : "list",
+                            label     : "Mens. a la comunidad",
+                            icon      : "fa-rss"
+                    ],
+                    logout     : [
                             controller: "login",
                             action    : "logout",
                             label     : "Salir",
@@ -332,32 +333,48 @@ class MenuTagLib {
     def renderVerticalMenuItem(item) {
         def html = ""
 
+        def active = ""
+        println session.cn
+        println session.an
+        if (session.cn == item.controller && session.an == item.action) {
+            active = "active"
+        }
+
         if (item.items && item.items.size() > 0) {
-            html += '<li class="menu-item active dropdown">'
-            html += '<a href="#" class="dropdown-toggle active " title="' + item.label + '">'
+
+            def submenuStr = ""
+            item.items.each { itm ->
+                def submenuActive = ""
+                def it = itm.value
+                if (session.cn == it.controller && session.an == it.action) {
+                    active = "active"
+                    submenuActive = "active"
+                }
+                def url = createLink(controller: it.controller, action: it.action, params: it.params)
+                submenuStr += '<li class="' + submenuActive + '">'
+                submenuStr += '<a href="' + url + '">'
+                if (it.icon) {
+                    submenuStr += '<i class="fa-menu fa ' + it.icon + '"></i>'
+                }
+                submenuStr += it.label
+                submenuStr += "</a>"
+                submenuStr += '</li>'
+            }
+
+            html += '<li class="menu-item ' + active + ' dropdown">'
+            html += '<a href="#" class="dropdown-toggle ' + active + ' " title="' + item.label + '">'
             if (item.icon) {
                 html += '<i class="fa-menu fa ' + item.icon + '"></i>'
             }
             html += '<span class="toggle-menu">' + item.label + '</span>'
             html += '<span class="caret toggle-menu"></span></a>'
-            html += '<ul class="submenu " style="margin-top: 0">'
-            item.items.each { itm ->
-                def it = itm.value
-                def url = createLink(controller: it.controller, action: it.action, params: it.params)
-                html += '<li>'
-                html += '<a href="' + url + '">'
-                if (it.icon) {
-                    html += '<i class="fa-menu fa ' + it.icon + '"></i>'
-                }
-                html += it.label
-                html += "</a>"
-                html += '</li>'
-            }
+            html += '<ul class="submenu ' + active + '" style="margin-top: 0">'
+            html += submenuStr
             html += '</ul>'
             html += '</li>'
         } else {
             def url = createLink(controller: item.controller, action: item.action, params: item.params)
-            html += '<li class="menu-item">'
+            html += '<li class="menu-item ' + active + '">'
             html += '<a href="' + url + '" title="' + item.label + '">'
             if (item.icon) {
                 html += '<i class="fa-menu fa ' + item.icon + '"></i>'

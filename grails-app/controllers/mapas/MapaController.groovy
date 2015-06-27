@@ -71,6 +71,4 @@ class MapaController extends Shield {
 
         return [tiposIncidencia: tiposIncidencia]
     }
-
-
 }

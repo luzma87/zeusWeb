@@ -9,7 +9,7 @@ class BusquedasController extends Shield {
 
     }
 
-    def buscar() {
+    def buscar_ajax() {
         println "params " + params
         def desde = new Date().parse("dd-MM-yyyy HH:mm", params.desde)
         def hasta

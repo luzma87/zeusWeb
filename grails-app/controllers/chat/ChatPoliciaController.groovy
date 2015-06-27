@@ -10,8 +10,9 @@ class ChatPoliciaController extends Shield {
     static scope = "session"
 
     def index() {
-        def user = "test4"
-        def pass = "123456"
+        def pers = Persona.get(session.usuario.id)
+        def user = pers.login
+        def pass = pers.password
         def ip = "167.114.144.175"
         def serverName = "vps44751.vps.ovh.ca"
         def roomName = "Policia"
@@ -50,8 +51,9 @@ class ChatPoliciaController extends Shield {
     }
 
     def ventanaMapa() {
-        def user = "test4"
-        def pass = "123456"
+        def pers = Persona.get(session.usuario.id)
+        def user = pers.login
+        def pass = pers.password
         def ip = "167.114.144.175"
         def serverName = "vps44751.vps.ovh.ca"
         def roomName = "Policia"
@@ -60,7 +62,7 @@ class ChatPoliciaController extends Shield {
         return [user: user]
     }
 
-    def getMessages() {
+    def getMessages_ajax() {
         def actual
         if (params.actual) {
             actual = params.actual.toInteger()
@@ -81,27 +83,14 @@ class ChatPoliciaController extends Shield {
 
     }
 
-    def enviarMensaje() {
+    def enviarMensaje_ajax() {
         messageHandlerServicePoliciaService.sendMensaje(params.mensaje)
         render "ok"
     }
 
-
-    def getInfoMensaje() {
+    def getInfoMensaje_ajax() {
         println "params " + params
         def p = Persona.findByLogin(params.user)
         [personaInstance: p]
-    }
-
-    def prueba() {
-
-        /*Chat chat2 = chatManager.createChat("test2" + "@" + "svt-pc");
-        try {
-            chat2.sendMessage("prueba");
-        } catch (SmackException.NotConnectedException e) {
-            e.printStackTrace();
-        }
-        */
-        render "ok"
     }
 }

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head>
-    <title><g:layoutTitle default="P&S Sistema contable"/></title>
+    <title><g:layoutTitle default="Zeus"/></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <imp:favicon/>
@@ -16,6 +16,8 @@
     <mn:verticalMenu/>
 
     <div class="contenido">
+        <mn:barraTop titulo="${g.layoutTitle(default: 'Zeus')}"/>
+
         <g:layoutBody/>
     </div>
     <script type="text/javascript">

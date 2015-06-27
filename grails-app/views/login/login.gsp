@@ -61,7 +61,7 @@
                         <div class="row fila">
                             <div class="col-md-12 grupo">
                                 <div class="input-group">
-                                    <g:textField name="user" class="form-control required" placeholder="Ingrese su usuario"/>
+                                    <g:textField name="user" class="form-control inputField required" placeholder="Ingrese su usuario"/>
                                     <span class="input-group-addon">
                                         <i class="fa fa-user"></i>
                                     </span>
@@ -78,7 +78,7 @@
                         <div class="row fila">
                             <div class="col-md-12 grupo">
                                 <div class="input-group">
-                                    <g:passwordField name="pass" class="form-control required" placeholder="Ingrese su contraseña"/>
+                                    <g:passwordField name="pass" class="form-control inputField required" placeholder="Ingrese su contraseña"/>
                                     <span class="input-group-addon">
                                         <i class="fa fa-lock"></i>
                                     </span>
@@ -192,6 +192,14 @@
         <script type="text/javascript">
             $(function () {
                 var $frm = $("#frmLogin");
+
+                function doLogin() {
+                    if ($frm.valid()) {
+                        $("#btnIngresar").button('loading');
+                        $frm.submit();
+                    }
+                }
+
                 $frm.validate({
                     errorClass     : "help-block",
                     errorPlacement : function (error, element) {
@@ -212,11 +220,14 @@
                     }
                 });
 
-                $("#btnIngresar").click(function () {
-                    if ($frm.valid()) {
-                        $(this).button('loading');
-                        $frm.submit();
+                $(".inputField").keyup(function (ev) {
+                    if (ev.keyCode == 13) {
+                        doLogin();
                     }
+                });
+
+                $("#btnIngresar").click(function () {
+                    doLogin();
                     return false;
                 });
             })

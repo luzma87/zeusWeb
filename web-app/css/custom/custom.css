@@ -61,8 +61,16 @@ body {
     list-style : none;
 }
 
+.submenu.active {
+    display : block;
+}
+
 .submenu a {
     width : 100%;
+}
+
+.submenu li.active a {
+    color : white;
 }
 
 .menu-vertical ul {
@@ -101,7 +109,7 @@ body {
     margin          : 0;
 }
 
-.menu a.active {
+.menu li.active a {
     text-decoration : none;
     background      : transparent;
     color           : #fff;
@@ -207,8 +215,8 @@ h1 {
     margin-top  : 0;
 }
 
-.card-inicio{
-    min-height    : 132px !important;
+.card-inicio {
+    min-height : 132px !important;
 }
 
 /*cards!!!!*/

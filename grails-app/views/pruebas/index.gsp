@@ -202,7 +202,7 @@
 
         $.ajax({
             type:"POST",
-            url: "${g.createLink(controller: 'pruebas',action: 'getInfoMensaje')}",
+            url: "${g.createLink(controller: 'pruebas',action: 'getInfoMensaje_ajax')}",
             data:"user="+$(this).attr("user")+"&mensaje="+$(this).attr("mensaje"),
             success : function(msg){
                 closeLoader()
@@ -281,7 +281,7 @@
                 title:"Información del usuario",
                 text: function(event, api) {
                     $.ajax({
-                        url: "${g.createLink(controller: 'pruebas',action: 'getInfoMensaje')}",
+                        url: "${g.createLink(controller: 'pruebas',action: 'getInfoMensaje_ajax')}",
                         data:"user="+$(this).attr("user")+"&mensaje="+$(this).attr("mensaje")
                     })
                             .then(function(content) {
@@ -322,7 +322,7 @@
        // console.log($("#mensajes").scrollTop(),$("#mensajes")[0].scrollHeight,scroll)
         $.ajax({
             type:"POST",
-            url: "${g.createLink(controller: 'pruebas',action: 'getMessages')}",
+            url: "${g.createLink(controller: 'pruebas',action: 'getMessages_ajax')}",
             data:"actual="+actual,
             dataType:"json",
             success : function(msg){
@@ -348,7 +348,7 @@
         if($.trim(texto)!=""){
             $.ajax({
                 type:"POST",
-                url: "${g.createLink(controller: 'pruebas',action: 'enviarMensaje')}",
+                url: "${g.createLink(controller: 'pruebas',action: 'enviarMensaje_ajax')}",
                 data:"mensaje="+$("#mensaje-txt").val(),
                 success : function(msg){
                     $("#mensaje-txt").val("")
@@ -365,7 +365,7 @@
             if($.trim(texto)!=""){
                 $.ajax({
                     type:"POST",
-                    url: "${g.createLink(controller: 'pruebas',action: 'enviarMensaje')}",
+                    url: "${g.createLink(controller: 'pruebas',action: 'enviarMensaje_ajax')}",
                     data:"mensaje="+$("#mensaje-txt").val(),
                     success : function(msg){
                         $("#mensaje-txt").val("")
@@ -380,7 +380,7 @@
     $(".btn-utils").click(function(){
         $.ajax({
             type:"POST",
-            url: "${g.createLink(controller: 'pruebas',action: 'enviarMensaje')}",
+            url: "${g.createLink(controller: 'pruebas',action: 'enviarMensaje_ajax')}",
             data:"mensaje="+$(this).attr("title"),
             success : function(msg){
                 $("#mensaje-txt").val("")
