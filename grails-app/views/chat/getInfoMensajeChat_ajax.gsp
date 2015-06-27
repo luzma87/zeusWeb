@@ -42,7 +42,6 @@
 
     <div class="col-md-9">
         ${params.from}
-        ${params.id}
     </div>
 </div>
 <g:if test="${inc.estado!='R'}">

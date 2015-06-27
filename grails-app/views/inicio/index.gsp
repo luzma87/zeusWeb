@@ -1,11 +1,10 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="mensajes.Mensaje; mensajes.Incidente" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>Zeus</title>
     <meta name="layout" content="main"/>
 </head>
 <body>
-<mn:barraTop titulo="Zeus - Inicio"></mn:barraTop>
 <g:if test="${session.usuario.tipo!='P'}">
     <div class="row" style="margin-top: 50px">
         <div class="col-md-3 col-md-offset-1">
@@ -145,13 +144,37 @@
     </div>
     <div class="row" style="margin-top: 50px">
         <div class="col-md-3 col-md-offset-1">
-            <div class="card-verde card-inicio">
+            <div class="card-default">
                 <div class="row">
                     <div class="col-xs-4">
-                        <i class="fa fa-5x">4</i>
+                        <i class="fa fa-4x">${seguridad.Persona.count()}</i>
                     </div>
                     <div class="col-xs-8 text-right">
                         <h2 style="margin-top: 0px">Usuarios registrados</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card-default">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <i class="fa fa-4x">${Incidente.count()}</i>
+                    </div>
+                    <div class="col-xs-8 text-right">
+                        <h2 style="margin-top: 0px">Incidentes reportados</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card-default">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <i class="fa fa-4x">${Mensaje.count()}</i>
+                    </div>
+                    <div class="col-xs-8 text-right">
+                        <h2 style="margin-top: 0px">Mensajes</h2>
                     </div>
                 </div>
             </div>

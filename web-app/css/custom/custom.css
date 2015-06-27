@@ -228,6 +228,14 @@ h1 {
     color         : #ffffff;
     padding       : 15px;
 }
+.card-default {
+    border-radius : 5px;
+    width         : 100%;
+    min-height    : 100px;
+    background    : #2F4050;
+    color         : #fff;
+    padding       : 15px;
+}
 
 .card-verde2 {
     border-radius : 5px;

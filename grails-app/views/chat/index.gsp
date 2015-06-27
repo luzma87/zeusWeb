@@ -131,7 +131,6 @@
 
             margin-top    : 0;
             border-radius : 5px;
-            border        : 1px solid #36579F;
         }
 
         .ingreso {
