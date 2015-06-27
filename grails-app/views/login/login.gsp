@@ -10,8 +10,8 @@
         <div class="panel-completo" style="height: auto;min-height: 10px">
             <div class="row">
                 <div class="col-md-12" style="position: relative" >
-                    <img src="${resource(dir:'images/favicons',file: 'apple-touch-icon-60x60.png')}">
-                    <span style="color: #006EB7">Petroleos y Servicios</span>
+                    <img src="${resource(dir:'images',file: 'logo_policia.png')}" height="60px">
+                    <span style="color: #006EB7">Zeus - Policía Nacional</span>
                 </div>
             </div>
         </div>
@@ -19,10 +19,10 @@
 </div>
 <div class="row" style="margin-top: 20px;padding: 20px">
     <div class="col-md-4 col-md-offset-1">
-        <div class="panel-completo" style="height: 338px">
+        <div class="panel-completo" style="height: 347px">
             <div class="row">
                 <div class="col-md-12 titulo-panel" style="position: relative">
-                    Petroleos y Servicios - Sistema contable
+                   Sistema de monitoreo comunitario
                 </div>
             </div>
             <div class="row fila">
@@ -60,61 +60,10 @@
         </div>
     </div>
     <div class="col-md-3 ">
-        <div class="panel-completo">
+        <div class="panel-completo" style="height: 347px">
             <div class="row">
                 <div class="col-md-12 titulo-panel">
-                    Otros sistemas PyS
-                </div>
-            </div>
-            <div class="row fila">
-                <div class="col-md-12">
-                    <div class="card-verde">
-                        <div class="row fila">
-                            <div class="col-xs-4">
-                                <i class="fa fa-cubes fa-3x"></i>
-                            </div>
-                            <div class="col-xs-8 text-right">
-                                <h1 style="margin-top: 0px">Esicc</h1>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row fila">
-                <div class="col-md-12">
-                    <div class="card-verde">
-                        <div class="row fila">
-                            <div class="col-xs-4">
-                                <i class="fa fa-dashboard fa-3x"></i>
-                            </div>
-                            <div class="col-xs-8 text-right">
-                                <h1 style="margin-top: 0px">Dashboard</h1>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row fila">
-                <div class="col-md-12">
-                    <div class="card-verde">
-                        <div class="row fila">
-                            <div class="col-xs-4">
-                                <i class="fa fa-file fa-3x"></i>
-                            </div>
-                            <div class="col-xs-8 text-right">
-                                <h1 style="margin-top: 0px">Facturación</h1>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3 ">
-        <div class="panel-completo" style="height: 338px">
-            <div class="row">
-                <div class="col-md-12 titulo-panel">
-                    Otra iformación
+                    ¿No estás registrado?
                 </div>
             </div>
             <div class="row fila">
@@ -122,16 +71,73 @@
                     <p>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sollicitudin enim sapien,
                         vel efficitur justo semper in. Nunc rhoncus leo non vestibulum eleifend. Duis faucibus,
-                        sem nec convallis efficitur, eros lectus efficitur ex, eget pharetra velit dolor eget ipsum.
-                        Vestibulum a placerat neque. Nullam sit amet nulla tempus, pulvinar dolor vitae, maximus augue.
-                        Sed purus mi, auctor et nisl ut, pharetra ornare metus. Phasellus commodo arcu sit amet enim eleifend
-                        rutrum. Aliquam ac efficitur tortor. Donec sit amet augue eu tellus vulputate condimentum id quis nunc.
+                        sem nec convallis efficitur, eros lectus efficitur ex.
                     </p>
+                </div>
+            </div>
+            <div class="row fila">
+                <div class="col-md-3">
+                   <i class="fa fa-sign-in fa-4x"></i>
+                </div>
+                <div class="col-md-9" style="font-size: 22px;line-height: 48px">
+                    Registrarse
                 </div>
             </div>
 
         </div>
     </div>
+    <div class="col-md-3 ">
+        <div class="panel-completo">
+            <div class="row">
+                <div class="col-md-12 titulo-panel">
+                    Servicios
+                </div>
+            </div>
+            <div class="row fila">
+                <div class="col-md-12">
+                    <div class="card-verde">
+                        <div class="row fila">
+                            <div class="col-xs-4">
+                                <i class="fa fa-home fa-3x"></i>
+                            </div>
+                            <div class="col-xs-8 text-right">
+                                <h1 style="margin-top: 0px;font-size: 18px">Encargar casa</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row fila">
+                <div class="col-md-12">
+                    <div class="card-verde">
+                        <div class="row fila">
+                            <div class="col-xs-4">
+                                <i class="fa fa-mobile fa-3x"></i>
+                            </div>
+                            <div class="col-xs-8 text-right">
+                                <h1 style="margin-top: 0px;font-size: 18px">Servicio móvil</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row fila">
+                <div class="col-md-12">
+                    <div class="card-verde">
+                        <div class="row fila">
+                            <div class="col-xs-4">
+                                <i class="fa fa-wechat fa-3x"></i>
+                            </div>
+                            <div class="col-xs-8 text-right">
+                                <h1 style="margin-top: 0px;font-size: 18px">Contáctenos</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 </body>

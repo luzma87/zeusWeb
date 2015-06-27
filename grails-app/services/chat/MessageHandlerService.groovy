@@ -104,16 +104,16 @@ class MessageHandlerService {
                         def tipo = msg[0..2]
                         println "msg " + msg
                         println "tipo " + tipo
-//                        if (tipos.contains(tipo)) {
-//                            def parts = msg.split(":")
-//                            def coords = parts.last()
-//                            parts = coords.split(",")
+                        if (tipos.contains(tipo)) {
+                            def parts = msg.split(":")
+                            def coords = parts.last()
+                            parts = coords.split(",")
 
-//                            def incId = creaIncidente(de, dDate, tipo, parts)
-//                            if (incId) {
-//                                tmp.put("id", incId)
-//                            }
-//                        }
+                            def incId = creaIncidente(de, dDate, tipo, parts)
+                            if (incId) {
+                                tmp.put("id", incId)
+                            }
+                        }
 
                         indice++
                     }
@@ -124,27 +124,27 @@ class MessageHandlerService {
         }
     }
 
-//    def creaIncidente(de, dDate, tipo, coords) {
-//        def inc = new Incidente()
-//        inc.de = de
-//        inc.fecha = dDate
-//        inc.tipo = tipo
-//        inc.latitud = coords[0].toDouble()
-//        inc.longitud = coords[1].toDouble()
-//        inc.estado = "P"
-//        if (!inc.save(flush: true)) {
-//            println "Error al guardar incidente: " + inc.errors
-//            return null
-//        } else {
-//            println "incidente guardado"
-//            incidentes.add(0, inc)
-//            if (incidentes.size() > 100) {
-//                incidentes.pop()
-//            }
-//            indiceInc++
-//            return inc.id
-//        }
-//    }
+    def creaIncidente(de, dDate, tipo, coords) {
+        def inc = new Incidente()
+        inc.de = de
+        inc.fecha = dDate
+        inc.tipo = tipo
+        inc.latitud = coords[0].toDouble()
+        inc.longitud = coords[1].toDouble()
+        inc.estado = "P"
+        if (!inc.save(flush: true)) {
+            println "Error al guardar incidente: " + inc.errors
+            return null
+        } else {
+            println "incidente guardado"
+            incidentes.add(0, inc)
+            if (incidentes.size() > 100) {
+                incidentes.pop()
+            }
+            indiceInc++
+            return inc.id
+        }
+    }
 
     def addMensaje(mensaje) {
 //        println "add mensaje"
