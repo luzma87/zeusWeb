@@ -27,7 +27,7 @@ class Persona {
             login column: 'username'
             cedula column: 'cedula'
             email column: 'email'
-            password column: 'encryptedPassword'
+            password column: 'plainPassword'
             direccion column: 'direccion'
             creacion column: 'creationDate'
             modificacion column: 'modificationDate'

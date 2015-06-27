@@ -66,7 +66,7 @@ class ChatController {
 //        }
 //        System.out.println("name = " + conn2.getUser())
         def user = "test3"
-        def pass = "123"
+        def pass = "123".encodeAsMD5()
         def ip = "167.114.144.175"
         def serverName = "vps44751.vps.ovh.ca"
         def roomName = "Jipijapa"
@@ -108,7 +108,7 @@ class ChatController {
 
     def ventanaMapa() {
         def user = "test4"
-        def pass = "123456"
+        def pass = "123".encodeAsMD5()
         def ip = "167.114.144.175"
         def serverName = "vps44751.vps.ovh.ca"
         def roomName = "Policia"
