@@ -5,10 +5,9 @@ import mensajes.Incidente
 import seguridad.Persona
 import seguridad.Shield
 
-class ChatController extends  Shield{
+class ChatController extends Shield {
 
     def messageHandlerService
-    static scope = "session"
 
 //    AbstractXMPPConnection conn2 = null
 
@@ -56,8 +55,10 @@ class ChatController extends  Shield{
     }
 
     def index() {
-        def user = "test3"
-        def pass = "123".encodeAsMD5()
+        def pers = Persona.get(session.usuario.id)
+        def user = pers.login
+        def pass = pers.password
+
         def ip = "167.114.144.175"
         def serverName = "vps44751.vps.ovh.ca"
         def roomName = "Jipijapa"

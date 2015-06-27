@@ -51,6 +51,8 @@ class MessageHandlerService {
                 con = new XMPPTCPConnection(config);
                 con.connect();
                 con.login();
+
+                println "Conectado como " + user
             } catch (e) {
 //                println "CATCH"
                 e.printStackTrace()

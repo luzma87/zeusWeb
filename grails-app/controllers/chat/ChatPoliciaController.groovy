@@ -1,13 +1,10 @@
 package chat
 
 import groovy.json.JsonBuilder
-import org.jivesoftware.smack.AbstractXMPPConnection
-import org.jivesoftware.smack.ConnectionConfiguration
-import org.jivesoftware.smack.tcp.XMPPTCPConnection
-import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration
 import seguridad.Persona
+import seguridad.Shield
 
-class ChatPoliciaController {
+class ChatPoliciaController extends Shield {
 
     def messageHandlerServicePoliciaService
     static scope = "session"
@@ -23,28 +20,28 @@ class ChatPoliciaController {
 
         def botones = [
                 unidades  : [
-                        clase: "btn-warning",
-                        title: "Avanzan unidades",
-                        icon : "fa-motorcycle",
-                        prefijo:"und"
+                        clase  : "btn-warning",
+                        title  : "Avanzan unidades",
+                        icon   : "fa-motorcycle",
+                        prefijo: "und"
                 ],
                 sospechoso: [
-                        clase: "btn-danger",
-                        title: "Sospechoso detenido",
-                        icon : "fa-child",
-                        prefijo:"ssd"
+                        clase  : "btn-danger",
+                        title  : "Sospechoso detenido",
+                        icon   : "fa-child",
+                        prefijo: "ssd"
                 ],
                 falsa     : [
-                        clase: "btn-primary",
-                        title: "Falsa alarma",
-                        icon : "fa-times",
-                        prefijo:"fls"
+                        clase  : "btn-primary",
+                        title  : "Falsa alarma",
+                        icon   : "fa-times",
+                        prefijo: "fls"
                 ],
                 novedad   : [
-                        clase: "btn-success",
-                        title: "Sin novedad",
-                        icon : "fa-check",
-                        prefijo:"snn"
+                        clase  : "btn-success",
+                        title  : "Sin novedad",
+                        icon   : "fa-check",
+                        prefijo: "snn"
                 ],
                 comunidad : [:]
         ]
@@ -52,7 +49,7 @@ class ChatPoliciaController {
         return [user: user, botones: botones]
     }
 
-    def ventanaMapa(){
+    def ventanaMapa() {
         def user = "test4"
         def pass = "123456"
         def ip = "167.114.144.175"

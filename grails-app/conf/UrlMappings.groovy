@@ -6,7 +6,7 @@ class UrlMappings {
                 // apply constraints here
             }
         }
-        "/"(controller: "chat", action: "index")
+        "/"(controller: "inicio", action: "index")
 
         "401"(controller: 'shield', action: 'unauthorized_401')
         "404"(controller: 'shield', action: 'notFound_404')

@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
     <head>
-        <title>Inicio</title>
+        <title>Ingreso</title>
         <meta name="layout" content="login"/>
 
         <style type="text/css">
@@ -13,6 +13,11 @@
         .titulo {
             color     : #006EB7;
             font-size : 20pt;
+        }
+
+        input.required {
+            border-bottom : 1px solid #ddd;
+            border-right  : 1px solid #ddd;
         }
         </style>
     </head>
@@ -34,49 +39,62 @@
         <div class="row" style="margin-top: 20px;padding: 20px">
             <div class="col-md-4 col-md-offset-1">
                 <div class="panel-completo" style="height: 347px">
-                    <div class="row">
-                        <div class="col-md-12 titulo-panel" style="position: relative">
-                            Sistema de monitoreo comunitario
+                    <g:form name="frmLogin" action="validar">
+                        <div class="row">
+                            <div class="col-md-12 titulo-panel" style="position: relative">
+                                Sistema de monitoreo comunitario
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="row fila">
-                        <div class="col-md-12">
-                            <h1 style="margin-top: 0">Ingreso al sistema</h1>
+                        <div class="row fila">
+                            <div class="col-md-12">
+                                <h1 style="margin-top: 0">Ingreso al sistema</h1>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="row fila">
-                        <div class="col-md-12">
-                            <label>Usuario</label>
+                        <div class="row fila">
+                            <div class="col-md-12">
+                                <label>Usuario</label>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="row fila">
-                        <div class="col-md-12">
-                            <input type="text" class="form-control" placeholder="Ingrese su usuario">
+                        <div class="row fila">
+                            <div class="col-md-12 grupo">
+                                <div class="input-group">
+                                    <g:textField name="user" class="form-control required" placeholder="Ingrese su usuario"/>
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-user"></i>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="row fila">
-                        <div class="col-md-12">
-                            <label>Contraseña</label>
+                        <div class="row fila">
+                            <div class="col-md-12">
+                                <label>Contraseña</label>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="row fila">
-                        <div class="col-md-12">
-                            <input type="password" class="form-control" placeholder="Ingrese su contraseña">
+                        <div class="row fila">
+                            <div class="col-md-12 grupo">
+                                <div class="input-group">
+                                    <g:passwordField name="pass" class="form-control required" placeholder="Ingrese su contraseña"/>
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-lock"></i>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="row fila">
-                        <div class="col-md-12 text-right">
-                            <a href="#" class="btn btn-verde" id="btnIngresar">
-                                <i class="fa fa-sign-in"></i> Ingresar
-                            </a>
+                        <div class="row fila">
+                            <div class="col-md-12 text-right">
+                                <a href="#" class="btn btn-verde" id="btnIngresar"
+                                   data-loading-text="<i class='fa fa-spinner fa-spin'></i> Espere...">
+                                    <i class="fa fa-sign-in"></i> Ingresar
+                                </a>
+                            </div>
                         </div>
-                    </div>
+                    </g:form>
                 </div>
             </div>
 
@@ -156,7 +174,7 @@
                             <div class="card-verde">
                                 <div class="row fila">
                                     <div class="col-xs-4">
-                                        <i class="fa fa-wechat fa-3x"></i>
+                                        <i class="fa fa-comment fa-3x"></i>
                                     </div>
 
                                     <div class="col-xs-8 text-right">
@@ -173,8 +191,32 @@
 
         <script type="text/javascript">
             $(function () {
-                $("#btnIngresar").click(function () {
+                var $frm = $("#frmLogin");
+                $frm.validate({
+                    errorClass     : "help-block",
+                    errorPlacement : function (error, element) {
+                        if (element.parent().hasClass("input-group")) {
+                            error.insertAfter(element.parent());
+                        } else {
+                            error.insertAfter(element);
+                        }
+                        element.parents(".grupo").addClass('has-error');
+                    },
+                    success        : function (label) {
+                        label.parents(".grupo").removeClass('has-error');
+                        label.remove();
+                    },
+                    messages       : {
+                        user : "Ingrese su usuario",
+                        pass : "Ingrese su contraseña"
+                    }
+                });
 
+                $("#btnIngresar").click(function () {
+                    if ($frm.valid()) {
+                        $(this).button('loading');
+                        $frm.submit();
+                    }
                     return false;
                 });
             })

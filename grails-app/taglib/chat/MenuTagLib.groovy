@@ -1,10 +1,12 @@
 package chat
 
+import seguridad.Persona
+
 class MenuTagLib {
     static namespace = 'mn'
 
 
-    def barraTop = {attrs->
+    def barraTop = { attrs ->
         def titulo = attrs['titulo']
         def html = '<nav class="default navbar">\n' +
                 '    <div class="row">\n' +
@@ -14,7 +16,7 @@ class MenuTagLib {
                 '            </a>\n' +
                 '        </div>\n' +
 
-                '        <div class="col-md-9 titulo hidden-sm hidden-xs ">\n' +titulo+
+                '        <div class="col-md-9 titulo hidden-sm hidden-xs ">\n' + titulo +
                 '        </div>\n' +
                 '        <div class="col-md-1 hidden-xs" style="width: 50px;margin-top: 10px">\n' +
                 '            <a href="#" class="item" title="Alertas" >\n' +
@@ -28,7 +30,7 @@ class MenuTagLib {
                 '        </div>\n' +
                 '    </div>\n' +
                 '</nav>'
-        out<< html
+        out << html
     }
 
     def stickyFooter = { attrs ->
@@ -178,4 +180,194 @@ class MenuTagLib {
 
         return str
     }
+
+    def verticalMenu = { attrs ->
+
+        println ">>>>>>>>>>>>>>>>>>>>>>>>>>"
+        println session.cn
+        println session.an
+        println ">>>>>>>>>>>>>>>>>>>>>>>>>>"
+
+        def usu = Persona.get(session.usuario.id)
+        def tipo = usu.tipo
+        def perfil
+
+        if (!tipo) {
+            tipo = "C"
+        }
+
+        def items = null
+
+        if (tipo == "C") {
+            perfil = "Ciudadano"
+            items = [
+                    chat     : [
+                            controller: "chatPersona",
+                            action    : "index",
+                            label     : "Chat",
+                            icon      : "fa-wechat"
+                    ],
+                    servicios: [
+                            label: "Servicios",
+                            icon : "fa-cubes",
+                            items: [
+                                    encargar: [
+                                            controller: "servicios",
+                                            action    : "form",
+                                            params    : [servicio: "encargar"],
+                                            label     : "Encargar casa",
+                                            icon      : "fa-home"
+                                    ],
+                                    movil   : [
+                                            controller: "servicios",
+                                            action    : "form",
+                                            params    : [servicio: "movil"],
+                                            label     : "Servicio móvil",
+                                            icon      : "fa-mobile"
+                                    ],
+                                    contacto: [
+                                            controller: "servicios",
+                                            action    : "form",
+                                            params    : [servicio: "contacto"],
+                                            label     : "Contáctenos",
+                                            icon      : "fa-comment"
+                                    ]
+                            ]
+                    ],
+                    logout   : [
+                            controller: "login",
+                            action    : "logout",
+                            label     : "Salir",
+                            icon      : "fa-sign-out"
+                    ]
+            ]
+        } else if (tipo == "P") {
+            perfil = "Policía"
+            items = [
+                    inicio    : [
+                            controller: "inicio",
+                            action    : "index",
+                            label     : "Inicio",
+                            icon      : "fa-home"
+                    ],
+                    chat      : [
+                            label: "Chat",
+                            icon : "fa-wechat",
+                            items: [
+                                    publico: [
+                                            controller: "chat",
+                                            action    : "index",
+                                            label     : "Público",
+                                            icon      : "fa-comments"
+                                    ],
+                                    policia: [
+                                            controller: "chatPolicia",
+                                            action    : "index",
+                                            label     : "Policías",
+                                            icon      : "fa-comment"
+                                    ]
+                            ]
+                    ],
+                    busquedas : [
+                            controller: "busquedas",
+                            action    : "index",
+                            label     : "Búsquedas",
+                            icon      : "fa-search"
+                    ],
+                    incidentes: [
+                            controller: "mapa",
+                            action    : "index",
+                            label     : "Incidentes",
+                            icon      : "fa-map-marker"
+                    ],
+                    personas  : [
+                            controller: "persona",
+                            action    : "list",
+                            label     : "Usuarios",
+                            icon      : "fa-users"
+                    ],
+                    logout    : [
+                            controller: "login",
+                            action    : "logout",
+                            label     : "Salir",
+                            icon      : "fa-sign-out"
+                    ]
+            ]
+        }
+
+        def strItems = ""
+        items.each { k, item ->
+            strItems += renderVerticalMenuItem(item)
+        }
+
+        def img = resource(dir: 'images', file: 'logo_policia.png')
+
+        def html = "<div class='menu'>"
+        html += "<ul class=\"nav menu-vertical\">"
+        /* ****************** user info ********************/
+        html += '<li class="info-user toggle-menu">'
+        html += '<div class="circulo-logo" style="margin-left: 20px;margin-top: 22px">'
+        html += '<img src="' + img + '" height="40px">'
+        html += '</div>'
+        html += '<div class="row fila">'
+        html += '<div class="col-md-11 col-md-offset-1">'
+        html += '<span style="font-weight: bold;color: #fff">' + usu.nombre + '</span>'
+        html += '</div>'
+        html += '</div>'
+        html += '<div class="row fila">'
+        html += '<div class="col-md-11 col-md-offset-1">'
+        html += '<span>' + perfil + '</span>'
+        html += '</div>'
+        html += '</div>'
+        html += '</li>'
+        /* ****************** fin user info ********************/
+
+        html += strItems
+
+        html += "</ul>"
+        html += "</div>" //.menu
+        out << html
+    }
+
+    def renderVerticalMenuItem(item) {
+        def html = ""
+
+        if (item.items && item.items.size() > 0) {
+            html += '<li class="menu-item active dropdown">'
+            html += '<a href="#" class="dropdown-toggle active " title="' + item.label + '">'
+            if (item.icon) {
+                html += '<i class="fa-menu fa ' + item.icon + '"></i>'
+            }
+            html += '<span class="toggle-menu">' + item.label + '</span>'
+            html += '<span class="caret toggle-menu"></span></a>'
+            html += '<ul class="submenu " style="margin-top: 0">'
+            item.items.each { itm ->
+                def it = itm.value
+                def url = createLink(controller: it.controller, action: it.action, params: it.params)
+                html += '<li>'
+                html += '<a href="' + url + '">'
+                if (it.icon) {
+                    html += '<i class="fa-menu fa ' + it.icon + '"></i>'
+                }
+                html += it.label
+                html += "</a>"
+                html += '</li>'
+            }
+            html += '</ul>'
+            html += '</li>'
+        } else {
+            def url = createLink(controller: item.controller, action: item.action, params: item.params)
+            html += '<li class="menu-item">'
+            html += '<a href="' + url + '" title="' + item.label + '">'
+            if (item.icon) {
+                html += '<i class="fa-menu fa ' + item.icon + '"></i>'
+            }
+            html += '<span class="toggle-menu">' + item.label + '</span>'
+            html += '</a>'
+            html += '</li>'
+        }
+
+        return html
+    }
+
 }

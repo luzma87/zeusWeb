@@ -23,7 +23,7 @@ class LoginController {
      */
     def login() {
         def usu = session.usuario
-        def cn = "sistema"
+        def cn = "inicio"
         def an = "index"
         if (usu) {
             if (session.cn && session.an) {
@@ -58,11 +58,6 @@ class LoginController {
         } else {
             user = user.first()
 
-            println "USER: " + user
-            println "PASS: " + user.password
-            println "PARM: " + params.pass
-            println "PARM: " + params.pass.encodeAsMD5()
-
             if (params.pass.encodeAsMD5() != user.password) {
                 flash.message = "Contraseña incorrecta"
                 flash.tipo = "error"
@@ -84,7 +79,7 @@ class LoginController {
      * @return
      */
     def doLogin_funcion() {
-        redirect(controller: "chat", action: "index")
+        redirect(controller: "inicio", action: "index")
     }
 
     /**

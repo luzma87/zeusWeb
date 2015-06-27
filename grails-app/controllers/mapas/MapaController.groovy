@@ -3,8 +3,9 @@ package mapas
 import mensajes.Conversacion
 import mensajes.Mensaje
 import mensajes.Room
+import seguridad.Shield
 
-class MapaController {
+class MapaController extends Shield {
 
     def index() {
 
@@ -21,32 +22,32 @@ class MapaController {
         def tiposIncidencia = [
                 loc: [
                         mensajes: [],
-                        icono   : resource(dir: 'images/pins/'+folder, file: 'location32.png'),
+                        icono   : resource(dir: 'images/pins/' + folder, file: 'location32.png'),
                         title   : "Ubicación"
                 ],
                 asL: [
                         mensajes: [],
-                        icono   : resource(dir: 'images/pins/'+folder, file: 'thief1.png'),
+                        icono   : resource(dir: 'images/pins/' + folder, file: 'thief1.png'),
                         title   : "Asalto"
                 ],
                 acL: [
                         mensajes: [],
-                        icono   : resource(dir: 'images/pins/'+folder, file: 'cars1.png'),
+                        icono   : resource(dir: 'images/pins/' + folder, file: 'cars1.png'),
                         title   : "Accidente"
                 ],
                 ssL: [
                         mensajes: [],
-                        icono   : resource(dir: 'images/pins/'+folder, file: 'businessman205.png'),
+                        icono   : resource(dir: 'images/pins/' + folder, file: 'businessman205.png'),
                         title   : "Sospechoso"
                 ],
                 inL: [
                         mensajes: [],
-                        icono   : resource(dir: 'images/pins/'+folder, file: 'bill7.png'),
+                        icono   : resource(dir: 'images/pins/' + folder, file: 'bill7.png'),
                         title   : "Intruso"
                 ],
                 lbL: [
                         mensajes: [],
-                        icono   : resource(dir: 'images/pins/'+folder, file: 'healthyfood1.png'),
+                        icono   : resource(dir: 'images/pins/' + folder, file: 'healthyfood1.png'),
                         title   : "Libadores"
                 ]/*,
                 loL: [
