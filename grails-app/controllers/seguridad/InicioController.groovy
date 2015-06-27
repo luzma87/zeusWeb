@@ -1,6 +1,6 @@
 package seguridad
 
-class InicioController {
+class InicioController extends Shield {
 
     def index() {}
 }
