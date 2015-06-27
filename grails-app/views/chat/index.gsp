@@ -331,8 +331,32 @@
             var $mensajeTxt = $("#mensaje-txt");
             var $mensajes = $("#mensajes");
 
-            function test() {
-                console.log("TEST");
+            function test(id,usuario,tipo) {
+
+                $.ajax({
+                    type    : "POST",
+                    url     : "${g.createLink(controller: 'chat',action: 'cambiaEstado')}",
+                    data    : "id=" + id,
+                    success : function (msg) {
+                        infowindow.close()
+                        $.ajax({
+                            type    : "POST",
+                            url     : "${g.createLink(controller: 'chat',action: 'enviarMensaje')}",
+                            data    : {
+                                mensaje : "und:"+tipo+" reportado por "+usuario+": Unidades en camino"
+                            },
+                            success : function (msg) {
+                                startInterval();
+                                for(var i = 0;i<markers.length;i++){
+                                    var m = markers[i]
+                                    if(m.incId==id){
+                                        m.setMap(null)
+                                    }
+                                }
+                            }
+                        });
+                    }
+                });
             }
 
             var tipos = {
@@ -566,20 +590,6 @@
                         }
                     }
                 });
-                %{--$.ajax({--}%
-                %{--type     : "POST",--}%
-                %{--url      : "${g.createLink(controller: 'chat',action: 'getIncidentes')}",--}%
-                %{--data     : "actual=" + actualInc,--}%
-                %{--dataType : "json",--}%
-                %{--success  : function (msg) {--}%
-                %{--var data = msg;--}%
-                %{--actualInc = actualInc + data.length;--}%
-                %{--console.log(data);--}%
-                %{--$.each(data, function (i, val) {--}%
-                %{--console.log(val);--}%
-                %{--});--}%
-                %{--}--}%
-                %{--});--}%
             }
 
             $(function () {

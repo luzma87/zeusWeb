@@ -1,9 +1,11 @@
 package chat
 
 import groovy.json.JsonBuilder
+import mensajes.Incidente
 import seguridad.Persona
+import seguridad.Shield
 
-class ChatController {
+class ChatController extends  Shield{
 
     def messageHandlerService
     static scope = "session"
@@ -11,7 +13,8 @@ class ChatController {
 //    AbstractXMPPConnection conn2 = null
 
     def getInfoMensajeChat_ajax() {
-
+        println "params info "+params
+        def inc = Incidente.get(params.id)
         def folder = "32px_bubble"
         def tipos = [
                 loc: [
@@ -40,37 +43,25 @@ class ChatController {
                 ]
         ]
 
-        return [params: params, tipos: tipos]
+        return [params: params, tipos: tipos,inc:inc]
+    }
+
+    def cambiaEstado(){
+        println "params cambia estado "+params
+        def inc = Incidente.get(params.id)
+        inc.estado="R"
+        if(!inc.save(flush: true))
+            println "error "+inc.save()
+        render "ok"
     }
 
     def index() {
-//        println "conn2.connected? " + conn2.connected
-//        println "conn2.authenticated? " + conn2.authenticated
-//        if (!conn2.authenticated) {
-//            try {
-//                XMPPTCPConnectionConfiguration config = XMPPTCPConnectionConfiguration.builder()
-//                        .setUsernameAndPassword("valentinsvt", "123456")
-//                        .setServiceName("vps44751.vps.ovh.ca")
-//                        .setHost("167.114.144.175")
-//                        .setPort(5222)
-//                        .setSecurityMode(ConnectionConfiguration.SecurityMode.disabled)
-//                        .build();
-//
-//                conn2 = new XMPPTCPConnection(config);
-//                conn2.connect();
-//                conn2.login();
-//            } catch (e) {
-//                println "CATCH"
-//                e.printStackTrace()
-//            }
-//        }
-//        System.out.println("name = " + conn2.getUser())
         def user = "test3"
         def pass = "123".encodeAsMD5()
         def ip = "167.114.144.175"
         def serverName = "vps44751.vps.ovh.ca"
         def roomName = "Jipijapa"
-
+        println "chat users"
         messageHandlerService.inicio(user, pass, ip, serverName, roomName)
 
         def botones = [
@@ -102,7 +93,7 @@ class ChatController {
         ]
 
         def folder = "32px_bubble"
-
+        messageHandlerService.sendMensaje("La Policía Nacional ha ingresado al chat")
         return [user: user, botones: botones, folder: folder]
     }
 

@@ -1,4 +1,4 @@
-<table class="table table-bordered table-condensed table-hover table-striped">
+<table class="table table-bordered table-condensed table-hover table-striped verde">
     <thead>
     <tr>
         <th>Fecha</th>
@@ -24,3 +24,10 @@
     </g:each>
     </tbody>
 </table>
+<div class="row fila">
+    <div class="col-md-2">
+        <a href="#" class="btn btn-verde">
+            <i class="fa fa-envelope"></i> Enviar por email
+        </a>
+    </div>
+</div>

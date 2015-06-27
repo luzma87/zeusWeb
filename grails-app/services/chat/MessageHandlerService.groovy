@@ -23,14 +23,15 @@ class MessageHandlerService {
     int indice = 0
     int indiceInc = 0
     def muc
+    def listener
 
     def tipos = [
-            "loc",
-            "asL",
-            "acL",
-            "ssL",
-            "inL",
-            "lbL"
+            "loc":"Ubicación",
+            "asL":"Asalto",
+            "acL":"Accidente",
+            "ssL":"Sospechoso",
+            "inL":"Intruso",
+            "lbL":"Libadores"
     ]
 
     def inicio(String user, String pass, String serverIp, String serverName, String roomName) {
@@ -58,6 +59,62 @@ class MessageHandlerService {
 
         def mucm = MultiUserChatManager.getInstanceFor(con)
         muc = mucm.getMultiUserChat("${roomName}@conference.${serverName}")
+        muc.leave()
+        muc.removeMessageListener(listener)
+        if(!listener){
+            listener = new MessageListener() {
+                @Override
+                void processMessage(Message message) {
+                    DelayInformation inf = null;
+                    def date
+                    def dDate
+//                        println "AQUI"
+////                        println "xml " + message.toXML()
+////                        println "xml2 " + message.getExtensionsXML()
+////                        println "xml3 " + message.getExtension("urn:xmpp:delay").toXML()
+                    try {
+                        inf = (DelayInformation) message.getExtension("urn:xmpp:delay");
+                    } catch (Exception e) {
+                        log.error(e);
+                    }
+
+                    if (inf != null) {
+                        dDate = inf.getStamp()
+                    } else {
+                        dDate = new Date()
+                    }
+                    def tmp = [:]
+                    def msg = message.getBody()
+                    def de = message.getFrom().split("/")[1]
+                    def tipo = msg[0..2]
+                    def iden = 0
+                    println "msg " + msg
+                    println "tipo " + tipo
+                    if (tipos[tipo]) {
+                        def parts = msg.split(":")
+                        def coords = parts.last()
+                        parts = coords.split(",")
+                        def incId = creaIncidente(de, dDate, tipos[tipo], parts)
+                        if (incId>0) {
+                            iden=incId
+                        }
+                    }
+                    date = dDate.format("dd-MM-yyyy HH:mm:ss")
+
+                    tmp.put("mensaje", msg)
+                    tmp.put("tipo", 1)
+                    tmp.put("de", de)
+                    tmp.put("type", message.getType())
+                    tmp.put("hora", date)
+                    tmp.put("id", iden)
+
+                    addMensaje(tmp)
+
+
+                    indice++
+                }
+            }
+        }
         try {
             if (!muc.isJoined()) {
                 indice = 0
@@ -65,59 +122,9 @@ class MessageHandlerService {
                 mensajes = []
                 incidentes = []
                 muc.join(user, pass)
-                muc.addMessageListener(new MessageListener() {
-                    @Override
-                    void processMessage(Message message) {
-                        DelayInformation inf = null;
-                        def date
-                        def dDate
-//                        println "AQUI"
-////                        println "xml " + message.toXML()
-////                        println "xml2 " + message.getExtensionsXML()
-////                        println "xml3 " + message.getExtension("urn:xmpp:delay").toXML()
-                        try {
-                            inf = (DelayInformation) message.getExtension("urn:xmpp:delay");
-                        } catch (Exception e) {
-                            log.error(e);
-                        }
-// get offline message timestamp
-                        if (inf != null) {
-                            dDate = inf.getStamp()
-//                            date = inf.getStamp().format("dd-MM-yy HH:mm:ss");
-                            ////println "stored "+date
-                        } else {
-                            dDate = new Date()
-//                            date = new Date().format("dd-MM-yy HH:mm:ss")
-                        }
-                        date = dDate.format("dd-MM-yyyy HH:mm:ss")
-                        def tmp = [:]
-                        def msg = message.getBody()
-                        def de = message.getFrom().split("/")[1]
-                        tmp.put("mensaje", msg)
-                        tmp.put("tipo", 1)
-                        tmp.put("de", de)
-                        tmp.put("type", message.getType())
-                        tmp.put("hora", date)
-
-                        addMensaje(tmp)
-
-                        def tipo = msg[0..2]
-                        println "msg " + msg
-                        println "tipo " + tipo
-                        if (tipos.contains(tipo)) {
-                            def parts = msg.split(":")
-                            def coords = parts.last()
-                            parts = coords.split(",")
-
-                            def incId = creaIncidente(de, dDate, tipo, parts)
-                            if (incId) {
-                                tmp.put("id", incId)
-                            }
-                        }
-
-                        indice++
-                    }
-                });
+                muc.addMessageListener(listener);
+            }else{
+                println "si es joined no hizo nada"
             }
         } catch (e) {
 //            println "eerror " + e
@@ -125,25 +132,33 @@ class MessageHandlerService {
     }
 
     def creaIncidente(de, dDate, tipo, coords) {
-        def inc = new Incidente()
-        inc.de = de
-        inc.fecha = dDate
-        inc.tipo = tipo
-        inc.latitud = coords[0].toDouble()
-        inc.longitud = coords[1].toDouble()
-        inc.estado = "P"
-        if (!inc.save(flush: true)) {
-            println "Error al guardar incidente: " + inc.errors
-            return null
-        } else {
-            println "incidente guardado"
-            incidentes.add(0, inc)
-            if (incidentes.size() > 100) {
-                incidentes.pop()
+        def check = Incidente.findAll("from Incidente  where tipo='${tipo}' and longitud=${coords[1]} and latitud=${coords[0]}")
+        println "check "+check
+        if(check.size()>0)
+            return check.pop().id
+        else {
+            def inc = new Incidente()
+            inc.de = de
+            inc.fecha = dDate
+            inc.tipo = tipo
+            inc.latitud = coords[0].toDouble()
+            inc.longitud = coords[1].toDouble()
+            inc.estado = "P"
+
+            if (!inc.save(flush: true)) {
+                println "Error al guardar incidente: " + inc.errors
+                return 0
+            } else {
+                println "incidente guardado"
+                incidentes.add(0, inc)
+                if (incidentes.size() > 100) {
+                    incidentes.pop()
+                }
+                indiceInc++
+                return inc.id
             }
-            indiceInc++
-            return inc.id
         }
+
     }
 
     def addMensaje(mensaje) {
@@ -172,27 +187,6 @@ class MessageHandlerService {
         }
     }
 
-    def getIncidentes(actual) {
-        println "incidentes: " + incidentes
-        if (incidentes.size() > 0) {
-            def i = indiceInc - actual
-            if (i > 0) {
-                if (i > 100) {
-                    println "1"
-                    return incidentes
-                } else {
-                    println "2"
-                    return incidentes[0..i - 1]
-                }
-            } else {
-                println "3"
-                return []
-            }
-        } else {
-            println "4"
-            return []
-        }
-    }
 
     def sendMensaje(String mensaje) {
 //        println "send mensaje"
