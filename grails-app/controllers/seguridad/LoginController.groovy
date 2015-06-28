@@ -58,7 +58,7 @@ class LoginController {
         } else {
             user = user.first()
 
-            if (params.pass.encodeAsMD5() != user.password) {
+            if (params.pass.toString().encodeAsMD5() != user.password) {
                 flash.message = "Contraseña incorrecta"
                 flash.tipo = "error"
                 flash.icon = "icon-warning"
