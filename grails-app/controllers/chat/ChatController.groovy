@@ -6,6 +6,8 @@ import seguridad.Persona
 import seguridad.Shield
 
 class ChatController extends Shield {
+    static scope="session"
+    static proxy=true
 
     def messageHandlerService
 
@@ -105,12 +107,12 @@ class ChatController extends Shield {
         def ip = "167.114.144.175"
         def serverName = "vps44751.vps.ovh.ca"
         def roomName = "Policia"
-        messageHandlerService.inicio(user, pass, ip, serverName, roomName)
-
-        return [user: user]
+        def folder = "32px_bubble"
+        return [user: user,folder: folder]
     }
 
     def getMessages_ajax() {
+       // println "get msn "+params
         def actual
         if (params.actual) {
             actual = params.actual.toInteger()
@@ -118,7 +120,7 @@ class ChatController extends Shield {
             actual = 0
         }
         def mensajes = messageHandlerService.getMensajes(actual)
-
+       // println " msn "+mensajes.size()
         if (mensajes.size() > 0) {
             def json = new JsonBuilder(mensajes.reverse())
             // println json.toPrettyString()
