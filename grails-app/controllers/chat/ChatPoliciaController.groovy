@@ -5,9 +5,10 @@ import seguridad.Persona
 import seguridad.Shield
 
 class ChatPoliciaController extends Shield {
+    static scope="session"
+    static proxy=true
 
     def messageHandlerServicePoliciaService
-    static scope = "session"
 
     def index() {
         def pers = Persona.get(session.usuario.id)

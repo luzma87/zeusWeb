@@ -18,7 +18,8 @@ class MessageHandlerService {
 
     def mensajes = []
     def incidentes = []
-
+    static scope = 'session'
+    static proxy = true
     AbstractXMPPConnection con
     int indice = 0
     int indiceInc = 0
@@ -173,8 +174,10 @@ class MessageHandlerService {
 
     def getMensajes(actual) {
 //        println "get mensaje"
+       // println "  size "+mensajes.size()
         if (mensajes.size() > 0) {
             def i = indice - actual
+           // println " nidice !! $indice  i "+i+"  act "+actual
             if (i > 0) {
                 if (i > 100) {
                     return mensajes

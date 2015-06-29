@@ -9,13 +9,14 @@ import org.jivesoftware.smack.tcp.XMPPTCPConnection
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration
 import org.jivesoftware.smackx.delay.packet.DelayInformation
 import org.jivesoftware.smackx.muc.MultiUserChatManager
-
 @Transactional
 class MessageHandlerServicePoliciaService {
     def mensajes = []
     AbstractXMPPConnection con
     int indice = 0
     def muc
+    static scope = 'session'
+    static proxy = true
 
     def inicio(String user, String pass, String serverIp, String serverName, String roomName) {
 
