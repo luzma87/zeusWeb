@@ -6,8 +6,8 @@ import seguridad.Persona
 import seguridad.Shield
 
 class ChatPersonaController extends Shield {
-    static scope="session"
-    static proxy=true
+    static scope = "session"
+    static proxy = true
     def messageHandlerService
 
 //    AbstractXMPPConnection conn2 = null
@@ -68,38 +68,38 @@ class ChatPersonaController extends Shield {
         messageHandlerService.inicio(user, pass, ip, serverName, roomName)
 
         def botones = [
-                asalto  : [
-                        clase  : "btn-verde",
+                asalto    : [
+                        clase  : "btn-asalto",
                         prefijo: "asL",
                         title  : "Asalto, necesito ayuda!",
                         icon   : "flaticon-thief1"
                 ],
-                accidente: [
-                        clase  : "btn-danger",
+                accidente : [
+                        clase  : "btn-accidente",
                         prefijo: "acL",
-                        title  : "Accidente",
+                        title  : "Accidente, necesito ayuda!",
                         icon   : "flaticon-cars1"
                 ],
-                sospechoso     : [
-                        clase  : "btn-warning",
+                sospechoso: [
+                        clase  : "btn-sospechoso",
                         prefijo: "ssL",
-                        title  : "Sospechoso",
+                        title  : "Sospechoso, necesito ayuda!",
                         icon   : "flaticon-businessman205"
                 ],
                 intruso   : [
-                        clase  : "btn-info",
+                        clase  : "btn-intruso",
                         prefijo: "inL",
-                        title  : "Intruso",
+                        title  : "Intruso, necesito ayuda!",
                         icon   : "flaticon-bill7"
                 ],
-                libadores   : [
-                        clase  : "btn-default",
+                libadores : [
+                        clase  : "btn-libadores",
                         prefijo: "lbL",
-                        title  : "Libadores",
+                        title  : "Libadores, necesito ayuda!",
                         icon   : "flaticon-healthyfood1"
                 ],
-                ubicacion   : [
-                        clase  : "btn-success",
+                ubicacion : [
+                        clase  : "btn-ubicacion",
                         prefijo: "loc",
                         title  : "Mi ubicación",
                         icon   : "flaticon-location32"
@@ -107,7 +107,7 @@ class ChatPersonaController extends Shield {
         ]
 
         def folder = "32px_bubble"
-        return [user: user, botones: botones, folder: folder,persona:pers]
+        return [user: user, botones: botones, folder: folder, persona: pers]
     }
 
     def ventanaMapa() {

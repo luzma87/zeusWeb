@@ -1,271 +1,27 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
-<html>
-<head>
-<meta name="layout" content="main"/>
-<script src="http://maps.googleapis.com/maps/api/js"></script>
-<imp:js src="${g.resource(dir: 'js', file: 'markerwithlabel.js')}"/>
-<imp:js src="${g.resource(dir: 'js/plugins/jquery.xcolor', file: 'jquery.xcolor.min.js')}"/>
-<imp:js src="${g.resource(dir: 'js/plugins/ion.sound-3.0.4', file: 'ion.sound.min.js')}"/>
-<imp:js src="${g.resource(dir: 'js/plugins/OverlappingMarkerSpiderfier/js', file: 'oms.min.js')}"/>
-<script>
-    var gm = google.maps;
-    var map, oms;
-    var colores = {};
-    var infowindow;
-
-    function startInterval() {
-        if (myInterval) {
-            clearInterval(myInterval);
-        }
-        showMensajes();
-        myInterval = setInterval(function () {
-            showMensajes();
-        }, 3000);
-    }
-
-    function toggleBounce(marker) {
-        if (marker.getAnimation() != null) {
-            marker.setAnimation(null);
-        } else {
-            marker.setAnimation(gm.Animation.BOUNCE);
-        }
-    }
-    function stopBounce(pos) {
-
-        if (marker.getAnimation() != null) {
-            marker.setAnimation(null);
-        } else {
-            marker.setAnimation(gm.Animation.BOUNCE);
-        }
-    }
-
-    function initialize() {
-        var mapProp = {
-            center    : new gm.LatLng(-0.16481615, -78.47895741),
-            zoom      : 15,
-            mapTypeId : gm.MapTypeId.ROADMAP
-        };
-        map = new gm.Map(document.getElementById("googleMap"), mapProp);
-
-        oms = new OverlappingMarkerSpiderfier(map, {
-            markersWontMove : true,
-            markersWontHide : true,
-            keepSpiderfied  : true
-        });
-
-        infowindow = new gm.InfoWindow({
-            content  : "DUMMY",
-            maxWidth : 300
-        });
-
-        oms.addListener('spiderfy', function (markers) {
-//                    console.log("spiderfy");
-            for (var i = 0; i < markers.length; i++) {
-                markers[i].setAnimation(null);
-            }
-            infowindow.close();
-        });
-
-        oms.addListener('unspiderfy', function (markers) {
-//                    console.log("unspiderfy");
-            for (var i = 0; i < markers.length; i++) {
-                markers[i].setAnimation(gm.Animation.BOUNCE);
-            }
-            infowindow.close();
-        });
-
-        oms.addListener('click', function (marker, event) {
-//                    if (marker.getAnimation() != null) {
-            marker.setAnimation(null);
-//                    } else {
-//                        marker.setAnimation(gm.Animation.BOUNCE);
-//                    }
-
-//                    console.log("fecha: ", marker.fecha, " from: ", marker.from, " msg: ", marker.mensaje);
-
-            infowindow.setContent("<i class='fa fa-spinner fa-spin fa-lg' style='color: #FFA46B;' title='Cargando...'></i>" +
-                    " Cargando...");
-
-            if (infowindow) {
-                infowindow.close();
-            }
-            infowindow.open(map, marker);
-            infoWindowAjax(marker, function (data) {
-                infowindow.setContent(data);
-            });
-        });
-        startInterval();
-    }
-
-    function infoWindowAjax(marker, callback) {
-        return $.ajax({
-            url  : "${g.createLink(controller: 'chat',action: 'getInfoMensajeChat_ajax')}",
-            data : {
-                from  : marker.from,
-                fecha : marker.fecha,
-                msg   : marker.mensaje,
-                id    : marker.incId
-            }
-        }).done(callback)
-                .fail(function (jqXHR, textStatus, errorThrown) {
-                    alert(errorThrown);
-                });
-    }
-
-    gm.event.addDomListener(window, 'load', initialize);
-
-</script>
-<title>Zeus - chat</title>
-<style type="text/css">
-.divIzq {
-    height        : 520px;
-    border-radius : 5px;
-    margin-right  : 0;
-}
-
-#mensajes {
-    height        : 416px;
-    overflow      : auto;
-    padding       : 10px;
-    width         : 100%;
-    margin-top    : 0;
-    border-radius : 5px;
-    font-size     : 11px !important;
-}
-
-.ingreso {
-    width      : 100%;
-    height     : 60px;
-    font-size  : 11px !important;
-    margin-top : 5px;
-}
-
-.divDer {
-    height                     : 475px;
-    overflow                   : auto;
-    border-bottom-right-radius : 5px;
-    border-top-right-radius    : 5px;
-
-}
-
-.mio {
-    padding       : 5px;
-    display       : inline-block;
-    border-radius : 5px;
-    background    : #2196f3;
-    margin-bottom : 5px;
-    color         : #d2d2d2;
-    text-align    : left;
-    cursor        : pointer;
-}
-
-.fila {
-    width : 100%;
-}
-
-.mensaje {
-    padding       : 5px;
-    display       : inline-block;
-    border-radius : 5px;
-    background    : #ffd781;
-    margin-bottom : 5px;
-    color         : #000000;
-    cursor        : pointer;
-    position      : relative;
-}
-
-.usuario {
-    font-weight : bold;
-}
-
-.txt-ingreso {
-    width         : 80%;
-    display       : inline-block;
-    height        : 100%;
-    resize        : none;
-    border-radius : 5px;
-    padding       : 10px;
-}
-
-.txt-der {
-    text-align : right;
-}
-
-.col-botones {
-    height      : 520px;
-    width       : 45px;
-    display     : inline-table;
-    float       : left;
-    margin-left : -12px;
-
-}
-
-.btn-barra {
-    margin      : 2px;
-    width       : 40px;
-    height      : 40px;
-    line-height : 30px;
-
-}
-
-.ventana {
-    width  : 150px;
-    height : 210px;
-}
-
-.fila-ventana {
-    width   : 100%;
-    height  : 25px;
-    padding : 3px;
-}
-
-body {
-    margin-bottom : 0 !important;
-
-}
-
-.labels {
-    color            : #000000;
-    background-color : white;
-    font-family      : "Lucida Grande", "Arial", sans-serif;
-    font-size        : 10px;
-    font-weight      : bold;
-    text-align       : center;
-    width            : 60px;
-    border           : 1px solid #36579F;
-    border-radius    : 3px;
-    white-space      : nowrap;
-}
-
-.label-emergencia {
-    color            : #ffffff;
-    background-color : #ff374d;
-    font-family      : "Lucida Grande", "Arial", sans-serif;
-    font-size        : 10px;
-    font-weight      : bolder;
-    text-align       : center;
-    padding          : 5px;
-    border           : 1px solid #fcf2ff;
-    border-radius    : 3px;
-    white-space      : nowrap;
-}
-
-.btn-utils {
-    width     : 120px;
-    font-size : 11px;
-}
-</style>
-</head>
-
-<body>
-%{--<mn:barraTop titulo="Chat policias"/>--}%
 <div class="row">
-
-    <div class="col-md-6 divIzq " style="position:relative;display: none">
+    <div class="col-md-6 divIzq " style="position:relative;">
         <div class="panel-completo" style="padding: 5px">
-            <div class="row fila" style="margin-left: 0px">
+            <div class="row fila" style="margin-left: 0; margin-top: 10px">
                 <div class="col-md-12 titulo-panel" style="position: relative">
                     Chat
+                    <g:set var="i" value="${0}"/>
+                    <g:each in="${botones}" var="boton">
+                        <g:set var="btn" value="${boton.value}"/>
+                        <g:if test="${btn.title}">
+                            <a href="#" class="btn ${btn.clase} btn-utils"
+                               title="${btn.title}" id="${boton.key}" data-prefijo="${btn.prefijo}"
+                               style="position: absolute; right: ${i * 60 + 20}px;top: -10px">
+                                <i class="fa ${btn.icon} fa-2x"></i>
+                            </a>
+                            <g:set var="i" value="${i + 1}"/>
+                        </g:if>
+                    </g:each>
+                    <g:if test="${policia}">
+                        <a href="#" class="btn btn-verde" title="Mensaje a la comunidad" id="btnCom"
+                           style="position: absolute; right: ${i * 60 + 20}px;top: -10px">
+                            <i class="fa fa-rss fa-2x"></i>
+                        </a>
+                    </g:if>
                 </div>
             </div>
 
@@ -273,19 +29,22 @@ body {
 
             <div class="ingreso">
                 <textarea class="txt-ingreso" id="mensaje-txt"></textarea>
-                <a href="#" class="btn btn-info" id="enviar" style="width: 19%;height: 100%;line-height: 45px;display: inline-block;margin-top: -55px">
+                <a href="#" class="btn btn-verde" id="enviar" style="width: 19%;height: 100%;line-height: 45px;display: inline-block;margin-top: -55px">
                     <i class="fa fa-share-square-o" style="margin-right: 6px"></i> Enviar
                 </a>
             </div>
         </div>
     </div>
 
-    <div class="col-md-12" id="map-container">
+    <div class="col-md-6" id="map-container">
         <div class="panel-completo" style="padding: 5px">
-            <div class="row fila" style="margin-left: 0px">
+            <div class="row fila" style="margin-left: 0">
                 <div class="col-md-12 titulo-panel" style="position: relative">
                     <span class="map-hide">Mapa</span>
 
+                    <a href="#" style="position: absolute;right: 30px" id="map-hide" title="Ocultar/Mostrar">
+                        <i class="fa fa-level-down"></i>
+                    </a>
                 </div>
             </div>
 
@@ -297,44 +56,17 @@ body {
 
 </div>
 
-<div class="ventana" style="display: none"></div>
-<script type="text/javascript">
-    var actual = 0;
-    var actualInc = 0;
-    var user = "${user}";
-    var markers = [];
-    var myInterval;
-    var first = true;
+<div class="row" style="margin-top: 10px">
+    <div class="col-md-12">
+    </div>
+</div>
 
+<div class="ventana" style="display: none"></div>
+
+<script type="text/javascript">
+    var user = "${user}";
     var $mensajeTxt = $("#mensaje-txt");
     var $mensajes = $("#mensajes");
-
-    function cambiarEstado(id, usuario, tipo) {
-        $.ajax({
-            type    : "POST",
-            url     : "${g.createLink(controller: 'chat',action: 'cambiaEstado_ajax')}",
-            data    : "id=" + id,
-            success : function (msg) {
-                infowindow.close();
-                $.ajax({
-                    type    : "POST",
-                    url     : "${g.createLink(controller: 'chat',action: 'enviarMensaje_ajax')}",
-                    data    : {
-                        mensaje : "und:" + tipo + " reportado por " + usuario + ": Unidades en camino"
-                    },
-                    success : function (msg) {
-                        startInterval();
-                        for (var i = 0; i < markers.length; i++) {
-                            var m = markers[i];
-                            if (m.incId == id) {
-                                m.setMap(null)
-                            }
-                        }
-                    }
-                });
-            }
-        });
-    }
 
     var tipos = {
         loc : {
@@ -363,24 +95,26 @@ body {
         }
     };
 
-    function getContrastYIQ(hexcolor) {
-        var r = parseInt(hexcolor.substr(0, 2), 16);
-        var g = parseInt(hexcolor.substr(2, 2), 16);
-        var b = parseInt(hexcolor.substr(4, 2), 16);
-        var yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
-        return (yiq >= 128) ? 'black' : 'white';
-    }
-
-    function getContrast50(hexcolor) {
-        return (parseInt(hexcolor, 16) > 0xffffff / 2) ? 'black' : 'white';
+    function infoWindowAjax(marker, callback) {
+        return $.ajax({
+            url  : "${g.createLink(controller: control,action: 'getInfoMensajeChat_ajax')}",
+            data : {
+                from  : marker.from,
+                fecha : marker.fecha,
+                msg   : marker.mensaje,
+                id    : marker.incId
+            }
+        }).done(callback)
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                });
     }
 
     function infoMensaje() {
         openLoader();
-
         $.ajax({
             type    : "POST",
-            url     : "${g.createLink(controller: 'chat',action: 'getInfoMensaje_ajax')}",
+            url     : "${g.createLink(controller: control,action: 'getInfoMensaje_ajax')}",
             data    : "user=" + $(this).attr("user") + "&mensaje=" + $(this).attr("mensaje"),
             success : function (msg) {
                 closeLoader();
@@ -406,10 +140,7 @@ body {
 
     function showPinUbicacion(latitud, longitud, from, hora, tipo, mensaje, id) {
         if (!isNaN(latitud) && !isNaN(longitud)) {
-//            function showPinUbicacion(latitud, longitud, nombre, hora, tipo) {
             var t = tipos[tipo];
-//                    console.log("show pin ubicacion: ", tipo, longitud, latitud, hora, t, map);
-            %{--var image = '${g.resource(dir: "images",file: "ping2.png")}';--}%
 
             var img = {
                 url    : t.icono,
@@ -447,7 +178,8 @@ body {
 
     function appendMensaje(val) {
 //                console.log(val);
-        var div;
+        var divNombre;
+        var divMensaje;
         var container;
         var esEmergencia = false;
         if (val.mensaje.length > 4) {
@@ -465,38 +197,41 @@ body {
             }
         }
         if (val.de == user) {
-            div = $("<div class='mio' user='" + val.de + "'  mensaje='" + val.mensaje + "'><span class='usuario'>" + val.de + " (" + val.hora + "): </span>" + mns + "</div>");
+            divNombre = $("<div class='nombre mio'>" + val.de + " (" + val.hora + "): </div>");
+//                    divMensaje = $("<div class='mio' user='" + val.de + "'  mensaje='" + val.mensaje + "'><span class='usuario'>" + val.de + " (" + val.hora + "): </span>" + mns + "</div>");
+            divMensaje = $("<div class='mensaje' user='" + val.de + "'  mensaje='" + val.mensaje + "'>" + mns + "</div>");
             container = $("<div class='fila txt-der'></div>");
-            container.append(div);
+            container.append(divNombre);
+            container.append(divMensaje);
             $mensajes.append(container);
         } else {
-
             if (!colores[val.de]) {
                 var cl = $.xcolor.random();
-                colores[val.de] = {
-                    bg   : cl,
-                    text : $.xcolor.complementary(cl)
-//                            text : getContrast50(cl.getHex())
-                };
+                colores[val.de] = cl;
             }
-
-            div = $("<div class='mensaje' user='" + val.de + "'  mensaje='" + val.mensaje + "'><span class='usuario'>" + val.de + " (" + val.hora + "): </span>" + mns + "</div>");
-            div.css({
-                background : colores[val.de].bg,
-                color      : colores[val.de].text
+            divNombre = $("<div class='nombre'>" + val.de + " (" + val.hora + "): </div>");
+//                    divMensaje = $("<div class='mensaje' user='" + val.de + "'  mensaje='" + val.mensaje + "'><span class='usuario'>" + val.de + " (" + val.hora + "): </span>" + mns + "</div>");
+            divMensaje = $("<div class='mensaje' user='" + val.de + "'  mensaje='" + val.mensaje + "'>" + mns + "</div>");
+//                    divMensaje.css({
+//                        background : colores[val.de].bg,
+//                        color      : colores[val.de].text
+//                    });
+            divNombre.css({
+                color : colores[val.de]
             });
-            container = $("<div class='fila'></div>");
-            container.append(div);
+            container = $("<div class='fila' data-user='" + val.de + "'></div>");
+            container.append(divNombre);
+            container.append(divMensaje);
             $mensajes.append(container);
         }
         //div.click(infoMensaje)
 
-        div.qtip({
+        divMensaje.qtip({
             content  : {
                 title : "Información del usuario",
                 text  : function (event, api) {
                     $.ajax({
-                        url  : "${g.createLink(controller: 'chat',action: 'getInfoMensaje_ajax')}",
+                        url  : "${g.createLink(controller: control,action: 'getInfoMensaje_ajax')}",
                         data : {
                             user    : $(this).attr("user"),
                             mensaje : $(this).attr("mensaje")
@@ -549,18 +284,16 @@ body {
 //                console.log($mensajes.scrollTop(), $mensajes[0].scrollHeight, scroll)
         $.ajax({
             type     : "POST",
-            url      : "${g.createLink(controller: 'chat',action: 'getMessages_ajax')}",
-            data     : "actual=" + actual+"&source=mapa",
+            url      : "${g.createLink(controller: control,action: 'getMessages_ajax')}",
+            data     : "actual=" + actual,
             dataType : "json",
             success  : function (msg) {
-
                 var data = msg;
                 actual = actual + data.length;
                 if (data.length > 0) {
                     document.title = "" + data.length + " mensajes nuevos"
                 }
                 $.each(data, function (i, val) {
-                    console.log(val)
                     appendMensaje(val);
                 });
                 if (scroll) {
@@ -574,7 +307,7 @@ body {
     function enviarMensaje(texto) {
         $.ajax({
             type    : "POST",
-            url     : "${g.createLink(controller: 'chat',action: 'enviarMensaje_ajax')}",
+            url     : "${g.createLink(controller: control,action: 'enviarMensaje_ajax')}",
             data    : {
                 mensaje : texto
             },
@@ -582,6 +315,10 @@ body {
                 $mensajeTxt.val("");
                 $mensajeTxt.html("");
                 startInterval();
+                closeLoader()
+            },
+            error   : function () {
+                closeLoader();
             }
         });
     }
@@ -647,8 +384,18 @@ body {
         });
 
         $(".btn-utils").click(function () {
-            var texto = $(this).data("prefijo") + ":" + $(this).attr("title");
+            openLoader();
+            var texto = "msg:" + $(this).attr("title");
             enviarMensaje(texto);
+            <g:if test="${policia}">
+
+            </g:if>
+            <g:else>
+            texto = $(this).data("prefijo") + ":${persona.latitud},${persona.longitud}";
+            enviarMensaje(texto);
+            </g:else>
+//            console.log(texto);
+
             return false
         });
         $("#map-hide").click(function () {
@@ -663,11 +410,12 @@ body {
             }
         });
         $("#map-pop").click(function () {
-            var ventana = window.open("${g.createLink(controller: 'chat',action: 'ventanaMapa')}");
+            var ventana = window.open("${g.createLink(controller: control,action: 'ventanaMapa')}");
             $(".divIzq").removeClass("col-md-6").removeClass("col-md-11").addClass("col-md-12");
             $("#map-container").remove()
         });
 
+        <g:if test="${policia}">
         $("#btnCom").click(function () {
             $.ajax({
                 type    : "POST",
@@ -690,7 +438,7 @@ body {
             }); //ajax
             return false;
         });
+        </g:if>
+
     });
 </script>
-</body>
-</html>

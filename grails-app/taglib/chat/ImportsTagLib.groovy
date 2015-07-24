@@ -118,6 +118,7 @@ class ImportsTagLib {
         text += imp.css(src: resource(dir: 'css/custom', file: 'inputs.css'))
         text += imp.css(src: resource(dir: 'css/custom', file: 'texto.css'))
         text += imp.css(src: resource(dir: 'css/custom', file: 'texto-vertical.css'))
+        text += imp.css(src: resource(dir: 'css/custom', file: 'botones.css'))
 
         //Banner
         text += imp.css(src: resource(dir: 'css/custom', file: 'banner.css'))
