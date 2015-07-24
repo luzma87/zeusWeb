@@ -5,8 +5,8 @@ import seguridad.Persona
 import seguridad.Shield
 
 class ChatPoliciaController extends Shield {
-    static scope="session"
-    static proxy=true
+    static scope = "session"
+    static proxy = true
 
     def messageHandlerServicePoliciaService
 
@@ -20,35 +20,36 @@ class ChatPoliciaController extends Shield {
 
         messageHandlerServicePoliciaService.inicio(user, pass, ip, serverName, roomName)
 
-        def botones = [
-                unidades  : [
-                        clase  : "btn-warning",
-                        title  : "Avanzan unidades",
-                        icon   : "fa-motorcycle",
-                        prefijo: "und"
-                ],
-                sospechoso: [
-                        clase  : "btn-danger",
-                        title  : "Sospechoso detenido",
-                        icon   : "fa-child",
-                        prefijo: "ssd"
-                ],
-                falsa     : [
-                        clase  : "btn-primary",
-                        title  : "Falsa alarma",
-                        icon   : "fa-times",
-                        prefijo: "fls"
-                ],
-                novedad   : [
-                        clase  : "btn-success",
-                        title  : "Sin novedad",
-                        icon   : "fa-check",
-                        prefijo: "snn"
-                ],
-                comunidad : [:]
-        ]
+        def botones = []
+//        def botones = [
+//                unidades  : [
+//                        clase  : "btn-warning",
+//                        title  : "Avanzan unidades",
+//                        icon   : "fa-motorcycle",
+//                        prefijo: "und"
+//                ],
+//                sospechoso: [
+//                        clase  : "btn-danger",
+//                        title  : "Sospechoso detenido",
+//                        icon   : "fa-child",
+//                        prefijo: "ssd"
+//                ],
+//                falsa     : [
+//                        clase  : "btn-primary",
+//                        title  : "Falsa alarma",
+//                        icon   : "fa-times",
+//                        prefijo: "fls"
+//                ],
+//                novedad   : [
+//                        clase  : "btn-success",
+//                        title  : "Sin novedad",
+//                        icon   : "fa-check",
+//                        prefijo: "snn"
+//                ],
+//                comunidad : [:]
+//        ]
 
-        return [user: user, botones: botones]
+        return [user: user, botones: botones, persona: pers]
     }
 
     def ventanaMapa() {

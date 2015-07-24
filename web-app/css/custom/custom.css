@@ -142,16 +142,6 @@ body {
     margin-right : 7px;
 }
 
-.btn-verde {
-    background : #19AA8D;
-    color      : #ffffff !important;
-}
-
-.btn-verde:hover {
-    background : #18A689;
-    color      : #ffffff !important;
-}
-
 .verde {
     background-color : #18A689;
 }

@@ -6,8 +6,8 @@ import seguridad.Persona
 import seguridad.Shield
 
 class ChatController extends Shield {
-    static scope="session"
-    static proxy=true
+    static scope = "session"
+    static proxy = true
 
     def messageHandlerService
 
@@ -81,6 +81,12 @@ class ChatController extends Shield {
                         title  : "Sospechoso detenido",
                         icon   : "fa-child"
                 ],
+                masCar    : [
+                        clase  : "btn-default",
+                        prefijo: "msc",
+                        title  : "Por favr enviar más características",
+                        icon   : "fa-user-plus"
+                ],
                 falsa     : [
                         clase  : "btn-primary",
                         prefijo: "fls",
@@ -97,7 +103,7 @@ class ChatController extends Shield {
 
         def folder = "32px_bubble"
         messageHandlerService.sendMensaje("lgn:La Policía Nacional ha ingresado al chat")
-        return [user: user, botones: botones, folder: folder]
+        return [user: user, botones: botones, folder: folder, persona: pers]
     }
 
     def ventanaMapa() {
@@ -108,11 +114,11 @@ class ChatController extends Shield {
         def serverName = "vps44751.vps.ovh.ca"
         def roomName = "Policia"
         def folder = "32px_bubble"
-        return [user: user,folder: folder]
+        return [user: user, folder: folder]
     }
 
     def getMessages_ajax() {
-       // println "get msn "+params
+        // println "get msn "+params
         def actual
         if (params.actual) {
             actual = params.actual.toInteger()
@@ -120,7 +126,7 @@ class ChatController extends Shield {
             actual = 0
         }
         def mensajes = messageHandlerService.getMensajes(actual)
-       // println " msn "+mensajes.size()
+        // println " msn "+mensajes.size()
         if (mensajes.size() > 0) {
             def json = new JsonBuilder(mensajes.reverse())
             // println json.toPrettyString()

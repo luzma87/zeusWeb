@@ -1,0 +1,138 @@
+.divIzq {
+    height        : 520px;
+    border-radius : 5px;
+    margin-right  : 0;
+}
+
+#mensajes {
+    height        : 416px;
+    overflow      : auto;
+    padding       : 10px;
+    width         : 100%;
+
+    margin-top    : 0;
+    border-radius : 5px;
+}
+
+.ingreso {
+    width      : 100%;
+    height     : 60px;
+    font-size  : 11px !important;
+    margin-top : 5px;
+}
+
+.divDer {
+    height                     : 475px;
+    overflow                   : auto;
+    border-bottom-right-radius : 5px;
+    border-top-right-radius    : 5px;
+
+}
+
+.mio {
+    /*padding       : 5px;*/
+    /*display       : inline-block;*/
+    /*border-radius : 5px;*/
+    /*/!*background    : #2196f3;*!/*/
+    /*margin-bottom : 5px;*/
+    /*/!*color         : #f0f0f0;*!/*/
+    /*text-align    : left;*/
+    /*cursor        : pointer;*/
+}
+
+.fila {
+    width      : 100%;
+    margin-top : 0;
+}
+
+.mensaje {
+    padding       : 5px;
+    display       : inline-block;
+    border-radius : 5px;
+    border        : solid 1px #101010;
+    /*background    : #ffd781;*/
+    margin-bottom : 5px;
+    color         : #000000;
+    cursor        : pointer;
+    position      : relative;
+}
+
+.nombre {
+    font-weight : bold;
+    color       : #0F6CB6;
+}
+
+.txt-ingreso {
+    width         : 80%;
+    display       : inline-block;
+    height        : 100%;
+    resize        : none;
+    border-radius : 5px;
+    padding       : 10px;
+}
+
+.txt-der {
+    text-align : right;
+}
+
+.col-botones {
+    height      : 520px;
+    width       : 45px;
+    display     : inline-table;
+    float       : left;
+    margin-left : -12px;
+}
+
+.btn-barra {
+    margin      : 2px;
+    width       : 40px;
+    height      : 40px;
+    line-height : 30px;
+
+}
+
+.ventana {
+    width  : 150px;
+    height : 210px;
+}
+
+.fila-ventana {
+    width   : 100%;
+    height  : 25px;
+    padding : 3px;
+}
+
+body {
+    margin-bottom : 0 !important;
+
+}
+
+.labels {
+    color            : #000000;
+    background-color : white;
+    font-family      : "Lucida Grande", "Arial", sans-serif;
+    font-size        : 10px;
+    font-weight      : bold;
+    text-align       : center;
+    width            : 60px;
+    border           : 1px solid #36579F;
+    border-radius    : 3px;
+    white-space      : nowrap;
+}
+
+.label-emergencia {
+    color            : #ffffff;
+    background-color : #ff374d;
+    font-family      : "Lucida Grande", "Arial", sans-serif;
+    font-size        : 10px;
+    font-weight      : bolder;
+    text-align       : center;
+    padding          : 5px;
+    border           : 1px solid #fcf2ff;
+    border-radius    : 3px;
+    white-space      : nowrap;
+}
+
+.btn-utils {
+    width : 50px;
+}
