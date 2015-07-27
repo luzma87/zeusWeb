@@ -1,3 +1,6 @@
+.show-label {
+    font-weight : bold;
+}
 
 input.required, select.required, textarea.required {
     border-bottom : 2px solid #19AA8D;

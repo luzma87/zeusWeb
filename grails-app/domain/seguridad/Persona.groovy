@@ -1,5 +1,7 @@
 package seguridad
 
+import documentos.DocumentoPersona
+
 class Persona {
 
     String nombre
@@ -15,6 +17,8 @@ class Persona {
     String creacion = new Date().getTime().toString()
     String modificacion = new Date().getTime().toString()
     String tipo //policia | ciudadano
+
+    static hasMany = [documentos: DocumentoPersona]
 
     static mapping = {
         table 'ofUser'

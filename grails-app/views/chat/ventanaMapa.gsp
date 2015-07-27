@@ -560,7 +560,7 @@
                             document.title = "" + data.length + " mensajes nuevos"
                         }
                         $.each(data, function (i, val) {
-                            console.log(val)
+//                            console.log(val)
                             appendMensaje(val);
                         });
                         if (scroll) {

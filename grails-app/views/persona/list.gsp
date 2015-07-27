@@ -174,7 +174,36 @@
                                     },
                                     success : function (msg) {
                                         bootbox.dialog({
-                                            title   : "Ver Persona",
+                                            title   : "<span class='text-verde'>Ver Persona</span>",
+                                            "class" : "modal-lg",
+                                            message : msg,
+                                            buttons : {
+                                                ok : {
+                                                    label     : "Aceptar",
+                                                    className : "btn-primary",
+                                                    callback  : function () {
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        },
+                        docs        : {
+                            label  : "Registrar documentos",
+                            icon   : "fa fa-files",
+                            action : function ($element) {
+                                var id = $element.data("id");
+                                $.ajax({
+                                    type    : "POST",
+                                    url     : "${createLink(controller:'persona', action:'show_ajax')}",
+                                    data    : {
+                                        id : id
+                                    },
+                                    success : function (msg) {
+                                        bootbox.dialog({
+                                            title   : "<span class='text-verde'>Ver Persona</span>",
                                             "class" : "modal-lg",
                                             message : msg,
                                             buttons : {
@@ -199,9 +228,10 @@
                             }
                         },
                         cambiarPass : {
-                            label  : "Cambiar contraseña",
-                            icon   : "fa fa-lock",
-                            action : function ($element) {
+                            label            : "Cambiar contraseña",
+                            icon             : "fa fa-lock",
+                            separator_before : true,
+                            action           : function ($element) {
                                 var id = $element.data("id");
                                 var nombre = $element.data("nombre");
 

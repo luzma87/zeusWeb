@@ -123,7 +123,7 @@
     }
 
     function showPinUbicacion(latitud, longitud, from, hora, tipo, mensaje, id) {
-        console.log(latitud, longitud, from, hora, tipo, mensaje, id);
+//        console.log(latitud, longitud, from, hora, tipo, mensaje, id);
         if (!isNaN(latitud) && !isNaN(longitud)) {
             var t = tipos[tipo];
 
