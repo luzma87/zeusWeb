@@ -4,6 +4,16 @@
     <head>
         <meta name="layout" content="main">
         <title>Lista de Personas</title>
+
+        <style type="text/css">
+        .liDoc {
+            cursor : pointer;
+        }
+
+        .liDoc.active {
+            font-weight : bold;
+        }
+        </style>
     </head>
 
     <body>
@@ -190,20 +200,28 @@
                                 });
                             }
                         },
+                        editar      : {
+                            label  : "Editar",
+                            icon   : "fa fa-pencil",
+                            action : function ($element) {
+                                var id = $element.data("id");
+                                location.href = "${createLink(action:'form')}/" + id
+                            }
+                        },
                         docs        : {
                             label  : "Registrar documentos",
-                            icon   : "fa fa-files",
+                            icon   : "fa fa-files-o",
                             action : function ($element) {
                                 var id = $element.data("id");
                                 $.ajax({
                                     type    : "POST",
-                                    url     : "${createLink(controller:'persona', action:'show_ajax')}",
+                                    url     : "${createLink(controller:'documentoPersona', action:'registrar_ajax')}",
                                     data    : {
                                         id : id
                                     },
                                     success : function (msg) {
                                         bootbox.dialog({
-                                            title   : "<span class='text-verde'>Ver Persona</span>",
+                                            title   : "<span class='text-verde'>Registro de documentos</span>",
                                             "class" : "modal-lg",
                                             message : msg,
                                             buttons : {
@@ -217,14 +235,6 @@
                                         });
                                     }
                                 });
-                            }
-                        },
-                        editar      : {
-                            label  : "Editar",
-                            icon   : "fa fa-pencil",
-                            action : function ($element) {
-                                var id = $element.data("id");
-                                location.href = "${createLink(action:'form')}/" + id
                             }
                         },
                         cambiarPass : {

@@ -18,7 +18,11 @@ class Documento {
     }
 
     static constraints = {
-        nombre maxSize: 15
+        nombre maxSize: 30
         descripcion nullable: true, maxSize: 140
+    }
+
+    public String toString() {
+        return this.nombre
     }
 }

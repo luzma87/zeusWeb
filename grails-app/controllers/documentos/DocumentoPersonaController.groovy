@@ -49,21 +49,9 @@ class DocumentoPersonaController extends Shield {
         return [documentoPersonaInstanceList: documentoPersonaInstanceList, documentoPersonaInstanceCount: documentoPersonaInstanceCount]
     }
 
-    /**
-     * Acción llamada con ajax que muestra la información de un elemento particular
-     */
-    def show_ajax() {
-        if (params.id) {
-            def documentoPersonaInstance = DocumentoPersona.get(params.id)
-            if (!documentoPersonaInstance) {
-                render "ERROR*No se encontró DocumentoPersona."
-                return
-            }
-            return [documentoPersonaInstance: documentoPersonaInstance]
-        } else {
-            render "ERROR*No se encontró DocumentoPersona."
-        }
-    } //show para cargar con ajax en un dialog
+    def registrar_ajax() {
+
+    }
 
     /**
      * Acción llamada con ajax que guarda la información de un elemento
