@@ -122,23 +122,8 @@
         });
     }
 
-    function showPin(latitud, longitud, nombre) {
-        var image = '${g.resource(dir: "images",file: "ping1.png")}';
-        var myLatlng = new gm.LatLng(latitud, longitud);
-        var marker = new MarkerWithLabel({
-            position     : myLatlng,
-            map          : map,
-            title        : nombre,
-            icon         : image,
-            labelContent : nombre,
-            labelAnchor  : new gm.Point(30, 55),
-            labelClass   : "labels", // the CSS class for the label
-            labelStyle   : {opacity : 0.90}
-        });
-        markers.push(marker)
-    }
-
     function showPinUbicacion(latitud, longitud, from, hora, tipo, mensaje, id) {
+        console.log(latitud, longitud, from, hora, tipo, mensaje, id);
         if (!isNaN(latitud) && !isNaN(longitud)) {
             var t = tipos[tipo];
 
@@ -176,8 +161,43 @@
         }
     }
 
+    function cambiarEstado(id, usuario, tipo) {
+        $.ajax({
+            type    : "POST",
+            url     : "${g.createLink(controller: control, action: 'cambiaEstado_ajax')}",
+            data    : "id=" + id,
+            success : function (msg) {
+                infowindow.close();
+                $.ajax({
+                    type    : "POST",
+                    url     : "${g.createLink(controller: control, action: 'enviarMensaje_ajax')}",
+                    data    : {
+                        mensaje : "und:" + tipo + " reportado por " + usuario + ": Unidades en camino"
+                    },
+                    success : function (msg) {
+                        startInterval();
+                        for (var i = 0; i < markers.length; i++) {
+                            var m = markers[i];
+                            if (m.incId == id) {
+                                m.setMap(null)
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    function quitar(id, usuario, tipo) {
+        for (var i = 0; i < markers.length; i++) {
+            var m = markers[i];
+            if (m.incId == id) {
+                m.setMap(null)
+            }
+        }
+    }
+
     function appendMensaje(val) {
-//                console.log(val);
         var divNombre;
         var divMensaje;
         var container;
@@ -185,14 +205,12 @@
         if (val.mensaje.length > 4) {
             var tipo = val.mensaje.substring(0, 3);
             var mns = val.mensaje.substring(4);
-//                    console.log(">>>", tipo, mns, tipo in tipos);
-//                    if (tipo == "loc") {
             if (tipo in tipos) {
                 esEmergencia = true;
-//                        var loc = val.mensaje.substring(4, val.mensaje.length);
                 var parts = val.mensaje.split(":");
                 var loc = parts[parts.length - 1];
                 loc = loc.split(",");
+//                console.log(val);
                 showPinUbicacion(loc[0] * 1, loc[1] * 1, val.de, val.hora, tipo, val.mensaje, val.id);
             }
         }
@@ -284,7 +302,7 @@
 //                console.log($mensajes.scrollTop(), $mensajes[0].scrollHeight, scroll)
         $.ajax({
             type     : "POST",
-            url      : "${g.createLink(controller: control,action: 'getMessages_ajax')}",
+            url      : "${g.createLink(controller: control, action: 'getMessages_ajax')}",
             data     : "actual=" + actual,
             dataType : "json",
             success  : function (msg) {
@@ -337,7 +355,8 @@
                 },
                 {
                     alias : "s3",
-                    name  : "bell_ring"
+                    path  : "${resource(dir:'audio')}/",
+                    name  : "popup_notification"
                 }
             ],
 
@@ -352,7 +371,7 @@
 //                    obj.alias;    // Alias (if set)
 //                    obj.ext;      // File .ext
 //                    obj.duration; // Seconds
-//                        console.log("READY");
+//                        console.log("READY", obj.name, obj.alias, obj.ext, obj.duration);
             },
             ended_callback : function (obj) {
 //                    obj.name;     // File name
@@ -360,7 +379,7 @@
 //                    obj.part;     // Part (if sprite)
 //                    obj.start;    // Start time (sec)
 //                    obj.duration; // Seconds
-//                        console.log("ENDED");
+//                        console.log("ENDED", obj.name, obj.alias, obj.ext, obj.duration);
             }
         });
 

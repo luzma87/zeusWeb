@@ -30,7 +30,13 @@
                             <div class="col-xs-8 text-right">
                                 <h2 style="margin-top: 0">Chat</h2>
 
-                                <p>Ingrese al chat comunitario</p>
+                                <ul class="lista">
+                                    <li>
+                                        <g:link controller="chatPersona" action="index">
+                                            Ingrese al chat comunitario
+                                        </g:link>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -46,9 +52,9 @@
                             <div class="col-xs-8 text-right">
                                 <h2 style="margin-top: 0">Servicios</h2>
                                 <ul class="lista">
-                                    <li>Móbiles</li>
+                                    <li>Móviles</li>
                                     <li>Encargo</li>
-                                    <li>Contactenos</li>
+                                    <li>Contáctenos</li>
                                 </ul>
                             </div>
                         </div>
@@ -59,7 +65,7 @@
                     <div class="card-naranja card-inicio">
                         <div class="row">
                             <div class="col-xs-4">
-                                <i class="fa fa-cogs fa-spin fa-5x"></i>
+                                <i class="fa fa-cogs fa-5x"></i>
                             </div>
 
                             <div class="col-xs-8 text-right">

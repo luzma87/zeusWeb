@@ -18,13 +18,13 @@ class MenuTagLib {
 
                 '        <div class="col-md-9 titulo hidden-sm hidden-xs ">\n' + titulo +
                 '        </div>\n' +
-                '        <div class="col-md-1 hidden-xs" style="width: 50px;margin-top: 10px">\n' +
-                '            <a href="#" class="item" title="Alertas" >\n' +
-                '                <i class="fa fa-bell"></i>\n' +
-                '            </a>\n' +
-                '        </div>\n' +
+//                '        <div class="col-md-1 hidden-xs" style="width: 50px;margin-top: 10px">\n' +
+//                '            <a href="#" class="item" title="Alertas" >\n' +
+//                '                <i class="fa fa-bell"></i>\n' +
+//                '            </a>\n' +
+//                '        </div>\n' +
                 '        <div class="col-md-1 col-xs-2 col-sm-2 " style="margin-top: 10px">\n' +
-                '            <a href="#" class="item" >\n' +
+                '            <a href="' + createLink(controller: 'login', action: 'logout') + '" class="item" >\n' +
                 '                <i class="fa fa-sign-out"></i> Salir\n' +
                 '            </a>\n' +
                 '        </div>\n' +
