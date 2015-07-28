@@ -68,7 +68,7 @@
                                 <tbody>
                                     <g:if test="${personaInstanceCount > 0}">
                                         <g:each in="${personaInstanceList}" status="i" var="personaInstance">
-                                            <tr data-id="${personaInstance.id}" data-nombre="${personaInstance.nombre}">
+                                            <tr data-id="${personaInstance.id}" data-nombre="${personaInstance.nombre}" class="${personaInstance.tipo}">
                                                 <td><elm:textoBusqueda busca="${params.search}"><g:message code="persona.tipo.${personaInstance.tipo}"/></elm:textoBusqueda></td>
                                                 <td><elm:textoBusqueda busca="${params.search}"><g:fieldValue bean="${personaInstance}" field="login"/></elm:textoBusqueda></td>
                                                 <td><elm:textoBusqueda busca="${params.search}">${personaInstance.nombre}</elm:textoBusqueda></td>
@@ -163,191 +163,224 @@
                 return $pass1Cont;
             }
 
-            $(function () {
-
-                $("tbody>tr").contextMenu({
-                    items  : {
-                        header      : {
-                            label  : "Acciones",
-                            header : true
-                        },
-                        ver         : {
-                            label  : "Ver",
-                            icon   : "fa fa-search",
-                            action : function ($element) {
-                                var id = $element.data("id");
-                                $.ajax({
-                                    type    : "POST",
-                                    url     : "${createLink(controller:'persona', action:'show_ajax')}",
-                                    data    : {
-                                        id : id
-                                    },
-                                    success : function (msg) {
-                                        bootbox.dialog({
-                                            title   : "<span class='text-verde'>Ver Persona</span>",
-                                            "class" : "modal-lg",
-                                            message : msg,
-                                            buttons : {
-                                                ok : {
-                                                    label     : "Aceptar",
-                                                    className : "btn-primary",
-                                                    callback  : function () {
-                                                    }
+            function createContextMenu(node) {
+                var $node = $(node);
+                var esCiudadano = $node.hasClass("C");
+                var esPolicia = $node.hasClass("P");
+                var items = {
+                    header : {
+                        label  : "Acciones",
+                        header : true
+                    },
+                    ver    : {
+                        label  : "Ver",
+                        icon   : "fa fa-search",
+                        action : function ($element) {
+                            var id = $element.data("id");
+                            $.ajax({
+                                type    : "POST",
+                                url     : "${createLink(controller:'persona', action:'show_ajax')}",
+                                data    : {
+                                    id : id
+                                },
+                                success : function (msg) {
+                                    bootbox.dialog({
+                                        title   : "<span class='text-verde'>Ver Persona</span>",
+                                        "class" : "modal-lg",
+                                        message : msg,
+                                        buttons : {
+                                            ok : {
+                                                label     : "Aceptar",
+                                                className : "btn-primary",
+                                                callback  : function () {
                                                 }
                                             }
-                                        });
-                                    }
-                                });
-                            }
-                        },
-                        editar      : {
-                            label  : "Editar",
-                            icon   : "fa fa-pencil",
-                            action : function ($element) {
-                                var id = $element.data("id");
-                                location.href = "${createLink(action:'form')}/" + id
-                            }
-                        },
-                        docs        : {
-                            label  : "Registrar documentos",
-                            icon   : "fa fa-files-o",
-                            action : function ($element) {
-                                var id = $element.data("id");
-                                $.ajax({
-                                    type    : "POST",
-                                    url     : "${createLink(controller:'documentoPersona', action:'registrar_ajax')}",
-                                    data    : {
-                                        id : id
-                                    },
-                                    success : function (msg) {
-                                        bootbox.dialog({
-                                            title   : "<span class='text-verde'>Registro de documentos</span>",
-                                            "class" : "modal-lg",
-                                            message : msg,
-                                            buttons : {
-                                                ok : {
-                                                    label     : "Aceptar",
-                                                    className : "btn-primary",
-                                                    callback  : function () {
-                                                    }
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    },
+                    editar : {
+                        label  : "Editar",
+                        icon   : "fa fa-pencil",
+                        action : function ($element) {
+                            var id = $element.data("id");
+                            location.href = "${createLink(action:'form')}/" + id
+                        }
+                    }
+                    /*,
+                     eliminar    : {
+                     label            : "Eliminar",
+                     icon             : "fa fa-trash-o",
+                     separator_before : true,
+                     action           : function ($element) {
+                     var id = $element.data("id");
+                     deletePersona(id);
+                     }
+                     }*/
+                };
+                if (esCiudadano) {
+                    items.docs = {
+                        label  : "Registrar documentos",
+                        icon   : "fa fa-files-o",
+                        action : function ($element) {
+                            var id = $element.data("id");
+                            $.ajax({
+                                type    : "POST",
+                                url     : "${createLink(controller:'documentoPersona', action:'registrar_ajax')}",
+                                data    : {
+                                    id : id
+                                },
+                                success : function (msg) {
+                                    bootbox.dialog({
+                                        title   : "<span class='text-verde'>Registro de documentos</span>",
+                                        "class" : "modal-sm",
+                                        message : msg,
+                                        buttons : {
+                                            cancel : {
+                                                label     : "Cancelar",
+                                                className : "btn-default",
+                                                callback  : function () {
                                                 }
-                                            }
-                                        });
-                                    }
-                                });
-                            }
-                        },
-                        cambiarPass : {
-                            label            : "Cambiar contraseña",
-                            icon             : "fa fa-lock",
-                            separator_before : true,
-                            action           : function ($element) {
-                                var id = $element.data("id");
-                                var nombre = $element.data("nombre");
-
-                                var $form = $("<form id='frmChPass' class='form-horizontal'>");
-                                var $pass1Cont = createPassInput("Contraseña", "pass");
-                                var $pass2Cont = createPassInput("Repita contraseña", "pass2");
-
-                                $form.append($pass1Cont).append($pass2Cont);
-
-                                $form.validate({
-                                    errorClass     : "help-block",
-                                    ignore         : [],
-                                    errorPlacement : function (error, element) {
-                                        if (element.attr("name") == "latitud" || element.attr("name") == "longitud") {
-                                            error.insertAfter("#latitud");
-                                        } else {
-                                            if (element.parent().hasClass("input-group")) {
-                                                error.insertAfter(element.parent());
-                                            } else {
-                                                error.insertAfter(element);
-                                            }
-                                        }
-                                        element.parents(".grupo").addClass('has-error');
-                                    },
-                                    success        : function (label) {
-                                        label.parents(".grupo").removeClass('has-error');
-                                        label.remove();
-                                    },
-                                    rules          : {
-                                        pass  : {
-                                            required : true
-                                        },
-                                        pass2 : {
-                                            required : true,
-                                            equalTo  : "#pass"
-                                        }
-                                    },
-                                    messages       : {
-                                        pass  : {
-                                            required : "Ingrese la contraseña"
-                                        },
-                                        pass2 : {
-                                            required : "Ingrese nuevamente la contraseña",
-                                            equalTo  : "Repita la contraseña"
-                                        }
-                                    }
-                                });
-
-                                bootbox.dialog({
-                                    "class" : "modal-sm",
-                                    title   : "<span class='text-verde'>Cambiar contraseña de <em>" + nombre + "</em></span>",
-                                    message : $form,
-                                    buttons : {
-                                        guardar  : {
-                                            label     : "<i class='fa fa-save'></i> Guardar",
-                                            className : "btn-verde",
-                                            callback  : function () {
-                                                if ($form.valid()) {
-                                                    openLoader();
+                                            },
+                                            ok     : {
+                                                label     : "<i class='fa fa-floppy-o'></i> Guardar",
+                                                className : "btn-verde",
+                                                callback  : function () {
+                                                    var ids = "";
+                                                    $(".liDoc.active").each(function () {
+                                                        ids += $(this).data("id") + ",";
+                                                    });
                                                     $.ajax({
                                                         type    : "POST",
-                                                        url     : '${createLink(controller:'persona', action:'cambiarPass_ajax')}',
+                                                        url     : "${createLink(controller:'documentoPersona', action:'saveAll_ajax')}",
                                                         data    : {
                                                             id   : id,
-                                                            pass : $("#pass").val()
+                                                            docs : ids
                                                         },
                                                         success : function (msg) {
                                                             var parts = msg.split("*");
-                                                            log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
-                                                            if (parts[0] == "SUCCESS") {
-                                                                setTimeout(function () {
-                                                                    location.reload(true);
-                                                                }, 1000);
-                                                            } else {
-                                                                closeLoader();
-                                                            }
-                                                        },
-                                                        error   : function () {
-                                                            log("Ha ocurrido un error interno", "Error");
-                                                            closeLoader();
+                                                            log(parts[1], parts[0]);
                                                         }
                                                     });
                                                 }
-                                                return false;
-                                            }
-                                        },
-                                        cancelar : {
-                                            label     : "Cancelear",
-                                            className : "btn-default",
-                                            callback  : function () {
                                             }
                                         }
+                                    });
+                                }
+                            });
+                        }
+                    };
+                }
+                items.cambiarPass = {
+                    label            : "Cambiar contraseña",
+                    icon             : "fa fa-lock",
+                    separator_before : true,
+                    action           : function ($element) {
+                        var id = $element.data("id");
+                        var nombre = $element.data("nombre");
+
+                        var $form = $("<form id='frmChPass' class='form-horizontal'>");
+                        var $pass1Cont = createPassInput("Contraseña", "pass");
+                        var $pass2Cont = createPassInput("Repita contraseña", "pass2");
+
+                        $form.append($pass1Cont).append($pass2Cont);
+
+                        $form.validate({
+                            errorClass     : "help-block",
+                            ignore         : [],
+                            errorPlacement : function (error, element) {
+                                if (element.attr("name") == "latitud" || element.attr("name") == "longitud") {
+                                    error.insertAfter("#latitud");
+                                } else {
+                                    if (element.parent().hasClass("input-group")) {
+                                        error.insertAfter(element.parent());
+                                    } else {
+                                        error.insertAfter(element);
                                     }
-                                });
+                                }
+                                element.parents(".grupo").addClass('has-error');
+                            },
+                            success        : function (label) {
+                                label.parents(".grupo").removeClass('has-error');
+                                label.remove();
+                            },
+                            rules          : {
+                                pass  : {
+                                    required : true
+                                },
+                                pass2 : {
+                                    required : true,
+                                    equalTo  : "#pass"
+                                }
+                            },
+                            messages       : {
+                                pass  : {
+                                    required : "Ingrese la contraseña"
+                                },
+                                pass2 : {
+                                    required : "Ingrese nuevamente la contraseña",
+                                    equalTo  : "Repita la contraseña"
+                                }
                             }
-                        }/*,
-                         eliminar    : {
-                         label            : "Eliminar",
-                         icon             : "fa fa-trash-o",
-                         separator_before : true,
-                         action           : function ($element) {
-                         var id = $element.data("id");
-                         deletePersona(id);
-                         }
-                         }*/
-                    },
+                        });
+
+                        bootbox.dialog({
+                            "class" : "modal-sm",
+                            title   : "<span class='text-verde'>Cambiar contraseña de <em>" + nombre + "</em></span>",
+                            message : $form,
+                            buttons : {
+                                guardar  : {
+                                    label     : "<i class='fa fa-save'></i> Guardar",
+                                    className : "btn-verde",
+                                    callback  : function () {
+                                        if ($form.valid()) {
+                                            openLoader();
+                                            $.ajax({
+                                                type    : "POST",
+                                                url     : '${createLink(controller:'persona', action:'cambiarPass_ajax')}',
+                                                data    : {
+                                                    id   : id,
+                                                    pass : $("#pass").val()
+                                                },
+                                                success : function (msg) {
+                                                    var parts = msg.split("*");
+                                                    log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
+                                                    if (parts[0] == "SUCCESS") {
+                                                        setTimeout(function () {
+                                                            location.reload(true);
+                                                        }, 1000);
+                                                    } else {
+                                                        closeLoader();
+                                                    }
+                                                },
+                                                error   : function () {
+                                                    log("Ha ocurrido un error interno", "Error");
+                                                    closeLoader();
+                                                }
+                                            });
+                                        }
+                                        return false;
+                                    }
+                                },
+                                cancelar : {
+                                    label     : "Cancelear",
+                                    className : "btn-default",
+                                    callback  : function () {
+                                    }
+                                }
+                            }
+                        });
+                    }
+                };
+                return items;
+            }
+
+            $(function () {
+
+                $("tbody>tr").contextMenu({
+                    items  : createContextMenu,
                     onShow : function ($element) {
                         $element.addClass("success");
                     },

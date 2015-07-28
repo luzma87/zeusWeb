@@ -6,14 +6,25 @@
   Time: 08:57 AM
 --%>
 
-<ul class="fa-ul">
-    <g:each in="${Documento.list([sort: 'nombre'])}" var="doc">
-        <li class="liDoc">
-            <i class="fa-li fa fa-square-o"></i>
-            ${doc}
-        </li>
-    </g:each>
-</ul>
+<p>
+    Registre los documentos presentados por <span class="text-verde">${persona.nombre}</span>
+</p>
+
+<div class="well">
+    <ul class="fa-ul">
+        <g:set var="docs" value="${persona.documentos.documento.id}"/>
+        <g:each in="${Documento.list([sort: 'nombre'])}" var="doc">
+            <g:set var="tiene" value="${false}"/>
+            <g:if test="${docs.contains(doc.id)}">
+                <g:set var="tiene" value="${true}"/>
+            </g:if>
+            <li class="liDoc ${tiene ? 'active text-verde' : ''}" data-id="${doc.id}">
+                <i class="fa-li fa ${tiene ? 'fa-check-square-o' : 'fa-square-o'}"></i>
+                ${doc}
+            </li>
+        </g:each>
+    </ul>
+</div>
 
 <script type="text/javascript">
     function activar($item) {

@@ -144,6 +144,9 @@ class PersonaController extends Shield {
      */
     def cambiarPass_ajax() {
         def persona = Persona.get(params.id)
+        if (params.user) {
+            persona = Persona.get(session.usuario.id)
+        }
         def pass = params.pass.toString().encodeAsMD5()
         persona.password = pass
         if (!persona.save(flush: true)) {
@@ -217,6 +220,20 @@ class PersonaController extends Shield {
     }
 
     /**
+     * Acción llamada con ajax que valida que la clave ingresada sea la guardada en el servidor
+     * @render boolean que indica si es o no correcta
+     */
+    def validar_pass_ajax() {
+        params.pass0 = params.pass0.toString().trim().encodeAsMD5()
+        def obj = Persona.get(session.usuario.id)
+        if (obj.password == params.pass0) {
+            render true
+        } else {
+            render false
+        }
+    }
+
+    /**
      * Acción que muestra un formaulario para crear o modificar un elemento
      */
     def form() {
@@ -260,4 +277,12 @@ class PersonaController extends Shield {
         flash.tipo = "success"
         redirect(action: "list")
     } //save standalone
+
+    /**
+     * Acción que muestra la pantalla de configuración personal
+     */
+    def admin() {
+        def persona = Persona.get(session.usuario.id)
+        return [persona: persona]
+    }
 }

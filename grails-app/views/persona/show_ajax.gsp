@@ -1,4 +1,4 @@
-<%@ page import="seguridad.Persona" %>
+<%@ page import="documentos.Documento; seguridad.Persona" %>
 
 <g:if test="${!personaInstance}">
     <elm:notFound elem="Persona" genero="o"/>
@@ -121,6 +121,24 @@
             <div class="row">
                 <div class="col-md-12 show-label">
                     <h3>Documentos entregados</h3>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="well">
+                        <ul class="fa-ul">
+                            <g:set var="docs" value="${personaInstance.documentos.documento.id}"/>
+                            <g:each in="${Documento.list([sort: 'nombre'])}" var="doc">
+                                <g:set var="tiene" value="${false}"/>
+                                <g:if test="${docs.contains(doc.id)}">
+                                    <g:set var="tiene" value="${true}"/>
+                                </g:if>
+                                <li class="${tiene ? 'active text-verde' : ''}" data-id="${doc.id}">
+                                    <i class="fa-li fa ${tiene ? 'fa-check-square-o' : 'fa-square-o'}"></i>
+                                    ${doc}
+                                </li>
+                            </g:each>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </g:if>

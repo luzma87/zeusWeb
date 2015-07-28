@@ -113,8 +113,10 @@ function openLoader(msg, title) {
         closeButton : false,
         class       : "modal-sm"
     });
-    $("#dlgLoader").css({zIndex : 1061})
+    $("#dlgLoader").css({zIndex : 1061});
+    $(".modal-backdrop").css({zIndex : 1060});
 }
 function closeLoader() {
     $("#dlgLoader").modal('hide');
+    $(".modal-backdrop").css({zIndex : 1040});
 }

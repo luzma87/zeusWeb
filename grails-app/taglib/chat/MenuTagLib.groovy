@@ -229,6 +229,12 @@ class MenuTagLib {
                                     ]
                             ]
                     ],
+                    pass     : [
+                            controller: "persona",
+                            action    : "admin",
+                            label     : "Mi cuenta",
+                            icon      : "fa-user"
+                    ],
                     logout   : [
                             controller: "login",
                             action    : "logout",

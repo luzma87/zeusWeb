@@ -1,5 +1,6 @@
 package documentos
 
+import seguridad.Persona
 import seguridad.Shield
 
 /**
@@ -49,8 +50,39 @@ class DocumentoPersonaController extends Shield {
         return [documentoPersonaInstanceList: documentoPersonaInstanceList, documentoPersonaInstanceCount: documentoPersonaInstanceCount]
     }
 
+    /**
+     * Acción llamada con ajax que muestra la lista de documentos para registrar los presentados por una persona
+     */
     def registrar_ajax() {
+        def persona = Persona.get(params.id)
+        return [persona: persona]
+    }
 
+    /**
+     * Acción llamada con ajax que guarda varios documentos a la vez
+     */
+    def saveAll_ajax() {
+        def errores = ""
+        def persona = Persona.get(params.id)
+        DocumentoPersona.findAllByPersona(persona).each { dp ->
+            dp.delete(flush: true)
+        }
+        params.docs.split(",").each { id ->
+            if (id) {
+                def doc = Documento.get(id.toLong())
+                def docPer = new DocumentoPersona()
+                docPer.persona = persona
+                docPer.documento = doc
+                if (!docPer.save(flush: true)) {
+                    errores += docPer.errors
+                }
+            }
+        }
+        if (errores == "") {
+            render "SUCCESS*Documentos de ${persona.nombre} registrados exitosamente"
+        } else {
+            render "ERROR*" + errores
+        }
     }
 
     /**
